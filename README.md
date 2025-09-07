@@ -1,2 +1,3 @@
-# status-bar-worker
-Status Bar Worker
+# Status Bar Worker
+
+WebWorker for the status bar functionality in Lvce Editor.
