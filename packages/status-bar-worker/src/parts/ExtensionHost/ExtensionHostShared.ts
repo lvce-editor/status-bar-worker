@@ -1,5 +1,5 @@
+import { ExtensionHost } from '@lvce-editor/rpc-registry'
 import * as ExtensionHostManagement from '../ExtensionHostManagement/ExtensionHostManagement.ts'
-import * as ExtensionHostWorker from '../ExtensionHostWorker/ExtensionHostWorker.ts'
 
 type ExecuteProvidersOptions = {
   readonly combineResults: (results: readonly any[]) => any
@@ -19,7 +19,8 @@ export const executeProviders = async ({
   params,
 }: ExecuteProvidersOptions): Promise<any> => {
   await ExtensionHostManagement.activateByEvent(event)
-  const result = await ExtensionHostWorker.invoke(method, ...params)
+  // @ts-ignore
+  const result = await ExtensionHost.invoke(method, ...params)
   return result
 }
 
@@ -32,7 +33,8 @@ type ExecuteProviderOptions = {
 
 export const executeProvider = async ({ event, method, noProviderFoundMessage, params }: ExecuteProviderOptions): Promise<any> => {
   await ExtensionHostManagement.activateByEvent(event)
-  const result = ExtensionHostWorker.invoke(method, ...params)
+  // @ts-ignore
+  const result = ExtensionHost.invoke(method, ...params)
   return result
 }
 
@@ -42,5 +44,6 @@ type ExecuteOptions = {
 }
 
 export const execute = async ({ method, params }: ExecuteOptions): Promise<any> => {
-  await ExtensionHostWorker.invoke(method, ...params)
+  // @ts-ignore
+  await ExtensionHost.invoke(method, ...params)
 }
