@@ -1,13 +1,6 @@
+import type { UiStatusBarItem } from '../UiStatusBarItem/UiStatusBarItem.ts'
 import * as ExtensionHostStatusBarItems from '../ExtensionHost/ExtensionHostStatusBarItems.ts'
 import * as ExtensionHostManagement from '../ExtensionHostManagement/ExtensionHostManagement.ts'
-
-type UiStatusBarItem = {
-  name: string
-  text: string
-  tooltip: string
-  command: string
-  icon: string
-}
 
 const toUiStatusBarItem = (extensionHostStatusBarItem: any): UiStatusBarItem => {
   return {
