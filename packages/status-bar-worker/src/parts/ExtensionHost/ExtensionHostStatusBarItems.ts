@@ -24,13 +24,11 @@ export const getStatusBarItems = (): Promise<any[]> => {
   })
 }
 
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 type ListenerFunction = (...args: any[]) => any
 
 // TODO add function to dispose listener
-export const onChange = (
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
-  listener: ListenerFunction,
-): Promise<any> => {
+export const onChange = (listener: ListenerFunction): Promise<any> => {
   const id = Listener.register(listener)
   return ExtensionHostShared.execute({
     method: ExtensionHostCommandType.RegisterStatusBarChangeListener,
