@@ -1,10 +1,10 @@
 import { expect, test } from '@jest/globals'
 import type { StatusBarItem } from '../src/parts/StatusBarItem/StatusBarItem.ts'
-import * as Create from '../src/parts/Create/Create.ts'
+import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as ItemRightUpdate from '../src/parts/ItemRightUpdate/ItemRightUpdate.ts'
 
 test('itemRightUpdate should update existing item by name', () => {
-  const state = Create.create(1)
+  const state = { ...createDefaultState(), uid: 1 }
   const item1: StatusBarItem = {
     name: 'item1',
     text: 'text1',
@@ -33,7 +33,7 @@ test('itemRightUpdate should update existing item by name', () => {
 })
 
 test('itemRightUpdate should add new item when name does not exist', () => {
-  const state = Create.create(1)
+  const state = { ...createDefaultState(), uid: 1 }
   const item1: StatusBarItem = {
     name: 'item1',
     text: 'text1',
@@ -57,7 +57,7 @@ test('itemRightUpdate should add new item when name does not exist', () => {
 })
 
 test('itemRightUpdate should handle empty array', () => {
-  const state = Create.create(1)
+  const state = { ...createDefaultState(), uid: 1 }
   const newItem: StatusBarItem = {
     name: 'item1',
     text: 'text1',
@@ -71,7 +71,7 @@ test('itemRightUpdate should handle empty array', () => {
 })
 
 test('itemRightUpdate should not mutate original state', () => {
-  const state = Create.create(1)
+  const state = { ...createDefaultState(), uid: 1 }
   const item1: StatusBarItem = {
     name: 'item1',
     text: 'text1',
@@ -92,7 +92,7 @@ test('itemRightUpdate should not mutate original state', () => {
 })
 
 test('itemRightUpdate should update item in middle of array', () => {
-  const state = Create.create(1)
+  const state = { ...createDefaultState(), uid: 1 }
   const item1: StatusBarItem = {
     name: 'item1',
     text: 'text1',

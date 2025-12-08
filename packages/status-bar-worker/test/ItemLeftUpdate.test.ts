@@ -1,10 +1,10 @@
 import { expect, test } from '@jest/globals'
 import type { StatusBarItem } from '../src/parts/StatusBarItem/StatusBarItem.ts'
-import * as Create from '../src/parts/Create/Create.ts'
+import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as ItemLeftUpdate from '../src/parts/ItemLeftUpdate/ItemLeftUpdate.ts'
 
 test('should update existing item in left status bar', () => {
-  const state = Create.create(1)
+  const state = { ...createDefaultState(), uid: 1 }
   const item1: StatusBarItem = {
     name: 'item1',
     text: 'Original Text',
@@ -34,7 +34,7 @@ test('should update existing item in left status bar', () => {
 })
 
 test('should insert item at beginning when item does not exist', () => {
-  const state = Create.create(2)
+  const state = { ...createDefaultState(), uid: 2 }
   const item1: StatusBarItem = {
     name: 'item1',
     text: 'Item 1',
@@ -56,7 +56,7 @@ test('should insert item at beginning when item does not exist', () => {
 })
 
 test('should update item in middle of array', () => {
-  const state = Create.create(3)
+  const state = { ...createDefaultState(), uid: 3 }
   const item1: StatusBarItem = {
     name: 'item1',
     text: 'Item 1',
@@ -89,7 +89,7 @@ test('should update item in middle of array', () => {
 })
 
 test('should preserve right status bar items', () => {
-  const state = Create.create(4)
+  const state = { ...createDefaultState(), uid: 4 }
   const leftItem: StatusBarItem = {
     name: 'leftItem',
     text: 'Left Item',
@@ -116,7 +116,7 @@ test('should preserve right status bar items', () => {
 })
 
 test('should preserve uid', () => {
-  const state = Create.create(42)
+  const state = { ...createDefaultState(), uid: 42 }
   const item: StatusBarItem = {
     name: 'item',
     text: 'Item',
@@ -136,7 +136,7 @@ test('should preserve uid', () => {
 })
 
 test('should handle empty left items array', () => {
-  const state = Create.create(5)
+  const state = { ...createDefaultState(), uid: 5 }
   const newItem: StatusBarItem = {
     name: 'newItem',
     text: 'New Item',
@@ -148,7 +148,7 @@ test('should handle empty left items array', () => {
 })
 
 test('should update item with all optional properties', () => {
-  const state = Create.create(6)
+  const state = { ...createDefaultState(), uid: 6 }
   const item: StatusBarItem = {
     name: 'item',
     text: 'Item',
