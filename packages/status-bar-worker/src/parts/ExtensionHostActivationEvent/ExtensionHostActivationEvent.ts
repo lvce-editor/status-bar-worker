@@ -16,3 +16,4 @@ export const OnTextSearch = 'onTextSearch'
 export const OnTypeDefinition = 'onTypeDefinition'
 export const OnImplementation = 'onImplementation'
 export const OnClosingTag = 'onClosingTag'
+
