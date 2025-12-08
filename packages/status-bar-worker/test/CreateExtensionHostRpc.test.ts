@@ -28,6 +28,7 @@ test('createExtensionHostRpc should return an RPC instance', async () => {
 
   expect(rpc).toBeDefined()
   expect(typeof rpc).toBe('object')
+  expect(sendCalled).toBe(true)
 })
 
 test('createExtensionHostRpc should use sendMessagePortToExtensionHostWorker', async () => {
@@ -57,6 +58,8 @@ test('createExtensionHostRpc should use sendMessagePortToExtensionHostWorker', a
   const rpc = await CreateExtensionHostRpc.createExtensionHostRpc()
 
   expect(rpc).toBeDefined()
+  expect(sendCalled).toBe(true)
+  expect(sendPort).toBeDefined()
 })
 
 test('createExtensionHostRpc should handle errors and wrap in VError', async () => {
