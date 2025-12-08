@@ -16,7 +16,7 @@ type StatusBarItem = {
 }
 
 export const loadContent = async (state: Readonly<State>): Promise<State> => {
-  const statusBarItemsPreference = StatusBarPreferences.itemsVisible()
+  const statusBarItemsPreference = await StatusBarPreferences.itemsVisible()
   const statusBarItems = await GetStatusBarItems.getStatusBarItems(statusBarItemsPreference)
   return {
     ...state,
