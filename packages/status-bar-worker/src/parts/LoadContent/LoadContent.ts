@@ -14,8 +14,3 @@ export const loadContent = async (state: Readonly<State>): Promise<State> => {
     statusBarItemsLeft: [...statusBarItems],
   }
 }
-
-export { handleClick } from '../HandleClick/HandleClick.ts'
-export { itemLeftUpdate } from '../ItemLeftUpdate/ItemLeftUpdate.ts'
-export { itemRightCreate } from '../ItemRightCreate/ItemRightCreate.ts'
-export { itemRightUpdate } from '../ItemRightUpdate/ItemRightUpdate.ts'
