@@ -1,8 +1,9 @@
-import * as ClassNames from '../ClassNames/ClassNames.js'
-import * as GetStatusBarItemsVirtualDom from '../GetStatusBarItemsVirtualDom/GetStatusBarItemsVirtualDom.js'
+import * as ClassNames from '../ClassNames/ClassNames.ts'
+import * as GetStatusBarItemsVirtualDom from '../GetStatusBarItemsVirtualDom/GetStatusBarItemsVirtualDom.ts'
+import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
 
-export const getStatusBarVirtualDom = (statusBarItemsLeft, statusBarItemsRight) => {
-  const dom = []
+export const getStatusBarVirtualDom = (statusBarItemsLeft: readonly StatusBarItem[], statusBarItemsRight: readonly StatusBarItem[]): unknown[] => {
+  const dom: unknown[] = []
   if (statusBarItemsLeft.length > 0) {
     dom.push(...GetStatusBarItemsVirtualDom.getStatusBarItemsVirtualDom(statusBarItemsLeft, ClassNames.StatusBarItemsLeft))
   }

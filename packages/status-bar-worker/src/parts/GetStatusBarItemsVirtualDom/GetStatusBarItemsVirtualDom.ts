@@ -1,10 +1,10 @@
-import * as ClassNames from '../ClassNames/ClassNames.js'
+import * as ClassNames from '../ClassNames/ClassNames.ts'
 import { VirtualDomElements, AriaRoles, text } from '@lvce-editor/virtual-dom-worker'
+import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
 
-const getStatusBarItemVirtualDom = (statusBarItem) => {
-  // @ts-ignore
-  const { tooltip, icon } = statusBarItem
-  const dom = []
+const getStatusBarItemVirtualDom = (statusBarItem: StatusBarItem): unknown[] => {
+  const { tooltip } = statusBarItem
+  const dom: unknown[] = []
   dom.push(
     {
       type: VirtualDomElements.Div,
@@ -19,7 +19,7 @@ const getStatusBarItemVirtualDom = (statusBarItem) => {
   return dom
 }
 
-export const getStatusBarItemsVirtualDom = (items, className) => {
+export const getStatusBarItemsVirtualDom = (items: readonly StatusBarItem[], className: string): unknown[] => {
   return [
     {
       type: VirtualDomElements.Div,
