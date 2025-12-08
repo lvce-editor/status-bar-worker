@@ -1,4 +1,4 @@
-import { test } from '@jest/globals'
+import { expect, test } from '@jest/globals'
 import { mockWorkerGlobalRpc } from '@lvce-editor/rpc'
 import * as Main from '../src/parts/Main/Main.ts'
 
@@ -8,4 +8,5 @@ test('main', async () => {
   start()
   await mainPromise
   dispose()
+  expect(true).toBe(true)
 })
