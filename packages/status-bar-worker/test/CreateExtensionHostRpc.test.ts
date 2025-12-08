@@ -15,11 +15,8 @@ test('createExtensionHostRpc should return an RPC instance', async () => {
       throw new Error(`unexpected method ${method}`)
     },
   })
-  ;(mockRpc as any).invokeAndTransfer = async (
-    method: string,
-    ...args: ReadonlyArray<any>
-  ): Promise<any> => {
-    if (method === 'sendMessagePortToExtensionHostWorker') {
+  ;(mockRpc as any).invokeAndTransfer = async (method: string, ...args: ReadonlyArray<any>): Promise<any> => {
+    if (method === 'sendMessagePortToExtensionHostWorker' || method === 'SendMessagePortToExtensionHostWorker.sendMessagePortToExtensionHostWorker') {
       sendCalled = true
       return undefined
     }
@@ -47,11 +44,8 @@ test('createExtensionHostRpc should use sendMessagePortToExtensionHostWorker', a
       throw new Error(`unexpected method ${method}`)
     },
   })
-  ;(mockRpc as any).invokeAndTransfer = async (
-    method: string,
-    ...args: ReadonlyArray<any>
-  ): Promise<any> => {
-    if (method === 'sendMessagePortToExtensionHostWorker') {
+  ;(mockRpc as any).invokeAndTransfer = async (method: string, ...args: ReadonlyArray<any>): Promise<any> => {
+    if (method === 'sendMessagePortToExtensionHostWorker' || method === 'SendMessagePortToExtensionHostWorker.sendMessagePortToExtensionHostWorker') {
       sendCalled = true
       sendPort = args[0]
       return undefined
@@ -75,20 +69,15 @@ test('createExtensionHostRpc should handle errors and wrap in VError', async () 
       throw new Error(`unexpected method ${method}`)
     },
   })
-  ;(mockRpc as any).invokeAndTransfer = async (
-    method: string,
-    ...args: ReadonlyArray<any>
-  ): Promise<any> => {
-    if (method === 'sendMessagePortToExtensionHostWorker') {
+  ;(mockRpc as any).invokeAndTransfer = async (method: string, ...args: ReadonlyArray<any>): Promise<any> => {
+    if (method === 'sendMessagePortToExtensionHostWorker' || method === 'SendMessagePortToExtensionHostWorker.sendMessagePortToExtensionHostWorker') {
       throw new Error('send error')
     }
     throw new Error(`unexpected method ${method}`)
   }
   RendererWorker.set(mockRpc)
 
-  await expect(
-    CreateExtensionHostRpc.createExtensionHostRpc(),
-  ).rejects.toThrow('Failed to create extension host rpc')
+  await expect(CreateExtensionHostRpc.createExtensionHostRpc()).rejects.toThrow('Failed to create extension host rpc')
 })
 
 test('createExtensionHostRpc should be awaitable', async () => {
@@ -101,11 +90,8 @@ test('createExtensionHostRpc should be awaitable', async () => {
       throw new Error(`unexpected method ${method}`)
     },
   })
-  ;(mockRpc as any).invokeAndTransfer = async (
-    method: string,
-    ...args: ReadonlyArray<any>
-  ): Promise<any> => {
-    if (method === 'sendMessagePortToExtensionHostWorker') {
+  ;(mockRpc as any).invokeAndTransfer = async (method: string, ...args: ReadonlyArray<any>): Promise<any> => {
+    if (method === 'sendMessagePortToExtensionHostWorker' || method === 'SendMessagePortToExtensionHostWorker.sendMessagePortToExtensionHostWorker') {
       return undefined
     }
     throw new Error(`unexpected method ${method}`)
@@ -116,4 +102,3 @@ test('createExtensionHostRpc should be awaitable', async () => {
 
   expect(true).toBe(true)
 })
-
