@@ -1,6 +1,7 @@
 import { expect, test } from '@jest/globals'
 import { MockRpc } from '@lvce-editor/rpc'
 import { ExtensionHost, RendererWorker } from '@lvce-editor/rpc-registry'
+import type { StatusBarState } from '../src/parts/StatusBarState/StatusBarState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as ExtensionHostCommandType from '../src/parts/ExtensionHostCommandType/ExtensionHostCommandType.ts'
 import * as LoadContent from '../src/parts/LoadContent/LoadContent.ts'
@@ -43,7 +44,7 @@ test('loadContent should load status bar items when preference is true', async (
   })
   ExtensionHost.set(mockExtensionHostRpc)
 
-  const state = { ...createDefaultState(), uid: 1 }
+  const state: StatusBarState = { ...createDefaultState(), uid: 1 }
   const result = await LoadContent.loadContent(state)
 
   expect(result.statusBarItemsLeft).toEqual([
@@ -75,7 +76,7 @@ test('loadContent should return empty array when preference is false', async () 
   })
   RendererWorker.set(mockRendererRpc)
 
-  const state = { ...createDefaultState(), uid: 2 }
+  const state: StatusBarState = { ...createDefaultState(), uid: 2 }
   const result = await LoadContent.loadContent(state)
 
   expect(result.statusBarItemsLeft).toEqual([])
@@ -95,7 +96,7 @@ test('loadContent should return empty array when preference is undefined', async
   })
   RendererWorker.set(mockRendererRpc)
 
-  const state = { ...createDefaultState(), uid: 3 }
+  const state: StatusBarState = { ...createDefaultState(), uid: 3 }
   const result = await LoadContent.loadContent(state)
 
   expect(result.statusBarItemsLeft).toEqual([])
@@ -115,7 +116,7 @@ test('loadContent should preserve existing state properties', async () => {
   })
   RendererWorker.set(mockRendererRpc)
 
-  const state = {
+  const state: StatusBarState & { disposed?: boolean } = {
     ...createDefaultState(),
     disposed: true,
     uid: 4,
@@ -168,7 +169,7 @@ test('loadContent should handle multiple status bar items', async () => {
   })
   ExtensionHost.set(mockExtensionHostRpc)
 
-  const state = { ...createDefaultState(), uid: 5 }
+  const state: StatusBarState = { ...createDefaultState(), uid: 5 }
   const result = await LoadContent.loadContent(state)
 
   expect(result.statusBarItemsLeft).toEqual([
