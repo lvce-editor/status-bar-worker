@@ -1,16 +1,16 @@
 import { expect, test } from '@jest/globals'
-import type * as StatusBarState from '../src/parts/StatusBarState/StatusBarState.ts'
+import type { StatusBarItem } from '../src/parts/StatusBarItem/StatusBarItem.ts'
 import * as Create from '../src/parts/Create/Create.ts'
 import * as ItemRightUpdate from '../src/parts/ItemRightUpdate/ItemRightUpdate.ts'
 
 test('itemRightUpdate should update existing item by name', () => {
   const state = Create.create(1)
-  const item1: StatusBarState.StatusBarItem = {
+  const item1: StatusBarItem = {
     name: 'item1',
     text: 'text1',
     tooltip: 'tooltip1',
   }
-  const item2: StatusBarState.StatusBarItem = {
+  const item2: StatusBarItem = {
     name: 'item2',
     text: 'text2',
     tooltip: 'tooltip2',
@@ -19,7 +19,7 @@ test('itemRightUpdate should update existing item by name', () => {
     ...state,
     statusBarItemsRight: [item1, item2],
   }
-  const updatedItem: StatusBarState.StatusBarItem = {
+  const updatedItem: StatusBarItem = {
     name: 'item1',
     text: 'updated text',
     tooltip: 'updated tooltip',
@@ -34,7 +34,7 @@ test('itemRightUpdate should update existing item by name', () => {
 
 test('itemRightUpdate should add new item when name does not exist', () => {
   const state = Create.create(1)
-  const item1: StatusBarState.StatusBarItem = {
+  const item1: StatusBarItem = {
     name: 'item1',
     text: 'text1',
     tooltip: 'tooltip1',
@@ -43,7 +43,7 @@ test('itemRightUpdate should add new item when name does not exist', () => {
     ...state,
     statusBarItemsRight: [item1],
   }
-  const newItem: StatusBarState.StatusBarItem = {
+  const newItem: StatusBarItem = {
     name: 'item2',
     text: 'text2',
     tooltip: 'tooltip2',
@@ -58,7 +58,7 @@ test('itemRightUpdate should add new item when name does not exist', () => {
 
 test('itemRightUpdate should handle empty array', () => {
   const state = Create.create(1)
-  const newItem: StatusBarState.StatusBarItem = {
+  const newItem: StatusBarItem = {
     name: 'item1',
     text: 'text1',
     tooltip: 'tooltip1',
@@ -72,7 +72,7 @@ test('itemRightUpdate should handle empty array', () => {
 
 test('itemRightUpdate should not mutate original state', () => {
   const state = Create.create(1)
-  const item1: StatusBarState.StatusBarItem = {
+  const item1: StatusBarItem = {
     name: 'item1',
     text: 'text1',
     tooltip: 'tooltip1',
@@ -81,7 +81,7 @@ test('itemRightUpdate should not mutate original state', () => {
     ...state,
     statusBarItemsRight: [item1],
   }
-  const updatedItem: StatusBarState.StatusBarItem = {
+  const updatedItem: StatusBarItem = {
     name: 'item1',
     text: 'updated text',
     tooltip: 'updated tooltip',
@@ -93,17 +93,17 @@ test('itemRightUpdate should not mutate original state', () => {
 
 test('itemRightUpdate should update item in middle of array', () => {
   const state = Create.create(1)
-  const item1: StatusBarState.StatusBarItem = {
+  const item1: StatusBarItem = {
     name: 'item1',
     text: 'text1',
     tooltip: 'tooltip1',
   }
-  const item2: StatusBarState.StatusBarItem = {
+  const item2: StatusBarItem = {
     name: 'item2',
     text: 'text2',
     tooltip: 'tooltip2',
   }
-  const item3: StatusBarState.StatusBarItem = {
+  const item3: StatusBarItem = {
     name: 'item3',
     text: 'text3',
     tooltip: 'tooltip3',
@@ -112,7 +112,7 @@ test('itemRightUpdate should update item in middle of array', () => {
     ...state,
     statusBarItemsRight: [item1, item2, item3],
   }
-  const updatedItem: StatusBarState.StatusBarItem = {
+  const updatedItem: StatusBarItem = {
     name: 'item2',
     text: 'updated text',
     tooltip: 'updated tooltip',
