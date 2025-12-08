@@ -7,6 +7,7 @@ import * as ItemRightCreate from '../ItemRightCreate/ItemRightCreate.ts'
 import * as ItemRightUpdate from '../ItemRightUpdate/ItemRightUpdate.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
 import { render2 } from '../Render2/Render2.ts'
+import { renderEventListeners } from '../RenderEventListeners/RenderEventListeners.ts'
 import { saveState } from '../SaveState/SaveState.ts'
 import { wrapCommand } from '../StatusBarStates/StatusBarStates.ts'
 
@@ -19,6 +20,7 @@ export const commandMap = {
   'StatusBar.itemRightUpdate': wrapCommand(ItemRightUpdate.itemRightUpdate),
   'StatusBar.loadContent': wrapCommand(LoadContent.loadContent),
   'StatusBar.render2': render2,
+  'StatusBar.renderEventListeners': renderEventListeners,
   'StatusBar.saveState': saveState,
   'StatusBar.terminate': terminate,
 }
