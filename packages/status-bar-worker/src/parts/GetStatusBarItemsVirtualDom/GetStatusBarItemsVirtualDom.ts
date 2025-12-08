@@ -1,30 +1,28 @@
-import * as ClassNames from '../ClassNames/ClassNames.ts'
 import { VirtualDomElements, AriaRoles, text } from '@lvce-editor/virtual-dom-worker'
 import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
+import * as ClassNames from '../ClassNames/ClassNames.ts'
 
 const getStatusBarItemVirtualDom = (statusBarItem: StatusBarItem): unknown[] => {
   const { tooltip } = statusBarItem
-  const dom: unknown[] = []
-  dom.push(
+  return [
     {
-      type: VirtualDomElements.Div,
+      childCount: 1,
       className: ClassNames.StatusBarItem,
       role: AriaRoles.Button,
       tabIndex: -1,
       title: tooltip,
-      childCount: 1,
+      type: VirtualDomElements.Div,
     },
     text(statusBarItem.text),
-  )
-  return dom
+  ]
 }
 
 export const getStatusBarItemsVirtualDom = (items: readonly StatusBarItem[], className: string): unknown[] => {
   return [
     {
-      type: VirtualDomElements.Div,
-      className,
       childCount: items.length,
+      className,
+      type: VirtualDomElements.Div,
     },
     ...items.flatMap(getStatusBarItemVirtualDom),
   ]

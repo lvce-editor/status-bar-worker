@@ -1,6 +1,6 @@
+import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as GetStatusBarItemsVirtualDom from '../GetStatusBarItemsVirtualDom/GetStatusBarItemsVirtualDom.ts'
-import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
 
 export const getStatusBarVirtualDom = (statusBarItemsLeft: readonly StatusBarItem[], statusBarItemsRight: readonly StatusBarItem[]): unknown[] => {
   const dom: unknown[] = []
