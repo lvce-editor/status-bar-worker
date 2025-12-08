@@ -1,12 +1,11 @@
+<<<<<<< HEAD
 import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
 import type * as StatusBarState from '../StatusBarState/StatusBarState.ts'
+=======
+import type { StatusBarItem, StatusBarState } from '../StatusBarState/StatusBarState.ts'
+>>>>>>> origin/main
 
-export const itemLeftCreate = (
-  state: Readonly<StatusBarState.StatusBarState>,
-  name: string,
-  text: string,
-  tooltip: string,
-): StatusBarState.StatusBarState => {
+export const itemLeftCreate = (state: StatusBarState, name: string, text: string, tooltip: string): StatusBarState => {
   const { statusBarItemsLeft } = state
   const newItem: StatusBarItem = {
     name,

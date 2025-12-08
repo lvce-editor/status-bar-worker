@@ -1,8 +1,9 @@
+import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import { VirtualDomElements, AriaRoles, text } from '@lvce-editor/virtual-dom-worker'
 import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
 
-const getStatusBarItemVirtualDom = (statusBarItem: StatusBarItem): unknown[] => {
+const getStatusBarItemVirtualDom = (statusBarItem: StatusBarItem): readonly VirtualDomNode[] => {
   const { tooltip } = statusBarItem
   return [
     {
@@ -17,7 +18,7 @@ const getStatusBarItemVirtualDom = (statusBarItem: StatusBarItem): unknown[] => 
   ]
 }
 
-export const getStatusBarItemsVirtualDom = (items: readonly StatusBarItem[], className: string): unknown[] => {
+export const getStatusBarItemsVirtualDom = (items: readonly StatusBarItem[], className: string): readonly VirtualDomNode[] => {
   return [
     {
       childCount: items.length,
