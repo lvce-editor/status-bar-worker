@@ -1,6 +1,5 @@
 import { expect, test } from '@jest/globals'
 import type { StatusBarItem } from '../src/parts/StatusBarItem/StatusBarItem.ts'
-import type * as StatusBarState from '../src/parts/StatusBarState/StatusBarState.ts'
 import * as Create from '../src/parts/Create/Create.ts'
 import * as ItemLeftUpdate from '../src/parts/ItemLeftUpdate/ItemLeftUpdate.ts'
 
