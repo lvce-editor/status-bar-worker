@@ -1,10 +1,11 @@
 import { expect, test } from '@jest/globals'
 import type { StatusBarItem } from '../src/parts/StatusBarItem/StatusBarItem.ts'
+import type { StatusBarState } from '../src/parts/StatusBarState/StatusBarState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as ItemRightUpdate from '../src/parts/ItemRightUpdate/ItemRightUpdate.ts'
 
 test('itemRightUpdate should update existing item by name', () => {
-  const state = { ...createDefaultState(), uid: 1 }
+  const state: StatusBarState = { ...createDefaultState(), uid: 1 }
   const item1: StatusBarItem = {
     name: 'item1',
     text: 'text1',
@@ -15,7 +16,7 @@ test('itemRightUpdate should update existing item by name', () => {
     text: 'text2',
     tooltip: 'tooltip2',
   }
-  const stateWithItems = {
+  const stateWithItems: StatusBarState = {
     ...state,
     statusBarItemsRight: [item1, item2],
   }
@@ -33,13 +34,13 @@ test('itemRightUpdate should update existing item by name', () => {
 })
 
 test('itemRightUpdate should add new item when name does not exist', () => {
-  const state = { ...createDefaultState(), uid: 1 }
+  const state: StatusBarState = { ...createDefaultState(), uid: 1 }
   const item1: StatusBarItem = {
     name: 'item1',
     text: 'text1',
     tooltip: 'tooltip1',
   }
-  const stateWithItems = {
+  const stateWithItems: StatusBarState = {
     ...state,
     statusBarItemsRight: [item1],
   }
@@ -57,7 +58,7 @@ test('itemRightUpdate should add new item when name does not exist', () => {
 })
 
 test('itemRightUpdate should handle empty array', () => {
-  const state = { ...createDefaultState(), uid: 1 }
+  const state: StatusBarState = { ...createDefaultState(), uid: 1 }
   const newItem: StatusBarItem = {
     name: 'item1',
     text: 'text1',
@@ -71,13 +72,13 @@ test('itemRightUpdate should handle empty array', () => {
 })
 
 test('itemRightUpdate should not mutate original state', () => {
-  const state = { ...createDefaultState(), uid: 1 }
+  const state: StatusBarState = { ...createDefaultState(), uid: 1 }
   const item1: StatusBarItem = {
     name: 'item1',
     text: 'text1',
     tooltip: 'tooltip1',
   }
-  const stateWithItems = {
+  const stateWithItems: StatusBarState = {
     ...state,
     statusBarItemsRight: [item1],
   }
@@ -92,7 +93,7 @@ test('itemRightUpdate should not mutate original state', () => {
 })
 
 test('itemRightUpdate should update item in middle of array', () => {
-  const state = { ...createDefaultState(), uid: 1 }
+  const state: StatusBarState = { ...createDefaultState(), uid: 1 }
   const item1: StatusBarItem = {
     name: 'item1',
     text: 'text1',
@@ -108,7 +109,7 @@ test('itemRightUpdate should update item in middle of array', () => {
     text: 'text3',
     tooltip: 'tooltip3',
   }
-  const stateWithItems = {
+  const stateWithItems: StatusBarState = {
     ...state,
     statusBarItemsRight: [item1, item2, item3],
   }

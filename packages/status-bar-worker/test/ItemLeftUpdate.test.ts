@@ -1,10 +1,11 @@
 import { expect, test } from '@jest/globals'
 import type { StatusBarItem } from '../src/parts/StatusBarItem/StatusBarItem.ts'
+import type { StatusBarState } from '../src/parts/StatusBarState/StatusBarState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as ItemLeftUpdate from '../src/parts/ItemLeftUpdate/ItemLeftUpdate.ts'
 
 test('should update existing item in left status bar', () => {
-  const state = { ...createDefaultState(), uid: 1 }
+  const state: StatusBarState = { ...createDefaultState(), uid: 1 }
   const item1: StatusBarItem = {
     name: 'item1',
     text: 'Original Text',
@@ -15,7 +16,7 @@ test('should update existing item in left status bar', () => {
     text: 'Item 2',
     tooltip: 'Tooltip 2',
   }
-  const stateWithItems = {
+  const stateWithItems: StatusBarState = {
     ...state,
     statusBarItemsLeft: [item1, item2],
   }
@@ -34,13 +35,13 @@ test('should update existing item in left status bar', () => {
 })
 
 test('should insert item at beginning when item does not exist', () => {
-  const state = { ...createDefaultState(), uid: 2 }
+  const state: StatusBarState = { ...createDefaultState(), uid: 2 }
   const item1: StatusBarItem = {
     name: 'item1',
     text: 'Item 1',
     tooltip: 'Tooltip 1',
   }
-  const stateWithItems = {
+  const stateWithItems: StatusBarState = {
     ...state,
     statusBarItemsLeft: [item1],
   }
@@ -56,7 +57,7 @@ test('should insert item at beginning when item does not exist', () => {
 })
 
 test('should update item in middle of array', () => {
-  const state = { ...createDefaultState(), uid: 3 }
+  const state: StatusBarState = { ...createDefaultState(), uid: 3 }
   const item1: StatusBarItem = {
     name: 'item1',
     text: 'Item 1',
@@ -72,7 +73,7 @@ test('should update item in middle of array', () => {
     text: 'Item 3',
     tooltip: 'Tooltip 3',
   }
-  const stateWithItems = {
+  const stateWithItems: StatusBarState = {
     ...state,
     statusBarItemsLeft: [item1, item2, item3],
   }
@@ -89,7 +90,7 @@ test('should update item in middle of array', () => {
 })
 
 test('should preserve right status bar items', () => {
-  const state = { ...createDefaultState(), uid: 4 }
+  const state: StatusBarState = { ...createDefaultState(), uid: 4 }
   const leftItem: StatusBarItem = {
     name: 'leftItem',
     text: 'Left Item',
@@ -100,7 +101,7 @@ test('should preserve right status bar items', () => {
     text: 'Right Item',
     tooltip: 'Right Tooltip',
   }
-  const stateWithItems = {
+  const stateWithItems: StatusBarState = {
     ...state,
     statusBarItemsLeft: [leftItem],
     statusBarItemsRight: [rightItem],
@@ -116,13 +117,13 @@ test('should preserve right status bar items', () => {
 })
 
 test('should preserve uid', () => {
-  const state = { ...createDefaultState(), uid: 42 }
+  const state: StatusBarState = { ...createDefaultState(), uid: 42 }
   const item: StatusBarItem = {
     name: 'item',
     text: 'Item',
     tooltip: 'Tooltip',
   }
-  const stateWithItems = {
+  const stateWithItems: StatusBarState = {
     ...state,
     statusBarItemsLeft: [item],
   }
@@ -136,7 +137,7 @@ test('should preserve uid', () => {
 })
 
 test('should handle empty left items array', () => {
-  const state = { ...createDefaultState(), uid: 5 }
+  const state: StatusBarState = { ...createDefaultState(), uid: 5 }
   const newItem: StatusBarItem = {
     name: 'newItem',
     text: 'New Item',
@@ -148,13 +149,13 @@ test('should handle empty left items array', () => {
 })
 
 test('should update item with all optional properties', () => {
-  const state = { ...createDefaultState(), uid: 6 }
+  const state: StatusBarState = { ...createDefaultState(), uid: 6 }
   const item: StatusBarItem = {
     name: 'item',
     text: 'Item',
     tooltip: 'Tooltip',
   }
-  const stateWithItems = {
+  const stateWithItems: StatusBarState = {
     ...state,
     statusBarItemsLeft: [item],
   }
