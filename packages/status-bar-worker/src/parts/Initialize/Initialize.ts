@@ -1,5 +1,7 @@
-import { initializeRendererProcess } from '../InitializeRendererProcess/InitializeRendererProcess.ts'
+import { ExtensionHost } from '@lvce-editor/rpc-registry'
+import { createExtensionHostRpc } from '../CreateExtensionHostRpc/CreateExtensionHostRpc.ts'
 
 export const initialize = async (): Promise<void> => {
-  await initializeRendererProcess()
+  const rpc = await createExtensionHostRpc()
+  ExtensionHost.set(rpc)
 }
