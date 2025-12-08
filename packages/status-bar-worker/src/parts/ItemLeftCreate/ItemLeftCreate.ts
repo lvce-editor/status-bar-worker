@@ -1,4 +1,5 @@
-import type { StatusBarItem, StatusBarState } from '../StatusBarState/StatusBarState.ts'
+import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
+import type { StatusBarState } from '../StatusBarState/StatusBarState.ts'
 
 export const itemLeftCreate = (state: StatusBarState, name: string, text: string, tooltip: string): StatusBarState => {
   const { statusBarItemsLeft } = state

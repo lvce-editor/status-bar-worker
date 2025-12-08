@@ -5,5 +5,3 @@ export interface StatusBarState {
   readonly statusBarItemsRight: readonly StatusBarItem[]
   readonly uid: number
 }
-
-export { type StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
