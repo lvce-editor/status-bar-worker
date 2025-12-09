@@ -1,28 +1,8 @@
-import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
 import type { StatusBarState } from '../StatusBarState/StatusBarState.ts'
 import * as InputName from '../InputName/InputName.ts'
-
-const getMatchingItem = (itemsLeft: readonly StatusBarItem[], itemsRight: readonly StatusBarItem[], name: string): StatusBarItem | undefined => {
-  for (const item of itemsLeft) {
-    if (item.name === name) {
-      return item
-    }
-  }
-  for (const item of itemsRight) {
-    if (item.name === name) {
-      return item
-    }
-  }
-  return undefined
-}
-
-const handleClickNotification = async (): Promise<void> => {
-  // TODO toggle notifications
-}
-
-const handleClickProblems = async (): Promise<void> => {
-  // TODO show problems view
-}
+import { getMatchingItem } from './GetMatchingItem.ts'
+import { handleClickNotification } from './HandleClickNotification.ts'
+import { handleClickProblems } from './HandleClickProblems.ts'
 
 export const handleClick = async (state: StatusBarState, name: string): Promise<StatusBarState> => {
   if (!name) {
