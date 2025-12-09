@@ -16,15 +16,7 @@ afterEach(() => {
 
 test('createExtensionHostRpc should return an RPC instance', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {
-      'SendMessagePortToExtensionHostWorker.sendMessagePortToExtensionHostWorker': async () => {},
-    },
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      if (method === 'sendMessagePortToExtensionHostWorker') {
-        return undefined
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    'SendMessagePortToExtensionHostWorker.sendMessagePortToExtensionHostWorker': async () => {},
   })
   ;(mockRpc as any).invokeAndTransfer = async (method: string, ...args: ReadonlyArray<any>): Promise<any> => {
     if (method === 'sendMessagePortToExtensionHostWorker' || method === 'SendMessagePortToExtensionHostWorker.sendMessagePortToExtensionHostWorker') {
@@ -43,15 +35,7 @@ test('createExtensionHostRpc should return an RPC instance', async () => {
 
 test('createExtensionHostRpc should use sendMessagePortToExtensionHostWorker', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {
-      'SendMessagePortToExtensionHostWorker.sendMessagePortToExtensionHostWorker': async () => {},
-    },
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      if (method === 'sendMessagePortToExtensionHostWorker') {
-        return undefined
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    'SendMessagePortToExtensionHostWorker.sendMessagePortToExtensionHostWorker': async () => {},
   })
   ;(mockRpc as any).invokeAndTransfer = async (method: string, ...args: ReadonlyArray<any>): Promise<any> => {
     if (method === 'sendMessagePortToExtensionHostWorker' || method === 'SendMessagePortToExtensionHostWorker.sendMessagePortToExtensionHostWorker') {
@@ -92,15 +76,7 @@ test('createExtensionHostRpc should handle errors and wrap in VError', async () 
 
 test('createExtensionHostRpc should be awaitable', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {
-      'SendMessagePortToExtensionHostWorker.sendMessagePortToExtensionHostWorker': async () => {},
-    },
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      if (method === 'sendMessagePortToExtensionHostWorker') {
-        return undefined
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    'SendMessagePortToExtensionHostWorker.sendMessagePortToExtensionHostWorker': async () => {},
   })
   ;(mockRpc as any).invokeAndTransfer = async (method: string, ...args: ReadonlyArray<any>): Promise<any> => {
     if (method === 'sendMessagePortToExtensionHostWorker' || method === 'SendMessagePortToExtensionHostWorker.sendMessagePortToExtensionHostWorker') {

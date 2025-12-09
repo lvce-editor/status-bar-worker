@@ -44,24 +44,11 @@ test('executeProviders should activate by event and invoke method with params', 
 
 test('executeProviders should use default noProviderFoundMessage', async () => {
   const mockRendererRpc = RendererWorker.registerMockRpc({
-    commandMap: {
-      'ExtensionHostManagement.activateByEvent': async () => {},
-    },
-    invoke: (method: string) => {
-      if (method === 'activateByEvent' || method.endsWith('.activateByEvent')) {
-        return undefined
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
   const mockExtensionHostRpc = ExtensionHost.registerMockRpc({
-    commandMap: {
-      'test.method': async () => {},
-    },
-    invoke: () => {
-      return 'result'
-    },
+    'test.method': async () => 'result',
   })
 
   const result = await ExtensionHostShared.executeProviders({
@@ -79,24 +66,11 @@ test('executeProviders should use default noProviderFoundMessage', async () => {
 
 test('executeProvider should activate by event and invoke method with params', async () => {
   const mockRendererRpc = RendererWorker.registerMockRpc({
-    commandMap: {
-      'ExtensionHostManagement.activateByEvent': async () => {},
-    },
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      if (method === 'activateByEvent' || method.endsWith('.activateByEvent')) {
-        return undefined
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
   const mockExtensionHostRpc = ExtensionHost.registerMockRpc({
-    commandMap: {
-      'test.method': async () => {},
-    },
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      return 'test-result'
-    },
+    'test.method': async () => 'test-result',
   })
 
   const result = await ExtensionHostShared.executeProvider({

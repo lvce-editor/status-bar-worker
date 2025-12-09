@@ -14,25 +14,16 @@ afterEach(() => {
 
 test('getStatusBarItems should activate by event and invoke GetStatusBarItems', async () => {
   const mockRendererRpc = RendererWorker.registerMockRpc({
-    commandMap: {},
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      if (method === 'activateByEvent' || method.endsWith('.activateByEvent')) {
-        return undefined
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
   const mockExtensionHostRpc = ExtensionHost.registerMockRpc({
-    commandMap: {},
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      return [
-        {
-          id: 'item1',
-          text: 'Item 1',
-        },
-      ]
-    },
+    [ExtensionHostCommandType.GetStatusBarItems]: async () => [
+      {
+        id: 'item1',
+        text: 'Item 1',
+      },
+    ],
   })
 
   const result = await ExtensionHostStatusBarItems.getStatusBarItems()
