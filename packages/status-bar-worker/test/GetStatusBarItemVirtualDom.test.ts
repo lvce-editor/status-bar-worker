@@ -16,6 +16,7 @@ test('getStatusBarItemVirtualDom should return div and text node with all proper
   expect(result[0]).toEqual({
     childCount: 1,
     className: ClassNames.StatusBarItem,
+    name: 'test.item',
     role: 'button',
     tabIndex: -1,
     title: 'Test Tooltip',
@@ -39,6 +40,7 @@ test('getStatusBarItemVirtualDom should return div and text node with minimal pr
   expect(result[0]).toEqual({
     childCount: 1,
     className: ClassNames.StatusBarItem,
+    name: 'test.item',
     role: 'button',
     tabIndex: -1,
     title: 'Test Tooltip',
@@ -62,6 +64,7 @@ test('getStatusBarItemVirtualDom should handle empty strings', () => {
   expect(result[0]).toEqual({
     childCount: 1,
     className: ClassNames.StatusBarItem,
+    name: '',
     role: 'button',
     tabIndex: -1,
     title: '',
