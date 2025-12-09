@@ -1,6 +1,7 @@
 import type { UiStatusBarItem } from '../UiStatusBarItem/UiStatusBarItem.ts'
 import * as ExtensionHostStatusBarItems from '../ExtensionHost/ExtensionHostStatusBarItems.ts'
 import * as ExtensionHostManagement from '../ExtensionHostManagement/ExtensionHostManagement.ts'
+import * as InputName from '../InputName/InputName.ts'
 
 const toUiStatusBarItem = (extensionHostStatusBarItem: any): UiStatusBarItem => {
   return {
@@ -30,7 +31,7 @@ export const getStatusBarItems = async (showItems: boolean): Promise<UiStatusBar
     {
       command: '',
       icon: '',
-      name: 'Notifications',
+      name: InputName.Notifications,
       text: 'Notifications',
       tooltip: '',
     },
