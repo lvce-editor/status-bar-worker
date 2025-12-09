@@ -27,12 +27,12 @@ test('handleClick should return state with items unchanged', async () => {
   expect(result).toEqual(state)
 })
 
-test('handleClick should return state with disposed flag unchanged', () => {
+test('handleClick should return state with disposed flag unchanged', async () => {
   const state: StatusBarState & { disposed?: boolean } = {
     ...createDefaultState(),
     disposed: true,
   }
-  const result = HandleClick.handleClick(state, 'test-item')
+  const result = await HandleClick.handleClick(state, 'test-item')
   expect(result).toEqual(state)
   expect((result as any).disposed).toBe(true)
 })
