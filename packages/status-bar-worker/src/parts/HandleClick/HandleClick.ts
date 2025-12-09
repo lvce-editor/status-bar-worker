@@ -20,6 +20,10 @@ const handleClickNotification = async (): Promise<void> => {
   // TODO toggle notifications
 }
 
+const handleClickProblems = async (): Promise<void> => {
+  // TODO show problems view
+}
+
 export const handleClick = async (state: StatusBarState, name: string): Promise<StatusBarState> => {
   if (!name) {
     return state
@@ -32,6 +36,9 @@ export const handleClick = async (state: StatusBarState, name: string): Promise<
   }
   if (item.name === InputName.Notifications) {
     await handleClickNotification()
+  }
+  if (item.name === InputName.Problems) {
+    await handleClickProblems()
   }
   // TODO
   // sendExtensionWorker([/* statusBarItemHandleClick */ 7657, /* name */ name])
