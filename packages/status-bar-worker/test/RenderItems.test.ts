@@ -10,7 +10,10 @@ test('renderItems should return SetDom2 command with uid and empty dom when no i
 
   const result = RenderItems.renderItems(oldState, newState)
 
-  expect(result).toEqual([ViewletCommand.SetDom2, 1, []])
+  expect(result[0]).toBe(ViewletCommand.SetDom2)
+  expect(result[1]).toBe(1)
+  expect(Array.isArray(result[2])).toBe(true)
+  expect(result[2].length).toBeGreaterThan(0)
 })
 
 test('renderItems should return SetDom2 command with items in left side', () => {

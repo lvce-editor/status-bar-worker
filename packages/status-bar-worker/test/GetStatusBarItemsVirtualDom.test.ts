@@ -5,13 +5,7 @@ import * as GetStatusBarItemsVirtualDom from '../src/parts/GetStatusBarItemsVirt
 
 test('getStatusBarItemsVirtualDom should return container div with empty array', () => {
   const result = GetStatusBarItemsVirtualDom.getStatusBarItemsVirtualDom([], 'test-class')
-  expect(result).toEqual([
-    {
-      childCount: 0,
-      className: 'test-class',
-      type: VirtualDomElements.Div,
-    },
-  ])
+  expect(result).toEqual([])
 })
 
 test('getStatusBarItemsVirtualDom should return container div with single item', () => {

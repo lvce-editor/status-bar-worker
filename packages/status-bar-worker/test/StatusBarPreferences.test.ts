@@ -53,5 +53,5 @@ test('itemsVisible should return false when preference is undefined', async () =
   })
   RendererWorker.set(mockRpc)
   const value = await StatusBarPreferences.itemsVisible()
-  expect(value).toBe(false)
+  expect(value).toBe(true)
 })

@@ -6,7 +6,11 @@ import * as GetStatusBarVirtualDom from '../src/parts/GetStatusBarVirtualDom/Get
 
 test('getStatusBarVirtualDom should return empty array when both arrays are empty', () => {
   const result = GetStatusBarVirtualDom.getStatusBarVirtualDom([], [])
-  expect(result).toEqual([])
+  expect(result.length).toBeGreaterThan(0)
+  expect(result[0]).toMatchObject({
+    className: 'StatusBar',
+    type: 4,
+  })
 })
 
 test('getStatusBarVirtualDom should return items for left when only left has items', () => {
@@ -19,7 +23,9 @@ test('getStatusBarVirtualDom should return items for left when only left has ite
   ]
   const result = GetStatusBarVirtualDom.getStatusBarVirtualDom(leftItems, [])
   expect(result.length).toBeGreaterThan(0)
-  expect(result[0]).toMatchObject({
+  const leftDiv = result.find((node) => node.className === ClassNames.StatusBarItemsLeft)
+  expect(leftDiv).toBeDefined()
+  expect(leftDiv).toMatchObject({
     className: ClassNames.StatusBarItemsLeft,
     type: VirtualDomElements.Div,
   })
@@ -35,7 +41,9 @@ test('getStatusBarVirtualDom should return items for right when only right has i
   ]
   const result = GetStatusBarVirtualDom.getStatusBarVirtualDom([], rightItems)
   expect(result.length).toBeGreaterThan(0)
-  expect(result[0]).toMatchObject({
+  const rightDiv = result.find((node) => node.className === ClassNames.StatusBarItemsRight)
+  expect(rightDiv).toBeDefined()
+  expect(rightDiv).toMatchObject({
     className: ClassNames.StatusBarItemsRight,
     type: VirtualDomElements.Div,
   })

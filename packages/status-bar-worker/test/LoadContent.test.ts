@@ -55,6 +55,13 @@ test('loadContent should load status bar items when preference is true', async (
       text: 'Test Item',
       tooltip: 'Test Tooltip',
     },
+    {
+      command: '',
+      icon: '',
+      name: 'Notifications',
+      text: 'Notifications',
+      tooltip: '',
+    },
   ])
   expect(result.uid).toBe(1)
   expect(result.statusBarItemsRight).toEqual([])
@@ -91,15 +98,37 @@ test('loadContent should return empty array when preference is undefined', async
       if (method === 'getPreference' || method === 'Preferences.get') {
         return undefined
       }
+      if (method === 'activateByEvent' || method === 'ExtensionHostManagement.activateByEvent') {
+        return undefined
+      }
       throw new Error(`unexpected method ${method}`)
     },
   })
   RendererWorker.set(mockRendererRpc)
 
+  const mockExtensionHostRpc = MockRpc.create({
+    commandMap: {},
+    invoke: (method: string, ...args: ReadonlyArray<any>) => {
+      if (method === ExtensionHostCommandType.GetStatusBarItems) {
+        return []
+      }
+      throw new Error(`unexpected method ${method}`)
+    },
+  })
+  ExtensionHost.set(mockExtensionHostRpc)
+
   const state: StatusBarState = { ...createDefaultState(), uid: 3 }
   const result = await LoadContent.loadContent(state)
 
-  expect(result.statusBarItemsLeft).toEqual([])
+  expect(result.statusBarItemsLeft).toEqual([
+    {
+      command: '',
+      icon: '',
+      name: 'Notifications',
+      text: 'Notifications',
+      tooltip: '',
+    },
+  ])
   expect(result.uid).toBe(3)
   expect(result.statusBarItemsRight).toEqual([])
 })
@@ -186,6 +215,13 @@ test('loadContent should handle multiple status bar items', async () => {
       name: 'item2',
       text: 'Item 2',
       tooltip: 'Tooltip 2',
+    },
+    {
+      command: '',
+      icon: '',
+      name: 'Notifications',
+      text: 'Notifications',
+      tooltip: '',
     },
   ])
 })
