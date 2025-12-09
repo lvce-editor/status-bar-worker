@@ -3,13 +3,13 @@ import type { StatusBarState } from '../src/parts/StatusBarState/StatusBarState.
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as HandleClick from '../src/parts/HandleClick/HandleClick.ts'
 
-test('handleClick should return state unchanged', () => {
+test('handleClick should return state unchanged', async () => {
   const state: StatusBarState = createDefaultState()
-  const result = HandleClick.handleClick(state, 'test-item')
+  const result = await HandleClick.handleClick(state, 'test-item')
   expect(result).toEqual(state)
 })
 
-test('handleClick should return state with items unchanged', () => {
+test('handleClick should return state with items unchanged', async () => {
   const state: StatusBarState = {
     ...createDefaultState(),
     statusBarItemsLeft: [
@@ -23,7 +23,7 @@ test('handleClick should return state with items unchanged', () => {
     ],
     statusBarItemsRight: [],
   }
-  const result = HandleClick.handleClick(state, 'test-item')
+  const result = await HandleClick.handleClick(state, 'test-item')
   expect(result).toEqual(state)
 })
 
@@ -37,7 +37,7 @@ test('handleClick should return state with disposed flag unchanged', () => {
   expect((result as any).disposed).toBe(true)
 })
 
-test('handleClick should return state with different name', () => {
+test('handleClick should return state with different name', async () => {
   const state: StatusBarState = {
     ...createDefaultState(),
     statusBarItemsLeft: [
@@ -66,12 +66,12 @@ test('handleClick should return state with different name', () => {
       },
     ],
   }
-  const result = HandleClick.handleClick(state, 'item2')
+  const result = await HandleClick.handleClick(state, 'item2')
   expect(result).toEqual(state)
 })
 
-test('handleClick should return state with empty name', () => {
+test('handleClick should return state with empty name', async () => {
   const state: StatusBarState = createDefaultState()
-  const result = HandleClick.handleClick(state, '')
+  const result = await HandleClick.handleClick(state, '')
   expect(result).toEqual(state)
 })
