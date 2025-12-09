@@ -4,15 +4,7 @@ import * as ExtensionHostManagement from '../src/parts/ExtensionHostManagement/E
 
 test('activateByEvent should call RendererWorker.activateByEvent with correct event', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {
-      'ExtensionHostManagement.activateByEvent': async () => {},
-    },
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      if (method === 'activateByEvent' || method === 'ExtensionHostManagement.activateByEvent') {
-        return undefined
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
   await ExtensionHostManagement.activateByEvent('test.event')
@@ -23,15 +15,7 @@ test('activateByEvent should call RendererWorker.activateByEvent with correct ev
 
 test('activateByEvent should handle different event names', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {
-      'ExtensionHostManagement.activateByEvent': async () => {},
-    },
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      if (method === 'activateByEvent' || method === 'ExtensionHostManagement.activateByEvent') {
-        return undefined
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
   await ExtensionHostManagement.activateByEvent('onDidChangeStatusBarItems')
@@ -42,15 +26,7 @@ test('activateByEvent should handle different event names', async () => {
 
 test('activateByEvent should be awaitable', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {
-      'ExtensionHostManagement.activateByEvent': async () => {},
-    },
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      if (method === 'activateByEvent' || method === 'ExtensionHostManagement.activateByEvent') {
-        return undefined
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
   await ExtensionHostManagement.activateByEvent('test.event')

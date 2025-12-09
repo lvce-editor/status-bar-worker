@@ -16,19 +16,8 @@ test('handleClickProblems should call Layout.showPanel', async () => {
 
 test('handleClickProblems should call Panel.selectIndex with 1', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {
-      'Layout.showPanel': async () => {},
-      'Panel.selectIndex': async () => {},
-    },
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      if (method === 'Layout.showPanel') {
-        return undefined
-      }
-      if (method === 'Panel.selectIndex') {
-        return undefined
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    'Layout.showPanel': async () => {},
+    'Panel.selectIndex': async () => {},
   })
 
   await HandleClickProblems.handleClickProblems()
@@ -39,19 +28,8 @@ test('handleClickProblems should call Panel.selectIndex with 1', async () => {
 
 test('handleClickProblems should call Layout.showPanel and Panel.selectIndex in order', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {
-      'Layout.showPanel': async () => {},
-      'Panel.selectIndex': async () => {},
-    },
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      if (method === 'Layout.showPanel') {
-        return undefined
-      }
-      if (method === 'Panel.selectIndex') {
-        return undefined
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    'Layout.showPanel': async () => {},
+    'Panel.selectIndex': async () => {},
   })
 
   await HandleClickProblems.handleClickProblems()

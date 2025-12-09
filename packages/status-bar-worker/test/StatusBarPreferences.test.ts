@@ -4,18 +4,11 @@ import * as StatusBarPreferences from '../src/parts/StatusBarPreferences/StatusB
 
 test('itemsVisible should return true when preference is true', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {
-      'Preferences.get': async () => {},
-    },
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      if (method === 'Preferences.get') {
-        const key = args[0]
-        if (key === 'statusBar.itemsVisible') {
-          return true
-        }
-        return undefined
+    'Preferences.get': async (key: string) => {
+      if (key === 'statusBar.itemsVisible') {
+        return true
       }
-      throw new Error(`unexpected method ${method}`)
+      return undefined
     },
   })
   const value = await StatusBarPreferences.itemsVisible()
@@ -25,18 +18,11 @@ test('itemsVisible should return true when preference is true', async () => {
 
 test('itemsVisible should return false when preference is false', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {
-      'Preferences.get': async () => {},
-    },
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      if (method === 'Preferences.get') {
-        const key = args[0]
-        if (key === 'statusBar.itemsVisible') {
-          return false
-        }
-        return undefined
+    'Preferences.get': async (key: string) => {
+      if (key === 'statusBar.itemsVisible') {
+        return false
       }
-      throw new Error(`unexpected method ${method}`)
+      return undefined
     },
   })
   const value = await StatusBarPreferences.itemsVisible()
@@ -46,15 +32,7 @@ test('itemsVisible should return false when preference is false', async () => {
 
 test('itemsVisible should return false when preference is undefined', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {
-      'Preferences.get': async () => {},
-    },
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      if (method === 'Preferences.get') {
-        return undefined
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    'Preferences.get': async () => undefined,
   })
   const value = await StatusBarPreferences.itemsVisible()
   expect(value).toBe(true)
