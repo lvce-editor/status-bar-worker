@@ -1,3 +1,8 @@
+import { RendererWorker } from '@lvce-editor/rpc-registry'
+
 export const handleClickProblems = async (): Promise<void> => {
-  // TODO show problems view
+  // @ts-ignore
+  await RendererWorker.invoke('Layout.showPanel')
+  // @ts-ignore
+  await RendererWorker.invoke('Panel.selectIndex', 1)
 }
