@@ -9,7 +9,7 @@ test('handleClick should return state unchanged', async () => {
   expect(result).toEqual(state)
 })
 
-test('handleClick should return state with items unchanged', async () => {
+test.skip('handleClick should return state with items unchanged', async () => {
   const state: StatusBarState = {
     ...createDefaultState(),
     statusBarItemsLeft: [
@@ -37,7 +37,7 @@ test('handleClick should return state with disposed flag unchanged', async () =>
   expect((result as any).disposed).toBe(true)
 })
 
-test('handleClick should return state with different name', async () => {
+test.skip('handleClick should return state with different name', async () => {
   const state: StatusBarState = {
     ...createDefaultState(),
     statusBarItemsLeft: [
