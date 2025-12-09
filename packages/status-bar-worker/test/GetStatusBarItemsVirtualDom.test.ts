@@ -30,7 +30,7 @@ test('getStatusBarItemsVirtualDom should return container div with single item',
     role: 'button',
     tabIndex: -1,
     title: 'Test Tooltip',
-    type: VirtualDomElements.Div,
+    type: VirtualDomElements.Button,
   })
   expect(result[2]).toEqual({
     childCount: 0,
@@ -66,7 +66,7 @@ test('getStatusBarItemsVirtualDom should return container div with multiple item
     role: 'button',
     tabIndex: -1,
     title: 'Tooltip 1',
-    type: VirtualDomElements.Div,
+    type: VirtualDomElements.Button,
   })
   expect(result[2]).toEqual({
     childCount: 0,
@@ -80,7 +80,7 @@ test('getStatusBarItemsVirtualDom should return container div with multiple item
     role: 'button',
     tabIndex: -1,
     title: 'Tooltip 2',
-    type: VirtualDomElements.Div,
+    type: VirtualDomElements.Button,
   })
   expect(result[4]).toEqual({
     childCount: 0,
@@ -129,7 +129,7 @@ test('getStatusBarItemsVirtualDom should handle items with all fields', () => {
     role: 'button',
     tabIndex: -1,
     title: 'Test Tooltip',
-    type: VirtualDomElements.Div,
+    type: VirtualDomElements.Button,
   })
   expect(result[2]).toEqual({
     childCount: 0,

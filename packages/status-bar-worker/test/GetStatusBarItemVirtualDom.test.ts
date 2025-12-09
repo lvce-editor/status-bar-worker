@@ -20,7 +20,7 @@ test('getStatusBarItemVirtualDom should return div and text node with all proper
     role: 'button',
     tabIndex: -1,
     title: 'Test Tooltip',
-    type: VirtualDomElements.Div,
+    type: VirtualDomElements.Button,
   })
   expect(result[1]).toEqual({
     childCount: 0,
@@ -44,7 +44,7 @@ test('getStatusBarItemVirtualDom should return div and text node with minimal pr
     role: 'button',
     tabIndex: -1,
     title: 'Test Tooltip',
-    type: VirtualDomElements.Div,
+    type: VirtualDomElements.Button,
   })
   expect(result[1]).toEqual({
     childCount: 0,
@@ -68,7 +68,7 @@ test('getStatusBarItemVirtualDom should handle empty strings', () => {
     role: 'button',
     tabIndex: -1,
     title: '',
-    type: VirtualDomElements.Div,
+    type: VirtualDomElements.Button,
   })
   expect(result[1]).toEqual({
     childCount: 0,
@@ -108,6 +108,6 @@ test('getStatusBarItemVirtualDom should have correct structure properties', () =
   expect(result[0].className).toBe(ClassNames.StatusBarItem)
   expect(result[0].role).toBe('button')
   expect(result[0].tabIndex).toBe(-1)
-  expect(result[0].type).toBe(VirtualDomElements.Div)
+  expect(result[0].type).toBe(VirtualDomElements.Button)
   expect(result[1].type).toBe(VirtualDomElements.Text)
 })
