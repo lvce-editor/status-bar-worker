@@ -13,7 +13,7 @@ export const getStatusBarItemVirtualDom = (statusBarItem: StatusBarItem): readon
       role: AriaRoles.Button,
       tabIndex: -1,
       title: tooltip,
-      type: VirtualDomElements.Div,
+      type: VirtualDomElements.Button,
     },
     text(statusBarItem.text),
   ]
