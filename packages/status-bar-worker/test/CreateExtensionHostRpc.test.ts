@@ -53,14 +53,8 @@ test('createExtensionHostRpc should use sendMessagePortToExtensionHostWorker', a
 
 test('createExtensionHostRpc should handle errors and wrap in VError', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {
-      'SendMessagePortToExtensionHostWorker.sendMessagePortToExtensionHostWorker': async () => {},
-    },
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      if (method === 'sendMessagePortToExtensionHostWorker') {
-        throw new Error('send error')
-      }
-      throw new Error(`unexpected method ${method}`)
+    'SendMessagePortToExtensionHostWorker.sendMessagePortToExtensionHostWorker': async () => {
+      throw new Error('send error')
     },
   })
   ;(mockRpc as any).invokeAndTransfer = async (method: string, ...args: ReadonlyArray<any>): Promise<any> => {

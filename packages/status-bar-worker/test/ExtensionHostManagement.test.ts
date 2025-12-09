@@ -9,8 +9,12 @@ test('activateByEvent should call RendererWorker.activateByEvent with correct ev
 
   await ExtensionHostManagement.activateByEvent('test.event')
 
-  expect(mockRpc.invocations.length).toBeGreaterThan(0)
-  expect(mockRpc.invocations.some((inv) => (inv.method === 'activateByEvent' || inv.method === 'ExtensionHostManagement.activateByEvent') && inv.args[0] === 'test.event')).toBe(true)
+  expect(mockRpc.invocations).toEqual([
+    {
+      method: 'ExtensionHostManagement.activateByEvent',
+      args: ['test.event'],
+    },
+  ])
 })
 
 test('activateByEvent should handle different event names', async () => {
@@ -20,8 +24,12 @@ test('activateByEvent should handle different event names', async () => {
 
   await ExtensionHostManagement.activateByEvent('onDidChangeStatusBarItems')
 
-  expect(mockRpc.invocations.length).toBeGreaterThan(0)
-  expect(mockRpc.invocations.some((inv) => (inv.method === 'activateByEvent' || inv.method === 'ExtensionHostManagement.activateByEvent') && inv.args[0] === 'onDidChangeStatusBarItems')).toBe(true)
+  expect(mockRpc.invocations).toEqual([
+    {
+      method: 'ExtensionHostManagement.activateByEvent',
+      args: ['onDidChangeStatusBarItems'],
+    },
+  ])
 })
 
 test('activateByEvent should be awaitable', async () => {
@@ -31,5 +39,10 @@ test('activateByEvent should be awaitable', async () => {
 
   await ExtensionHostManagement.activateByEvent('test.event')
 
-  expect(mockRpc.invocations.length).toBeGreaterThan(0)
+  expect(mockRpc.invocations).toEqual([
+    {
+      method: 'ExtensionHostManagement.activateByEvent',
+      args: ['test.event'],
+    },
+  ])
 })

@@ -1,6 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
-import * as HandleClickProblems from '../src/parts/HandleClick/HandleClickProblems.ts'
+import * as HandleClickProblems from '../src/parts/HandleClickProblems/HandleClickProblems.ts'
 
 test('handleClickProblems should call Layout.showPanel', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
@@ -10,8 +10,16 @@ test('handleClickProblems should call Layout.showPanel', async () => {
 
   await HandleClickProblems.handleClickProblems()
 
-  expect(mockRpc.invocations.length).toBeGreaterThan(0)
-  expect(mockRpc.invocations.some((inv) => inv.method === 'Layout.showPanel')).toBe(true)
+  expect(mockRpc.invocations).toEqual([
+    {
+      method: 'Layout.showPanel',
+      args: [],
+    },
+    {
+      method: 'Panel.selectIndex',
+      args: [1],
+    },
+  ])
 })
 
 test('handleClickProblems should call Panel.selectIndex with 1', async () => {
@@ -22,8 +30,16 @@ test('handleClickProblems should call Panel.selectIndex with 1', async () => {
 
   await HandleClickProblems.handleClickProblems()
 
-  expect(mockRpc.invocations.length).toBeGreaterThan(0)
-  expect(mockRpc.invocations.some((inv) => inv.method === 'Panel.selectIndex' && inv.args[0] === 1)).toBe(true)
+  expect(mockRpc.invocations).toEqual([
+    {
+      method: 'Layout.showPanel',
+      args: [],
+    },
+    {
+      method: 'Panel.selectIndex',
+      args: [1],
+    },
+  ])
 })
 
 test('handleClickProblems should call Layout.showPanel and Panel.selectIndex in order', async () => {
@@ -34,7 +50,14 @@ test('handleClickProblems should call Layout.showPanel and Panel.selectIndex in 
 
   await HandleClickProblems.handleClickProblems()
 
-  expect(mockRpc.invocations.length).toBeGreaterThan(0)
-  const methods = mockRpc.invocations.map((inv) => inv.method)
-  expect(methods).toEqual(['Layout.showPanel', 'Panel.selectIndex'])
+  expect(mockRpc.invocations).toEqual([
+    {
+      method: 'Layout.showPanel',
+      args: [],
+    },
+    {
+      method: 'Panel.selectIndex',
+      args: [1],
+    },
+  ])
 })

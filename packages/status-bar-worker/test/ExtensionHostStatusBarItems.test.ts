@@ -42,27 +42,11 @@ test('getStatusBarItems should activate by event and invoke GetStatusBarItems', 
 
 test('getStatusBarItems should return empty array when no items are returned', async () => {
   const mockRendererRpc = RendererWorker.registerMockRpc({
-    commandMap: {
-      'ExtensionHostManagement.activateByEvent': async () => {},
-    },
-    invoke: (method: string) => {
-      if (method === 'activateByEvent' || method.endsWith('.activateByEvent')) {
-        return undefined
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
   const mockExtensionHostRpc = ExtensionHost.registerMockRpc({
-    commandMap: {
-      [ExtensionHostCommandType.GetStatusBarItems]: async () => {},
-    },
-    invoke: (method: string) => {
-      if (method === ExtensionHostCommandType.GetStatusBarItems) {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    [ExtensionHostCommandType.GetStatusBarItems]: async () => [],
   })
 
   const result = await ExtensionHostStatusBarItems.getStatusBarItems()
@@ -74,36 +58,20 @@ test('getStatusBarItems should return empty array when no items are returned', a
 
 test('getStatusBarItems should return items from provider', async () => {
   const mockRendererRpc = RendererWorker.registerMockRpc({
-    commandMap: {
-      'ExtensionHostManagement.activateByEvent': async () => {},
-    },
-    invoke: (method: string) => {
-      if (method === 'activateByEvent' || method.endsWith('.activateByEvent')) {
-        return undefined
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
   const mockExtensionHostRpc = ExtensionHost.registerMockRpc({
-    commandMap: {
-      [ExtensionHostCommandType.GetStatusBarItems]: async () => {},
-    },
-    invoke: (method: string) => {
-      if (method === ExtensionHostCommandType.GetStatusBarItems) {
-        return [
-          {
-            id: 'item1',
-            text: 'Item 1',
-          },
-          {
-            id: 'item2',
-            text: 'Item 2',
-          },
-        ]
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    [ExtensionHostCommandType.GetStatusBarItems]: async () => [
+      {
+        id: 'item1',
+        text: 'Item 1',
+      },
+      {
+        id: 'item2',
+        text: 'Item 2',
+      },
+    ],
   })
 
   const result = await ExtensionHostStatusBarItems.getStatusBarItems()
@@ -127,12 +95,7 @@ const listener2 = (): void => {}
 
 test('onChange should register a listener and call RegisterStatusBarChangeListener', async () => {
   const mockExtensionHostRpc = ExtensionHost.registerMockRpc({
-    commandMap: {
-      [ExtensionHostCommandType.RegisterStatusBarChangeListener]: async () => {},
-    },
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      return undefined
-    },
+    [ExtensionHostCommandType.RegisterStatusBarChangeListener]: async () => undefined,
   })
 
   await ExtensionHostStatusBarItems.onChange(emptyListener)
@@ -147,15 +110,7 @@ test('onChange should register a listener and call RegisterStatusBarChangeListen
 
 test('onChange should register multiple listeners independently', async () => {
   const mockExtensionHostRpc = ExtensionHost.registerMockRpc({
-    commandMap: {
-      [ExtensionHostCommandType.RegisterStatusBarChangeListener]: async () => {},
-    },
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      if (method === ExtensionHostCommandType.RegisterStatusBarChangeListener) {
-        return undefined
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    [ExtensionHostCommandType.RegisterStatusBarChangeListener]: async () => undefined,
   })
 
   await ExtensionHostStatusBarItems.onChange(emptyListener)
@@ -182,13 +137,7 @@ test('onChange should pass empty params array to executeProviders', async () => 
   })
 
   const mockExtensionHostRpc = ExtensionHost.registerMockRpc({
-    commandMap: {},
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      if (method === ExtensionHostCommandType.GetStatusBarItems) {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    [ExtensionHostCommandType.GetStatusBarItems]: async () => [],
   })
 
   await ExtensionHostStatusBarItems.getStatusBarItems()
