@@ -1,49 +1,50 @@
 import { expect, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as ExtensionHostManagement from '../src/parts/ExtensionHostManagement/ExtensionHostManagement.ts'
 
 test('activateByEvent should call RendererWorker.activateByEvent with correct event', async () => {
-  let calledEvent: string | undefined
-  const mockRpc = MockRpc.create({
-    commandMap: {},
+  const mockRpc = RendererWorker.registerMockRpc({
+    commandMap: {
+      'ExtensionHostManagement.activateByEvent': async () => {},
+    },
     invoke: (method: string, ...args: ReadonlyArray<any>) => {
       if (method === 'activateByEvent' || method === 'ExtensionHostManagement.activateByEvent') {
-        calledEvent = args[0]
         return undefined
       }
       throw new Error(`unexpected method ${method}`)
     },
   })
-  RendererWorker.set(mockRpc)
 
   await ExtensionHostManagement.activateByEvent('test.event')
 
-  expect(calledEvent).toBe('test.event')
+  expect(mockRpc.invocations.length).toBeGreaterThan(0)
+  expect(mockRpc.invocations.some((inv) => (inv.method === 'activateByEvent' || inv.method === 'ExtensionHostManagement.activateByEvent') && inv.args[0] === 'test.event')).toBe(true)
 })
 
 test('activateByEvent should handle different event names', async () => {
-  let calledEvent: string | undefined
-  const mockRpc = MockRpc.create({
-    commandMap: {},
+  const mockRpc = RendererWorker.registerMockRpc({
+    commandMap: {
+      'ExtensionHostManagement.activateByEvent': async () => {},
+    },
     invoke: (method: string, ...args: ReadonlyArray<any>) => {
       if (method === 'activateByEvent' || method === 'ExtensionHostManagement.activateByEvent') {
-        calledEvent = args[0]
         return undefined
       }
       throw new Error(`unexpected method ${method}`)
     },
   })
-  RendererWorker.set(mockRpc)
 
   await ExtensionHostManagement.activateByEvent('onDidChangeStatusBarItems')
 
-  expect(calledEvent).toBe('onDidChangeStatusBarItems')
+  expect(mockRpc.invocations.length).toBeGreaterThan(0)
+  expect(mockRpc.invocations.some((inv) => (inv.method === 'activateByEvent' || inv.method === 'ExtensionHostManagement.activateByEvent') && inv.args[0] === 'onDidChangeStatusBarItems')).toBe(true)
 })
 
 test('activateByEvent should be awaitable', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
+  const mockRpc = RendererWorker.registerMockRpc({
+    commandMap: {
+      'ExtensionHostManagement.activateByEvent': async () => {},
+    },
     invoke: (method: string, ...args: ReadonlyArray<any>) => {
       if (method === 'activateByEvent' || method === 'ExtensionHostManagement.activateByEvent') {
         return undefined
@@ -51,9 +52,8 @@ test('activateByEvent should be awaitable', async () => {
       throw new Error(`unexpected method ${method}`)
     },
   })
-  RendererWorker.set(mockRpc)
 
   await ExtensionHostManagement.activateByEvent('test.event')
 
-  expect(true).toBe(true)
+  expect(mockRpc.invocations.length).toBeGreaterThan(0)
 })

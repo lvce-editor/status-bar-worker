@@ -1,15 +1,15 @@
 import { expect, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as HandleClickProblems from '../src/parts/HandleClick/HandleClickProblems.ts'
 
 test('handleClickProblems should call Layout.showPanel', async () => {
-  let showPanelCalled = false
-  const mockRpc = MockRpc.create({
-    commandMap: {},
+  const mockRpc = RendererWorker.registerMockRpc({
+    commandMap: {
+      'Layout.showPanel': async () => {},
+      'Panel.selectIndex': async () => {},
+    },
     invoke: (method: string, ...args: ReadonlyArray<any>) => {
       if (method === 'Layout.showPanel') {
-        showPanelCalled = true
         return undefined
       }
       if (method === 'Panel.selectIndex') {
@@ -18,57 +18,56 @@ test('handleClickProblems should call Layout.showPanel', async () => {
       throw new Error(`unexpected method ${method}`)
     },
   })
-  RendererWorker.set(mockRpc)
 
   await HandleClickProblems.handleClickProblems()
 
-  expect(showPanelCalled).toBe(true)
+  expect(mockRpc.invocations.length).toBeGreaterThan(0)
+  expect(mockRpc.invocations.some((inv) => inv.method === 'Layout.showPanel')).toBe(true)
 })
 
 test('handleClickProblems should call Panel.selectIndex with 1', async () => {
-  let selectIndexCalled = false
-  let selectIndexArg: number | undefined
-  const mockRpc = MockRpc.create({
-    commandMap: {},
+  const mockRpc = RendererWorker.registerMockRpc({
+    commandMap: {
+      'Layout.showPanel': async () => {},
+      'Panel.selectIndex': async () => {},
+    },
     invoke: (method: string, ...args: ReadonlyArray<any>) => {
       if (method === 'Layout.showPanel') {
         return undefined
       }
       if (method === 'Panel.selectIndex') {
-        selectIndexCalled = true
-        selectIndexArg = args[0]
         return undefined
       }
       throw new Error(`unexpected method ${method}`)
     },
   })
-  RendererWorker.set(mockRpc)
 
   await HandleClickProblems.handleClickProblems()
 
-  expect(selectIndexCalled).toBe(true)
-  expect(selectIndexArg).toBe(1)
+  expect(mockRpc.invocations.length).toBeGreaterThan(0)
+  expect(mockRpc.invocations.some((inv) => inv.method === 'Panel.selectIndex' && inv.args[0] === 1)).toBe(true)
 })
 
 test('handleClickProblems should call Layout.showPanel and Panel.selectIndex in order', async () => {
-  const callOrder: string[] = []
-  const mockRpc = MockRpc.create({
-    commandMap: {},
+  const mockRpc = RendererWorker.registerMockRpc({
+    commandMap: {
+      'Layout.showPanel': async () => {},
+      'Panel.selectIndex': async () => {},
+    },
     invoke: (method: string, ...args: ReadonlyArray<any>) => {
       if (method === 'Layout.showPanel') {
-        callOrder.push('Layout.showPanel')
         return undefined
       }
       if (method === 'Panel.selectIndex') {
-        callOrder.push('Panel.selectIndex')
         return undefined
       }
       throw new Error(`unexpected method ${method}`)
     },
   })
-  RendererWorker.set(mockRpc)
 
   await HandleClickProblems.handleClickProblems()
 
-  expect(callOrder).toEqual(['Layout.showPanel', 'Panel.selectIndex'])
+  expect(mockRpc.invocations.length).toBeGreaterThan(0)
+  const methods = mockRpc.invocations.map((inv) => inv.method)
+  expect(methods).toEqual(['Layout.showPanel', 'Panel.selectIndex'])
 })

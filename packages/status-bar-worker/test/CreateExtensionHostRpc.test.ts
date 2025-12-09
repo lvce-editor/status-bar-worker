@@ -1,5 +1,5 @@
 import { expect, test, afterEach } from '@jest/globals'
-import { MockRpc, type Rpc } from '@lvce-editor/rpc'
+import { type Rpc } from '@lvce-editor/rpc'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as CreateExtensionHostRpc from '../src/parts/CreateExtensionHostRpc/CreateExtensionHostRpc.ts'
 
@@ -15,12 +15,12 @@ afterEach(() => {
 })
 
 test('createExtensionHostRpc should return an RPC instance', async () => {
-  let sendCalled = false
-  const mockRpc = MockRpc.create({
-    commandMap: {},
+  const mockRpc = RendererWorker.registerMockRpc({
+    commandMap: {
+      'SendMessagePortToExtensionHostWorker.sendMessagePortToExtensionHostWorker': async () => {},
+    },
     invoke: (method: string, ...args: ReadonlyArray<any>) => {
       if (method === 'sendMessagePortToExtensionHostWorker') {
-        sendCalled = true
         return undefined
       }
       throw new Error(`unexpected method ${method}`)
@@ -28,30 +28,26 @@ test('createExtensionHostRpc should return an RPC instance', async () => {
   })
   ;(mockRpc as any).invokeAndTransfer = async (method: string, ...args: ReadonlyArray<any>): Promise<any> => {
     if (method === 'sendMessagePortToExtensionHostWorker' || method === 'SendMessagePortToExtensionHostWorker.sendMessagePortToExtensionHostWorker') {
-      sendCalled = true
       return undefined
     }
     throw new Error(`unexpected method ${method}`)
   }
-  RendererWorker.set(mockRpc)
 
   const rpc = await CreateExtensionHostRpc.createExtensionHostRpc()
   rpcInstances.push(rpc)
 
   expect(rpc).toBeDefined()
   expect(typeof rpc).toBe('object')
-  expect(sendCalled).toBe(true)
+  expect(mockRpc.invocations.length).toBeGreaterThan(0)
 })
 
 test('createExtensionHostRpc should use sendMessagePortToExtensionHostWorker', async () => {
-  let sendCalled = false
-  let sendPort: any
-  const mockRpc = MockRpc.create({
-    commandMap: {},
+  const mockRpc = RendererWorker.registerMockRpc({
+    commandMap: {
+      'SendMessagePortToExtensionHostWorker.sendMessagePortToExtensionHostWorker': async () => {},
+    },
     invoke: (method: string, ...args: ReadonlyArray<any>) => {
       if (method === 'sendMessagePortToExtensionHostWorker') {
-        sendCalled = true
-        sendPort = args[0]
         return undefined
       }
       throw new Error(`unexpected method ${method}`)
@@ -59,25 +55,23 @@ test('createExtensionHostRpc should use sendMessagePortToExtensionHostWorker', a
   })
   ;(mockRpc as any).invokeAndTransfer = async (method: string, ...args: ReadonlyArray<any>): Promise<any> => {
     if (method === 'sendMessagePortToExtensionHostWorker' || method === 'SendMessagePortToExtensionHostWorker.sendMessagePortToExtensionHostWorker') {
-      sendCalled = true
-      sendPort = args[0]
       return undefined
     }
     throw new Error(`unexpected method ${method}`)
   }
-  RendererWorker.set(mockRpc)
 
   const rpc = await CreateExtensionHostRpc.createExtensionHostRpc()
   rpcInstances.push(rpc)
 
   expect(rpc).toBeDefined()
-  expect(sendCalled).toBe(true)
-  expect(sendPort).toBeDefined()
+  expect(mockRpc.invocations.length).toBeGreaterThan(0)
 })
 
 test('createExtensionHostRpc should handle errors and wrap in VError', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
+  const mockRpc = RendererWorker.registerMockRpc({
+    commandMap: {
+      'SendMessagePortToExtensionHostWorker.sendMessagePortToExtensionHostWorker': async () => {},
+    },
     invoke: (method: string, ...args: ReadonlyArray<any>) => {
       if (method === 'sendMessagePortToExtensionHostWorker') {
         throw new Error('send error')
@@ -91,14 +85,16 @@ test('createExtensionHostRpc should handle errors and wrap in VError', async () 
     }
     throw new Error(`unexpected method ${method}`)
   }
-  RendererWorker.set(mockRpc)
 
   await expect(CreateExtensionHostRpc.createExtensionHostRpc()).rejects.toThrow('Failed to create extension host rpc')
+  expect(mockRpc.invocations.length).toBeGreaterThan(0)
 })
 
 test('createExtensionHostRpc should be awaitable', async () => {
-  const mockRpc = MockRpc.create({
-    commandMap: {},
+  const mockRpc = RendererWorker.registerMockRpc({
+    commandMap: {
+      'SendMessagePortToExtensionHostWorker.sendMessagePortToExtensionHostWorker': async () => {},
+    },
     invoke: (method: string, ...args: ReadonlyArray<any>) => {
       if (method === 'sendMessagePortToExtensionHostWorker') {
         return undefined
@@ -112,10 +108,9 @@ test('createExtensionHostRpc should be awaitable', async () => {
     }
     throw new Error(`unexpected method ${method}`)
   }
-  RendererWorker.set(mockRpc)
 
   const rpc = await CreateExtensionHostRpc.createExtensionHostRpc()
   rpcInstances.push(rpc)
 
-  expect(true).toBe(true)
+  expect(mockRpc.invocations.length).toBeGreaterThan(0)
 })
