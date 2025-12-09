@@ -1,51 +1,43 @@
 import { expect, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
 import { ExtensionHost, RendererWorker } from '@lvce-editor/rpc-registry'
 import type { StatusBarState } from '../src/parts/StatusBarState/StatusBarState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
+import * as ExtensionHostActivationEvent from '../src/parts/ExtensionHostActivationEvent/ExtensionHostActivationEvent.ts'
 import * as ExtensionHostCommandType from '../src/parts/ExtensionHostCommandType/ExtensionHostCommandType.ts'
 import * as LoadContent from '../src/parts/LoadContent/LoadContent.ts'
 
 test('loadContent should load status bar items when preference is true', async () => {
-  const mockRendererRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      if (method === 'getPreference' || method === 'Preferences.get') {
-        const key = args[0]
-        if (key === 'statusBar.itemsVisible') {
-          return true
-        }
-        return undefined
+  const mockRendererRpc = RendererWorker.registerMockRpc({
+    'ExtensionHostManagement.activateByEvent': async () => {},
+    'Preferences.get': async (key: string) => {
+      if (key === 'statusBar.itemsVisible') {
+        return true
       }
-      if (method === 'activateByEvent' || method === 'ExtensionHostManagement.activateByEvent') {
-        return undefined
-      }
-      throw new Error(`unexpected method ${method}`)
+      return undefined
     },
   })
-  RendererWorker.set(mockRendererRpc)
 
-  const mockExtensionHostRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      if (method === ExtensionHostCommandType.GetStatusBarItems) {
-        return [
-          {
-            command: 'test.command',
-            icon: 'test-icon',
-            id: 'test.item',
-            text: 'Test Item',
-            tooltip: 'Test Tooltip',
-          },
-        ]
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+  const mockExtensionHostRpc = ExtensionHost.registerMockRpc({
+    [ExtensionHostCommandType.GetStatusBarItems]: async () => [
+      {
+        command: 'test.command',
+        icon: 'test-icon',
+        id: 'test.item',
+        text: 'Test Item',
+        tooltip: 'Test Tooltip',
+      },
+    ],
   })
-  ExtensionHost.set(mockExtensionHostRpc)
 
   const state: StatusBarState = { ...createDefaultState(), uid: 1 }
   const result = await LoadContent.loadContent(state)
+
+  expect(mockRendererRpc.invocations).toEqual([
+    ['Preferences.get', 'statusBar.itemsVisible'],
+    ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl],
+    ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem],
+  ])
+  expect(mockExtensionHostRpc.invocations).toEqual([[ExtensionHostCommandType.GetStatusBarItems]])
 
   expect(result.statusBarItemsLeft).toEqual([
     {
@@ -75,23 +67,19 @@ test('loadContent should load status bar items when preference is true', async (
 })
 
 test('loadContent should return empty array when preference is false', async () => {
-  const mockRendererRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      if (method === 'getPreference' || method === 'Preferences.get') {
-        const key = args[0]
-        if (key === 'statusBar.itemsVisible') {
-          return false
-        }
-        return undefined
+  const mockRendererRpc = RendererWorker.registerMockRpc({
+    'Preferences.get': async (key: string) => {
+      if (key === 'statusBar.itemsVisible') {
+        return false
       }
-      throw new Error(`unexpected method ${method}`)
+      return undefined
     },
   })
-  RendererWorker.set(mockRendererRpc)
 
   const state: StatusBarState = { ...createDefaultState(), uid: 2 }
   const result = await LoadContent.loadContent(state)
+
+  expect(mockRendererRpc.invocations).toEqual([['Preferences.get', 'statusBar.itemsVisible']])
 
   expect(result.statusBarItemsLeft).toEqual([])
   expect(result.uid).toBe(2)
@@ -99,33 +87,24 @@ test('loadContent should return empty array when preference is false', async () 
 })
 
 test('loadContent should return empty array when preference is undefined', async () => {
-  const mockRendererRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      if (method === 'getPreference' || method === 'Preferences.get') {
-        return undefined
-      }
-      if (method === 'activateByEvent' || method === 'ExtensionHostManagement.activateByEvent') {
-        return undefined
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+  const mockRendererRpc = RendererWorker.registerMockRpc({
+    'ExtensionHostManagement.activateByEvent': async () => {},
+    'Preferences.get': async () => undefined,
   })
-  RendererWorker.set(mockRendererRpc)
 
-  const mockExtensionHostRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      if (method === ExtensionHostCommandType.GetStatusBarItems) {
-        return []
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+  const mockExtensionHostRpc = ExtensionHost.registerMockRpc({
+    [ExtensionHostCommandType.GetStatusBarItems]: async () => [],
   })
-  ExtensionHost.set(mockExtensionHostRpc)
 
   const state: StatusBarState = { ...createDefaultState(), uid: 3 }
   const result = await LoadContent.loadContent(state)
+
+  expect(mockRendererRpc.invocations).toEqual([
+    ['Preferences.get', 'statusBar.itemsVisible'],
+    ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl],
+    ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem],
+  ])
+  expect(mockExtensionHostRpc.invocations).toEqual([[ExtensionHostCommandType.GetStatusBarItems]])
 
   expect(result.statusBarItemsLeft).toEqual([
     {
@@ -148,16 +127,9 @@ test('loadContent should return empty array when preference is undefined', async
 })
 
 test('loadContent should preserve existing state properties', async () => {
-  const mockRendererRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      if (method === 'getPreference' || method === 'Preferences.get') {
-        return false
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+  const mockRendererRpc = RendererWorker.registerMockRpc({
+    'Preferences.get': async () => false,
   })
-  RendererWorker.set(mockRendererRpc)
 
   const state: StatusBarState & { disposed?: boolean } = {
     ...createDefaultState(),
@@ -166,54 +138,47 @@ test('loadContent should preserve existing state properties', async () => {
   }
   const result = await LoadContent.loadContent(state)
 
+  expect(mockRendererRpc.invocations).toEqual([['Preferences.get', 'statusBar.itemsVisible']])
+
   expect(result.uid).toBe(4)
   expect(result.disposed).toBe(true)
   expect(result.statusBarItemsLeft).toEqual([])
 })
 
 test('loadContent should handle multiple status bar items', async () => {
-  const mockRendererRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      if (method === 'getPreference' || method === 'Preferences.get') {
-        return true
-      }
-      if (method === 'activateByEvent' || method === 'ExtensionHostManagement.activateByEvent') {
-        return undefined
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+  const mockRendererRpc = RendererWorker.registerMockRpc({
+    'ExtensionHostManagement.activateByEvent': async () => {},
+    'Preferences.get': async () => true,
   })
-  RendererWorker.set(mockRendererRpc)
 
-  const mockExtensionHostRpc = MockRpc.create({
-    commandMap: {},
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      if (method === ExtensionHostCommandType.GetStatusBarItems) {
-        return [
-          {
-            command: 'command1',
-            icon: 'icon1',
-            id: 'item1',
-            text: 'Item 1',
-            tooltip: 'Tooltip 1',
-          },
-          {
-            command: 'command2',
-            icon: 'icon2',
-            id: 'item2',
-            text: 'Item 2',
-            tooltip: 'Tooltip 2',
-          },
-        ]
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+  const mockExtensionHostRpc = ExtensionHost.registerMockRpc({
+    [ExtensionHostCommandType.GetStatusBarItems]: async () => [
+      {
+        command: 'command1',
+        icon: 'icon1',
+        id: 'item1',
+        text: 'Item 1',
+        tooltip: 'Tooltip 1',
+      },
+      {
+        command: 'command2',
+        icon: 'icon2',
+        id: 'item2',
+        text: 'Item 2',
+        tooltip: 'Tooltip 2',
+      },
+    ],
   })
-  ExtensionHost.set(mockExtensionHostRpc)
 
   const state: StatusBarState = { ...createDefaultState(), uid: 5 }
   const result = await LoadContent.loadContent(state)
+
+  expect(mockRendererRpc.invocations).toEqual([
+    ['Preferences.get', 'statusBar.itemsVisible'],
+    ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl],
+    ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem],
+  ])
+  expect(mockExtensionHostRpc.invocations).toEqual([[ExtensionHostCommandType.GetStatusBarItems]])
 
   expect(result.statusBarItemsLeft).toEqual([
     {

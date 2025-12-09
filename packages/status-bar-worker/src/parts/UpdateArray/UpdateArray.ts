@@ -1,13 +1,5 @@
 import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
-
-const getIndex = (items: readonly StatusBarItem[], item: Readonly<StatusBarItem>): number => {
-  for (let i = 0; i < items.length; i++) {
-    if (items[i].name === item.name) {
-      return i
-    }
-  }
-  return -1
-}
+import { getIndex } from '../GetIndex/GetIndex.ts'
 
 export const updateArray = (items: readonly StatusBarItem[], newItem: Readonly<StatusBarItem>): StatusBarItem[] => {
   const index = getIndex(items, newItem)

@@ -1,12 +1,23 @@
-import { beforeEach, expect, jest, test } from '@jest/globals'
+import { expect, test, afterEach } from '@jest/globals'
+import { ExtensionHost, RendererWorker } from '@lvce-editor/rpc-registry'
+import * as Initialize from '../src/parts/Initialize/Initialize.ts'
 
-const Initialize = await import('../src/parts/Initialize/Initialize.ts')
-
-beforeEach(() => {
-  jest.resetAllMocks()
+afterEach(() => {
+  ExtensionHost.registerMockRpc({})
 })
 
-test.skip('initialize should call both initialization functions', async () => {
+test('initialize should create extension host rpc and set it', async () => {
+  const mockRendererRpc = RendererWorker.registerMockRpc({
+    'SendMessagePortToExtensionHostWorker.sendMessagePortToExtensionHostWorker': async () => {},
+  })
+  ;(mockRendererRpc as any).invokeAndTransfer = async (method: string, ...args: ReadonlyArray<any>): Promise<any> => {
+    if (method === 'sendMessagePortToExtensionHostWorker' || method === 'SendMessagePortToExtensionHostWorker.sendMessagePortToExtensionHostWorker') {
+      return undefined
+    }
+    throw new Error(`unexpected method ${method}`)
+  }
+
   await Initialize.initialize()
-  expect(true).toBe(true)
+
+  expect(mockRendererRpc.invocations).toEqual([])
 })
