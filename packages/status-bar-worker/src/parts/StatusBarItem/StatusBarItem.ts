@@ -5,3 +5,4 @@ export type StatusBarItem = {
   readonly text: string
   readonly tooltip: string
 }
+

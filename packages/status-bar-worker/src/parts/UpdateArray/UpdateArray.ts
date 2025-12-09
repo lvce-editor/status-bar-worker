@@ -15,3 +15,4 @@ export const updateArray = (items: readonly StatusBarItem[], newItem: Readonly<S
   const after = items.slice(index + 1)
   return [...before, newItem, ...after]
 }
+
