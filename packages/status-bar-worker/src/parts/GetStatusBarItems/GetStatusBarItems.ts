@@ -35,6 +35,13 @@ export const getStatusBarItems = async (showItems: boolean): Promise<UiStatusBar
       text: 'Notifications',
       tooltip: '',
     },
+    {
+      command: '',
+      icon: '',
+      name: InputName.Problems,
+      text: 'Problems',
+      tooltip: '',
+    },
   ]
   return [...uiStatusBarItems, ...extraItems]
 }

@@ -57,6 +57,13 @@ test('getStatusBarItems should return transformed items when showItems is true',
       text: 'Notifications',
       tooltip: '',
     },
+    {
+      command: '',
+      icon: '',
+      name: 'Problems',
+      text: 'Problems',
+      tooltip: '',
+    },
   ])
 })
 
@@ -91,6 +98,13 @@ test('getStatusBarItems should return empty array when no items are returned', a
       icon: '',
       name: 'Notifications',
       text: 'Notifications',
+      tooltip: '',
+    },
+    {
+      command: '',
+      icon: '',
+      name: 'Problems',
+      text: 'Problems',
       tooltip: '',
     },
   ])
@@ -129,6 +143,13 @@ test('getStatusBarItems should handle null items', async () => {
       text: 'Notifications',
       tooltip: '',
     },
+    {
+      command: '',
+      icon: '',
+      name: 'Problems',
+      text: 'Problems',
+      tooltip: '',
+    },
   ])
 })
 
@@ -163,6 +184,13 @@ test('getStatusBarItems should handle undefined items', async () => {
       icon: '',
       name: 'Notifications',
       text: 'Notifications',
+      tooltip: '',
+    },
+    {
+      command: '',
+      icon: '',
+      name: 'Problems',
+      text: 'Problems',
       tooltip: '',
     },
   ])
@@ -220,6 +248,13 @@ test('getStatusBarItems should default missing fields to empty strings', async (
       icon: '',
       name: 'Notifications',
       text: 'Notifications',
+      tooltip: '',
+    },
+    {
+      command: '',
+      icon: '',
+      name: 'Problems',
+      text: 'Problems',
       tooltip: '',
     },
   ])
@@ -285,6 +320,13 @@ test('getStatusBarItems should handle multiple items', async () => {
       icon: '',
       name: 'Notifications',
       text: 'Notifications',
+      tooltip: '',
+    },
+    {
+      command: '',
+      icon: '',
+      name: 'Problems',
+      text: 'Problems',
       tooltip: '',
     },
   ])

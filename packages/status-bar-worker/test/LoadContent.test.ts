@@ -62,6 +62,13 @@ test('loadContent should load status bar items when preference is true', async (
       text: 'Notifications',
       tooltip: '',
     },
+    {
+      command: '',
+      icon: '',
+      name: 'Problems',
+      text: 'Problems',
+      tooltip: '',
+    },
   ])
   expect(result.uid).toBe(1)
   expect(result.statusBarItemsRight).toEqual([])
@@ -126,6 +133,13 @@ test('loadContent should return empty array when preference is undefined', async
       icon: '',
       name: 'Notifications',
       text: 'Notifications',
+      tooltip: '',
+    },
+    {
+      command: '',
+      icon: '',
+      name: 'Problems',
+      text: 'Problems',
       tooltip: '',
     },
   ])
@@ -221,6 +235,13 @@ test('loadContent should handle multiple status bar items', async () => {
       icon: '',
       name: 'Notifications',
       text: 'Notifications',
+      tooltip: '',
+    },
+    {
+      command: '',
+      icon: '',
+      name: 'Problems',
+      text: 'Problems',
       tooltip: '',
     },
   ])
