@@ -4,5 +4,5 @@ export const handleClickProblems = async (): Promise<void> => {
   // @ts-ignore
   await RendererWorker.invoke('Layout.showPanel')
   // @ts-ignore
-  await RendererWorker.invoke('Panel.selectIndex', 0)
+  await RendererWorker.invoke('Panel.selectIndex', 1)
 }
