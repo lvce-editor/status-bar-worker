@@ -1,8 +1,8 @@
 import type { StatusBarState } from '../StatusBarState/StatusBarState.ts'
-import * as InputName from '../InputName/InputName.ts'
 import { getMatchingItem } from '../GetMatchingItem/GetMatchingItem.ts'
 import { handleClickNotification } from '../HandleClickNotification/HandleClickNotification.ts'
 import { handleClickProblems } from '../HandleClickProblems/HandleClickProblems.ts'
+import * as InputName from '../InputName/InputName.ts'
 
 export const handleClick = async (state: StatusBarState, name: string): Promise<StatusBarState> => {
   if (!name) {

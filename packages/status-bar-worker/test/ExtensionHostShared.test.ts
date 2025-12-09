@@ -106,10 +106,7 @@ test('execute should invoke method with params', async () => {
 
 test('execute should handle empty params', async () => {
   const mockExtensionHostRpc = ExtensionHost.registerMockRpc({
-    commandMap: {},
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      return undefined
-    },
+    'test.method': async () => undefined,
   })
 
   await ExtensionHostShared.execute({
@@ -117,6 +114,10 @@ test('execute should handle empty params', async () => {
     params: [],
   })
 
-  expect(mockExtensionHostRpc.invocations.length).toBeGreaterThan(0)
-  expect(mockExtensionHostRpc.invocations.some((inv) => inv.method === 'test.method' && inv.args.length === 0)).toBe(true)
+  expect(mockExtensionHostRpc.invocations).toEqual([
+    {
+      method: 'test.method',
+      args: [],
+    },
+  ])
 })
