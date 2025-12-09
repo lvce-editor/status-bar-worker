@@ -1,5 +1,6 @@
 import type { StatusBarState } from '../StatusBarState/StatusBarState.ts'
 import { getMatchingItem } from '../GetMatchingItem/GetMatchingItem.ts'
+import { handleClickExtensionStatusBarItem } from '../HandleClickExtensionStatusBarItem/HandleClickExtensionStatusBarItem.ts'
 import { handleClickNotification } from '../HandleClickNotification/HandleClickNotification.ts'
 import { handleClickProblems } from '../HandleClickProblems/HandleClickProblems.ts'
 import * as InputName from '../InputName/InputName.ts'
@@ -16,9 +17,10 @@ export const handleClick = async (state: StatusBarState, name: string): Promise<
   }
   if (item.name === InputName.Notifications) {
     await handleClickNotification()
-  }
-  if (item.name === InputName.Problems) {
+  } else if (item.name === InputName.Problems) {
     await handleClickProblems()
+  } else {
+    await handleClickExtensionStatusBarItem(name)
   }
   // TODO
   // sendExtensionWorker([/* statusBarItemHandleClick */ 7657, /* name */ name])
