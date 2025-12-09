@@ -290,30 +290,25 @@ test('diff2 should work with different uids independently', () => {
     text: 'Test 1',
     tooltip: 'Test tooltip 1',
   }
-  const item2: StatusBarItem = {
-    name: 'test2',
-    text: 'Test 2',
-    tooltip: 'Test tooltip 2',
-  }
-  const oldState1 = {
+  const oldState1: StatusBarState = {
     ...createDefaultState(),
     statusBarItemsLeft: [],
     statusBarItemsRight: [],
     uid: uid1,
   }
-  const newState1 = {
+  const newState1: StatusBarState = {
     ...createDefaultState(),
     statusBarItemsLeft: [item1],
     statusBarItemsRight: [],
     uid: uid1,
   }
-  const oldState2 = {
+  const oldState2: StatusBarState = {
     ...createDefaultState(),
     statusBarItemsLeft: [],
     statusBarItemsRight: [],
     uid: uid2,
   }
-  const newState2 = {
+  const newState2: StatusBarState = {
     ...createDefaultState(),
     statusBarItemsLeft: [],
     statusBarItemsRight: [],
