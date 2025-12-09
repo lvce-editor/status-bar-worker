@@ -50,6 +50,13 @@ test('getStatusBarItems should return transformed items when showItems is true',
       text: 'Test Item',
       tooltip: 'Test Tooltip',
     },
+    {
+      command: '',
+      icon: '',
+      name: 'Notifications',
+      text: 'Notifications',
+      tooltip: '',
+    },
   ])
 })
 
@@ -78,7 +85,15 @@ test('getStatusBarItems should return empty array when no items are returned', a
 
   const result = await GetStatusBarItems.getStatusBarItems(true)
 
-  expect(result).toEqual([])
+  expect(result).toEqual([
+    {
+      command: '',
+      icon: '',
+      name: 'Notifications',
+      text: 'Notifications',
+      tooltip: '',
+    },
+  ])
 })
 
 test('getStatusBarItems should handle null items', async () => {
@@ -106,7 +121,15 @@ test('getStatusBarItems should handle null items', async () => {
 
   const result = await GetStatusBarItems.getStatusBarItems(true)
 
-  expect(result).toEqual([])
+  expect(result).toEqual([
+    {
+      command: '',
+      icon: '',
+      name: 'Notifications',
+      text: 'Notifications',
+      tooltip: '',
+    },
+  ])
 })
 
 test('getStatusBarItems should handle undefined items', async () => {
@@ -134,7 +157,15 @@ test('getStatusBarItems should handle undefined items', async () => {
 
   const result = await GetStatusBarItems.getStatusBarItems(true)
 
-  expect(result).toEqual([])
+  expect(result).toEqual([
+    {
+      command: '',
+      icon: '',
+      name: 'Notifications',
+      text: 'Notifications',
+      tooltip: '',
+    },
+  ])
 })
 
 test('getStatusBarItems should default missing fields to empty strings', async () => {
@@ -182,6 +213,13 @@ test('getStatusBarItems should default missing fields to empty strings', async (
       icon: '',
       name: '',
       text: 'Item 2',
+      tooltip: '',
+    },
+    {
+      command: '',
+      icon: '',
+      name: 'Notifications',
+      text: 'Notifications',
       tooltip: '',
     },
   ])
@@ -241,6 +279,13 @@ test('getStatusBarItems should handle multiple items', async () => {
       name: 'item2',
       text: 'Item 2',
       tooltip: 'Tooltip 2',
+    },
+    {
+      command: '',
+      icon: '',
+      name: 'Notifications',
+      text: 'Notifications',
+      tooltip: '',
     },
   ])
 })

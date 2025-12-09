@@ -26,5 +26,14 @@ export const getStatusBarItems = async (showItems: boolean): Promise<UiStatusBar
   await ExtensionHostManagement.activateByEvent('onSourceControl')
   const extensionStatusBarItems = await ExtensionHostStatusBarItems.getStatusBarItems()
   const uiStatusBarItems = toUiStatusBarItems(extensionStatusBarItems)
-  return uiStatusBarItems
+  const extraItems: readonly UiStatusBarItem[] = [
+    {
+      command: '',
+      icon: '',
+      name: 'Notifications',
+      text: 'Notifications',
+      tooltip: '',
+    },
+  ]
+  return [...uiStatusBarItems, ...extraItems]
 }

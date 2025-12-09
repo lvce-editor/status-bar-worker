@@ -4,6 +4,9 @@ import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
 import * as GetStatusBarItemVirtualDom from '../GetStatusBarItemVirtualDom/GetStatusBarItemVirtualDom.ts'
 
 export const getStatusBarItemsVirtualDom = (items: readonly StatusBarItem[], className: string): readonly VirtualDomNode[] => {
+  if (items.length === 0) {
+    return []
+  }
   return [
     {
       childCount: items.length,

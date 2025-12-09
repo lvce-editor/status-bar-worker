@@ -1,7 +1,18 @@
-import { expect, test } from '@jest/globals'
-import { MockRpc } from '@lvce-editor/rpc'
+import { expect, test, afterEach } from '@jest/globals'
+import { MockRpc, type Rpc } from '@lvce-editor/rpc'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as CreateExtensionHostRpc from '../src/parts/CreateExtensionHostRpc/CreateExtensionHostRpc.ts'
+
+const rpcInstances: Rpc[] = []
+
+afterEach(() => {
+  for (const rpc of rpcInstances) {
+    if (rpc && typeof (rpc as any).dispose === 'function') {
+      ;(rpc as any).dispose()
+    }
+  }
+  rpcInstances.length = 0
+})
 
 test('createExtensionHostRpc should return an RPC instance', async () => {
   let sendCalled = false
@@ -25,6 +36,7 @@ test('createExtensionHostRpc should return an RPC instance', async () => {
   RendererWorker.set(mockRpc)
 
   const rpc = await CreateExtensionHostRpc.createExtensionHostRpc()
+  rpcInstances.push(rpc)
 
   expect(rpc).toBeDefined()
   expect(typeof rpc).toBe('object')
@@ -56,6 +68,7 @@ test('createExtensionHostRpc should use sendMessagePortToExtensionHostWorker', a
   RendererWorker.set(mockRpc)
 
   const rpc = await CreateExtensionHostRpc.createExtensionHostRpc()
+  rpcInstances.push(rpc)
 
   expect(rpc).toBeDefined()
   expect(sendCalled).toBe(true)
@@ -101,7 +114,8 @@ test('createExtensionHostRpc should be awaitable', async () => {
   }
   RendererWorker.set(mockRpc)
 
-  await CreateExtensionHostRpc.createExtensionHostRpc()
+  const rpc = await CreateExtensionHostRpc.createExtensionHostRpc()
+  rpcInstances.push(rpc)
 
   expect(true).toBe(true)
 })
