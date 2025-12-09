@@ -18,4 +18,3 @@ export const getStatusBarItemVirtualDom = (statusBarItem: StatusBarItem): readon
     text(statusBarItem.text),
   ]
 }
-

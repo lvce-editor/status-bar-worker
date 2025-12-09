@@ -155,4 +155,3 @@ test('diff should ignore uid when comparing', () => {
   const result = Diff.diff(oldState, newState)
   expect(result).toEqual([])
 })
-

@@ -8,4 +8,3 @@ export const getIndex = (items: readonly StatusBarItem[], item: Readonly<StatusB
   }
   return -1
 }
-

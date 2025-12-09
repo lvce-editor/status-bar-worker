@@ -40,4 +40,3 @@ export const TextDocumentSyncIncremental = 'ExtensionHostTextDocument.syncIncrem
 export const TextSearchExecuteTextSearchProvider = 'ExtensionHostTextSearch.executeTextSearchProvider'
 export const TypeDefinitionExecuteTypeDefinitionProvider = 'ExtensionHostTypeDefinition.executeTypeDefinitionProvider'
 export const WorkspaceSetPath = 'Workspace.setWorkspacePath'
-
