@@ -7,9 +7,9 @@ test('create should store state with the given uid', () => {
   const uid = 123
   Create.create(uid)
   const result = StatusBarStates.get(uid)
-  const {newState} = result
+  const { newState } = result
   const newStateTyped: StatusBarState = newState
-  const {oldState} = result
+  const { oldState } = result
   const oldStateTyped: StatusBarState = oldState
   expect(newStateTyped).toBeDefined()
   expect(newStateTyped.uid).toBe(uid)
@@ -23,7 +23,7 @@ test('create should store state with empty arrays', () => {
   const uid = 456
   Create.create(uid)
   const result = StatusBarStates.get(uid)
-  const {newState} = result
+  const { newState } = result
   const newStateTyped: StatusBarState = newState
   expect(newStateTyped).toBeDefined()
   expect(newStateTyped.statusBarItemsLeft).toEqual([])

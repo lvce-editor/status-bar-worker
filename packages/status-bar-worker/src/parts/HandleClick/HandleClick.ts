@@ -9,4 +9,3 @@ export const handleClick = (state: Readonly<State>, name: string): State => {
   // sendExtensionWorker([/* statusBarItemHandleClick */ 7657, /* name */ name])
   return state
 }
-

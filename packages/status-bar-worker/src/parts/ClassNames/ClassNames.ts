@@ -240,4 +240,3 @@ export const Viewlet: string = 'Viewlet'
 export const ViewletSearchMessage: string = 'ViewletSearchMessage'
 export const Welcome: string = 'Welcome'
 export const WelcomeMessage: string = 'WelcomeMessage'
-

@@ -5,4 +5,3 @@ export interface UiStatusBarItem {
   readonly text: string
   readonly tooltip: string
 }
-

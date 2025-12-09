@@ -9,4 +9,3 @@ export const updateStatusBarItems = async (state: Readonly<State>): Promise<Stat
   const newState = await LoadContent.loadContent(state)
   return newState
 }
-
