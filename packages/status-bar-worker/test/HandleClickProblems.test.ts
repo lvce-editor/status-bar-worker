@@ -4,19 +4,8 @@ import * as HandleClickProblems from '../src/parts/HandleClick/HandleClickProble
 
 test('handleClickProblems should call Layout.showPanel', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
-    commandMap: {
-      'Layout.showPanel': async () => {},
-      'Panel.selectIndex': async () => {},
-    },
-    invoke: (method: string, ...args: ReadonlyArray<any>) => {
-      if (method === 'Layout.showPanel') {
-        return undefined
-      }
-      if (method === 'Panel.selectIndex') {
-        return undefined
-      }
-      throw new Error(`unexpected method ${method}`)
-    },
+    'Layout.showPanel': async () => {},
+    'Panel.selectIndex': async () => {},
   })
 
   await HandleClickProblems.handleClickProblems()
