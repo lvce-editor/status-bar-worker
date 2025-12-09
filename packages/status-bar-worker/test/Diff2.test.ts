@@ -2,8 +2,8 @@ import { expect, test } from '@jest/globals'
 import type { StatusBarItem } from '../src/parts/StatusBarItem/StatusBarItem.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as Diff2 from '../src/parts/Diff2/Diff2.ts'
-import * as StatusBarStates from '../src/parts/StatusBarStates/StatusBarStates.ts'
 import * as DiffType from '../src/parts/DiffType/DiffType.ts'
+import * as StatusBarStates from '../src/parts/StatusBarStates/StatusBarStates.ts'
 
 test('diff2 should return empty array when states are equal', () => {
   const uid = 1
@@ -290,32 +290,26 @@ test('diff2 should work with different uids independently', () => {
     text: 'Test 1',
     tooltip: 'Test tooltip 1',
   }
-  const oldState1: StatusBarState = {
+  const state1 = {
     ...createDefaultState(),
     statusBarItemsLeft: [],
     statusBarItemsRight: [],
     uid: uid1,
   }
-  const newState1: StatusBarState = {
+  const state2 = {
     ...createDefaultState(),
     statusBarItemsLeft: [item1],
     statusBarItemsRight: [],
     uid: uid1,
   }
-  const oldState2: StatusBarState = {
+  const state3 = {
     ...createDefaultState(),
     statusBarItemsLeft: [],
     statusBarItemsRight: [],
     uid: uid2,
   }
-  const newState2: StatusBarState = {
-    ...createDefaultState(),
-    statusBarItemsLeft: [],
-    statusBarItemsRight: [],
-    uid: uid2,
-  }
-  StatusBarStates.set(uid1, oldState1, newState1)
-  StatusBarStates.set(uid2, oldState2, newState2)
+  StatusBarStates.set(uid1, state1, state2)
+  StatusBarStates.set(uid2, state3, state3)
   const result1 = Diff2.diff2(uid1)
   const result2 = Diff2.diff2(uid2)
   expect(result1).toEqual([DiffType.RenderItems])
