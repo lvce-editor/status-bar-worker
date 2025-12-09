@@ -1,6 +1,7 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
+import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as GetStatusBarItemsVirtualDom from '../GetStatusBarItemsVirtualDom/GetStatusBarItemsVirtualDom.ts'
 
 const getChildCount = (leftCount: number, rightCount: number): number => {
@@ -22,6 +23,7 @@ export const getStatusBarVirtualDom = (
     {
       childCount: getChildCount(statusBarItemsLeft.length, statusBarItemsRight.length),
       className: 'StatusBar',
+      onClick: DomEventListenerFunctions.HandleClick,
       type: VirtualDomElements.Div,
     },
     ...GetStatusBarItemsVirtualDom.getStatusBarItemsVirtualDom(statusBarItemsLeft, ClassNames.StatusBarItemsLeft),
