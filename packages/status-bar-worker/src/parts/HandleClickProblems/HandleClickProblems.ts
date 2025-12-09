@@ -6,3 +6,4 @@ export const handleClickProblems = async (): Promise<void> => {
   // @ts-ignore
   await RendererWorker.invoke('Panel.toggleView', 'Problems')
 }
+

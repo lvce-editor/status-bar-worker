@@ -17,3 +17,4 @@ export const contentLoadedEffects = (state: Readonly<State>): void => {
   // maybe return cleanup function from here like react hooks
   void ExtensionHostStatusBarItems.onChange(handleChange)
 }
+

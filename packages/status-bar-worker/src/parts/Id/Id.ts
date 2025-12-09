@@ -4,3 +4,4 @@ export const create = (): number => {
   idCounter++
   return idCounter
 }
+
