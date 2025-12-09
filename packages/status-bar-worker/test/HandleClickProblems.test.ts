@@ -72,4 +72,3 @@ test('handleClickProblems should call Layout.showPanel and Panel.selectIndex in 
 
   expect(callOrder).toEqual(['Layout.showPanel', 'Panel.selectIndex'])
 })
-
