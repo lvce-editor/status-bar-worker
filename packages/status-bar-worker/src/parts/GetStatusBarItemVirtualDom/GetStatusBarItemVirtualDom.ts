@@ -4,11 +4,12 @@ import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
 
 export const getStatusBarItemVirtualDom = (statusBarItem: StatusBarItem): readonly VirtualDomNode[] => {
-  const { tooltip } = statusBarItem
+  const { name, tooltip } = statusBarItem
   return [
     {
       childCount: 1,
       className: ClassNames.StatusBarItem,
+      name,
       role: AriaRoles.Button,
       tabIndex: -1,
       title: tooltip,
