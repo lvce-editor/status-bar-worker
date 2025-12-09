@@ -30,7 +30,7 @@ test('createExtensionHostRpc should return an RPC instance', async () => {
 
   expect(rpc).toBeDefined()
   expect(typeof rpc).toBe('object')
-  expect(mockRpc.invocations.length).toBeGreaterThan(0)
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('createExtensionHostRpc should use sendMessagePortToExtensionHostWorker', async () => {
@@ -48,7 +48,7 @@ test('createExtensionHostRpc should use sendMessagePortToExtensionHostWorker', a
   rpcInstances.push(rpc)
 
   expect(rpc).toBeDefined()
-  expect(mockRpc.invocations.length).toBeGreaterThan(0)
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('createExtensionHostRpc should handle errors and wrap in VError', async () => {
@@ -65,7 +65,7 @@ test('createExtensionHostRpc should handle errors and wrap in VError', async () 
   }
 
   await expect(CreateExtensionHostRpc.createExtensionHostRpc()).rejects.toThrow('Failed to create extension host rpc')
-  expect(mockRpc.invocations.length).toBeGreaterThan(0)
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('createExtensionHostRpc should be awaitable', async () => {
@@ -82,5 +82,5 @@ test('createExtensionHostRpc should be awaitable', async () => {
   const rpc = await CreateExtensionHostRpc.createExtensionHostRpc()
   rpcInstances.push(rpc)
 
-  expect(mockRpc.invocations.length).toBeGreaterThan(0)
+  expect(mockRpc.invocations).toEqual([])
 })

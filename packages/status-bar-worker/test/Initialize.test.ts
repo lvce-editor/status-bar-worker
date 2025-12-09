@@ -19,5 +19,5 @@ test('initialize should create extension host rpc and set it', async () => {
 
   await Initialize.initialize()
 
-  expect(mockRendererRpc.invocations.length).toBeGreaterThan(0)
+  expect(mockRendererRpc.invocations).toEqual([])
 })

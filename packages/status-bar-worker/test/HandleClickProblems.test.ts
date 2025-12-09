@@ -10,16 +10,7 @@ test('handleClickProblems should call Layout.showPanel', async () => {
 
   await HandleClickProblems.handleClickProblems()
 
-  expect(mockRpc.invocations).toEqual([
-    {
-      method: 'Layout.showPanel',
-      args: [],
-    },
-    {
-      method: 'Panel.selectIndex',
-      args: [1],
-    },
-  ])
+  expect(mockRpc.invocations).toEqual([['Layout.showPanel'], ['Panel.selectIndex', 1]])
 })
 
 test('handleClickProblems should call Panel.selectIndex with 1', async () => {
@@ -30,16 +21,7 @@ test('handleClickProblems should call Panel.selectIndex with 1', async () => {
 
   await HandleClickProblems.handleClickProblems()
 
-  expect(mockRpc.invocations).toEqual([
-    {
-      method: 'Layout.showPanel',
-      args: [],
-    },
-    {
-      method: 'Panel.selectIndex',
-      args: [1],
-    },
-  ])
+  expect(mockRpc.invocations).toEqual([['Layout.showPanel'], ['Panel.selectIndex', 1]])
 })
 
 test('handleClickProblems should call Layout.showPanel and Panel.selectIndex in order', async () => {
@@ -50,14 +32,5 @@ test('handleClickProblems should call Layout.showPanel and Panel.selectIndex in 
 
   await HandleClickProblems.handleClickProblems()
 
-  expect(mockRpc.invocations).toEqual([
-    {
-      method: 'Layout.showPanel',
-      args: [],
-    },
-    {
-      method: 'Panel.selectIndex',
-      args: [1],
-    },
-  ])
+  expect(mockRpc.invocations).toEqual([['Layout.showPanel'], ['Panel.selectIndex', 1]])
 })

@@ -24,10 +24,8 @@ test('executeProviders should activate by event and invoke method with params', 
     params: ['param1', 'param2'],
   })
 
-  expect(mockRendererRpc.invocations.length).toBeGreaterThan(0)
-  expect(mockRendererRpc.invocations.some((inv) => (inv.method === 'activateByEvent' || inv.method.endsWith('.activateByEvent')) && inv.args[0] === 'test.event')).toBe(true)
-  expect(mockExtensionHostRpc.invocations.length).toBeGreaterThan(0)
-  expect(mockExtensionHostRpc.invocations.some((inv) => inv.method === 'test.method' && inv.args[0] === 'param1' && inv.args[1] === 'param2')).toBe(true)
+  expect(mockRendererRpc.invocations).toEqual([['ExtensionHostManagement.activateByEvent', 'test.event']])
+  expect(mockExtensionHostRpc.invocations).toEqual([['test.method', 'param1', 'param2']])
   expect(result).toBe('test-result')
 })
 
@@ -48,18 +46,8 @@ test('executeProviders should use default noProviderFoundMessage', async () => {
     params: [],
   })
 
-  expect(mockRendererRpc.invocations).toEqual([
-    {
-      method: 'ExtensionHostManagement.activateByEvent',
-      args: ['test.event'],
-    },
-  ])
-  expect(mockExtensionHostRpc.invocations).toEqual([
-    {
-      method: 'test.method',
-      args: [],
-    },
-  ])
+  expect(mockRendererRpc.invocations).toEqual([['ExtensionHostManagement.activateByEvent', 'test.event']])
+  expect(mockExtensionHostRpc.invocations).toEqual([['test.method']])
   expect(result).toBe('result')
 })
 
@@ -79,10 +67,8 @@ test('executeProvider should activate by event and invoke method with params', a
     params: ['param1', 'param2'],
   })
 
-  expect(mockRendererRpc.invocations.length).toBeGreaterThan(0)
-  expect(mockRendererRpc.invocations.some((inv) => (inv.method === 'activateByEvent' || inv.method.endsWith('.activateByEvent')) && inv.args[0] === 'test.event')).toBe(true)
-  expect(mockExtensionHostRpc.invocations.length).toBeGreaterThan(0)
-  expect(mockExtensionHostRpc.invocations.some((inv) => inv.method === 'test.method' && inv.args[0] === 'param1' && inv.args[1] === 'param2')).toBe(true)
+  expect(mockRendererRpc.invocations).toEqual([['ExtensionHostManagement.activateByEvent', 'test.event']])
+  expect(mockExtensionHostRpc.invocations).toEqual([['test.method', 'param1', 'param2']])
   expect(result).toBe('test-result')
 })
 
@@ -96,12 +82,7 @@ test('execute should invoke method with params', async () => {
     params: ['param1', 'param2'],
   })
 
-  expect(mockExtensionHostRpc.invocations).toEqual([
-    {
-      method: 'test.method',
-      args: ['param1', 'param2'],
-    },
-  ])
+  expect(mockExtensionHostRpc.invocations).toEqual([['test.method', 'param1', 'param2']])
 })
 
 test('execute should handle empty params', async () => {
@@ -114,10 +95,5 @@ test('execute should handle empty params', async () => {
     params: [],
   })
 
-  expect(mockExtensionHostRpc.invocations).toEqual([
-    {
-      method: 'test.method',
-      args: [],
-    },
-  ])
+  expect(mockExtensionHostRpc.invocations).toEqual([['test.method']])
 })

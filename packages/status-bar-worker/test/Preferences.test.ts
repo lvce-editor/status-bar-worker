@@ -13,12 +13,7 @@ test('get should return preference value', async () => {
   })
   const value = await Preferences.get('test.key')
   expect(value).toBe('test.value')
-  expect(mockRpc.invocations).toEqual([
-    {
-      method: 'Preferences.get',
-      args: ['test.key'],
-    },
-  ])
+  expect(mockRpc.invocations).toEqual([['Preferences.get', 'test.key']])
 })
 
 test('get should return undefined for non-existent key', async () => {
@@ -27,12 +22,7 @@ test('get should return undefined for non-existent key', async () => {
   })
   const value = await Preferences.get('non.existent.key')
   expect(value).toBeUndefined()
-  expect(mockRpc.invocations).toEqual([
-    {
-      method: 'Preferences.get',
-      args: ['non.existent.key'],
-    },
-  ])
+  expect(mockRpc.invocations).toEqual([['Preferences.get', 'non.existent.key']])
 })
 
 test('get should handle different preference types', async () => {
@@ -57,17 +47,8 @@ test('get should handle different preference types', async () => {
   const objectValue = await Preferences.get('object.key')
   expect(objectValue).toEqual({ nested: 'value' })
   expect(mockRpc.invocations).toEqual([
-    {
-      method: 'Preferences.get',
-      args: ['number.key'],
-    },
-    {
-      method: 'Preferences.get',
-      args: ['boolean.key'],
-    },
-    {
-      method: 'Preferences.get',
-      args: ['object.key'],
-    },
+    ['Preferences.get', 'number.key'],
+    ['Preferences.get', 'boolean.key'],
+    ['Preferences.get', 'object.key'],
   ])
 })

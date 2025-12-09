@@ -13,12 +13,7 @@ test('itemsVisible should return true when preference is true', async () => {
   })
   const value = await StatusBarPreferences.itemsVisible()
   expect(value).toBe(true)
-  expect(mockRpc.invocations).toEqual([
-    {
-      method: 'Preferences.get',
-      args: ['statusBar.itemsVisible'],
-    },
-  ])
+  expect(mockRpc.invocations).toEqual([['Preferences.get', 'statusBar.itemsVisible']])
 })
 
 test('itemsVisible should return false when preference is false', async () => {
@@ -32,12 +27,7 @@ test('itemsVisible should return false when preference is false', async () => {
   })
   const value = await StatusBarPreferences.itemsVisible()
   expect(value).toBe(false)
-  expect(mockRpc.invocations).toEqual([
-    {
-      method: 'Preferences.get',
-      args: ['statusBar.itemsVisible'],
-    },
-  ])
+  expect(mockRpc.invocations).toEqual([['Preferences.get', 'statusBar.itemsVisible']])
 })
 
 test('itemsVisible should return false when preference is undefined', async () => {
@@ -46,10 +36,5 @@ test('itemsVisible should return false when preference is undefined', async () =
   })
   const value = await StatusBarPreferences.itemsVisible()
   expect(value).toBe(true)
-  expect(mockRpc.invocations).toEqual([
-    {
-      method: 'Preferences.get',
-      args: ['statusBar.itemsVisible'],
-    },
-  ])
+  expect(mockRpc.invocations).toEqual([['Preferences.get', 'statusBar.itemsVisible']])
 })

@@ -28,18 +28,8 @@ test('getStatusBarItems should activate by event and invoke GetStatusBarItems', 
 
   const result = await ExtensionHostStatusBarItems.getStatusBarItems()
 
-  expect(mockRendererRpc.invocations).toEqual([
-    {
-      method: 'ExtensionHostManagement.activateByEvent',
-      args: [ExtensionHostActivationEvent.OnStatusBarItem],
-    },
-  ])
-  expect(mockExtensionHostRpc.invocations).toEqual([
-    {
-      method: ExtensionHostCommandType.GetStatusBarItems,
-      args: [],
-    },
-  ])
+  expect(mockRendererRpc.invocations).toEqual([['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem]])
+  expect(mockExtensionHostRpc.invocations).toEqual([[ExtensionHostCommandType.GetStatusBarItems]])
   expect(result).toEqual([
     {
       id: 'item1',
@@ -59,18 +49,8 @@ test('getStatusBarItems should return empty array when no items are returned', a
 
   const result = await ExtensionHostStatusBarItems.getStatusBarItems()
 
-  expect(mockRendererRpc.invocations).toEqual([
-    {
-      method: 'ExtensionHostManagement.activateByEvent',
-      args: [ExtensionHostActivationEvent.OnStatusBarItem],
-    },
-  ])
-  expect(mockExtensionHostRpc.invocations).toEqual([
-    {
-      method: ExtensionHostCommandType.GetStatusBarItems,
-      args: [],
-    },
-  ])
+  expect(mockRendererRpc.invocations).toEqual([['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem]])
+  expect(mockExtensionHostRpc.invocations).toEqual([[ExtensionHostCommandType.GetStatusBarItems]])
   expect(result).toEqual([])
 })
 
@@ -94,18 +74,8 @@ test('getStatusBarItems should return items from provider', async () => {
 
   const result = await ExtensionHostStatusBarItems.getStatusBarItems()
 
-  expect(mockRendererRpc.invocations).toEqual([
-    {
-      method: 'ExtensionHostManagement.activateByEvent',
-      args: [ExtensionHostActivationEvent.OnStatusBarItem],
-    },
-  ])
-  expect(mockExtensionHostRpc.invocations).toEqual([
-    {
-      method: ExtensionHostCommandType.GetStatusBarItems,
-      args: [],
-    },
-  ])
+  expect(mockRendererRpc.invocations).toEqual([['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem]])
+  expect(mockExtensionHostRpc.invocations).toEqual([[ExtensionHostCommandType.GetStatusBarItems]])
   expect(result).toEqual([
     {
       id: 'item1',
@@ -129,10 +99,10 @@ test('onChange should register a listener and call RegisterStatusBarChangeListen
   await ExtensionHostStatusBarItems.onChange(emptyListener)
 
   expect(mockExtensionHostRpc.invocations.length).toBe(1)
-  expect(mockExtensionHostRpc.invocations[0].method).toBe(ExtensionHostCommandType.RegisterStatusBarChangeListener)
-  expect(mockExtensionHostRpc.invocations[0].args.length).toBe(1)
-  expect(typeof mockExtensionHostRpc.invocations[0].args[0]).toBe('number')
-  expect(Listener.state[mockExtensionHostRpc.invocations[0].args[0]]).toBe(emptyListener)
+  expect(mockExtensionHostRpc.invocations[0][0]).toBe(ExtensionHostCommandType.RegisterStatusBarChangeListener)
+  expect(mockExtensionHostRpc.invocations[0].length).toBe(2)
+  expect(typeof mockExtensionHostRpc.invocations[0][1]).toBe('number')
+  expect(Listener.state[mockExtensionHostRpc.invocations[0][1]]).toBe(emptyListener)
 })
 
 test('onChange should register multiple listeners independently', async () => {
@@ -144,11 +114,11 @@ test('onChange should register multiple listeners independently', async () => {
   await ExtensionHostStatusBarItems.onChange(listener2)
 
   expect(mockExtensionHostRpc.invocations.length).toBe(2)
-  expect(mockExtensionHostRpc.invocations[0].method).toBe(ExtensionHostCommandType.RegisterStatusBarChangeListener)
-  expect(mockExtensionHostRpc.invocations[1].method).toBe(ExtensionHostCommandType.RegisterStatusBarChangeListener)
-  expect(mockExtensionHostRpc.invocations[0].args[0]).not.toBe(mockExtensionHostRpc.invocations[1].args[0])
-  expect(Listener.state[mockExtensionHostRpc.invocations[0].args[0]]).toBe(emptyListener)
-  expect(Listener.state[mockExtensionHostRpc.invocations[1].args[0]]).toBe(listener2)
+  expect(mockExtensionHostRpc.invocations[0][0]).toBe(ExtensionHostCommandType.RegisterStatusBarChangeListener)
+  expect(mockExtensionHostRpc.invocations[1][0]).toBe(ExtensionHostCommandType.RegisterStatusBarChangeListener)
+  expect(mockExtensionHostRpc.invocations[0][1]).not.toBe(mockExtensionHostRpc.invocations[1][1])
+  expect(Listener.state[mockExtensionHostRpc.invocations[0][1]]).toBe(emptyListener)
+  expect(Listener.state[mockExtensionHostRpc.invocations[1][1]]).toBe(listener2)
 })
 
 test('onChange should pass empty params array to executeProviders', async () => {
@@ -162,16 +132,6 @@ test('onChange should pass empty params array to executeProviders', async () => 
 
   await ExtensionHostStatusBarItems.getStatusBarItems()
 
-  expect(mockRendererRpc.invocations).toEqual([
-    {
-      method: 'ExtensionHostManagement.activateByEvent',
-      args: [ExtensionHostActivationEvent.OnStatusBarItem],
-    },
-  ])
-  expect(mockExtensionHostRpc.invocations).toEqual([
-    {
-      method: ExtensionHostCommandType.GetStatusBarItems,
-      args: [],
-    },
-  ])
+  expect(mockRendererRpc.invocations).toEqual([['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem]])
+  expect(mockExtensionHostRpc.invocations).toEqual([[ExtensionHostCommandType.GetStatusBarItems]])
 })
