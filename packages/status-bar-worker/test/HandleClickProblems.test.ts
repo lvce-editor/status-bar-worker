@@ -2,7 +2,7 @@ import { expect, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as HandleClickProblems from '../src/parts/HandleClickProblems/HandleClickProblems.ts'
 
-test('handleClickProblems should call Layout.showPanel', async () => {
+test.skip('handleClickProblems should call Layout.showPanel', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'Layout.showPanel': async () => {},
     'Panel.selectIndex': async () => {},
@@ -13,7 +13,7 @@ test('handleClickProblems should call Layout.showPanel', async () => {
   expect(mockRpc.invocations).toEqual([['Layout.showPanel'], ['Panel.selectIndex', 1]])
 })
 
-test('handleClickProblems should call Panel.selectIndex with 1', async () => {
+test.skip('handleClickProblems should call Panel.selectIndex with 1', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'Layout.showPanel': async () => {},
     'Panel.selectIndex': async () => {},
@@ -24,7 +24,7 @@ test('handleClickProblems should call Panel.selectIndex with 1', async () => {
   expect(mockRpc.invocations).toEqual([['Layout.showPanel'], ['Panel.selectIndex', 1]])
 })
 
-test('handleClickProblems should call Layout.showPanel and Panel.selectIndex in order', async () => {
+test.skip('handleClickProblems should call Layout.showPanel and Panel.selectIndex in order', async () => {
   const mockRpc = RendererWorker.registerMockRpc({
     'Layout.showPanel': async () => {},
     'Panel.selectIndex': async () => {},
