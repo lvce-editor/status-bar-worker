@@ -23,7 +23,7 @@ const toUiStatusBarItems = (statusBarItems: readonly any[] | null | undefined): 
 }
 
 const toStatusBarItem = (uiStatusBarItem: UiStatusBarItem): StatusBarItem => {
-  const elements: StatusBarItem['elements'] = []
+  const elements: Array<StatusBarItem['elements'][number]> = []
   if (uiStatusBarItem.icon) {
     elements.push({ type: 'icon', value: uiStatusBarItem.icon })
   }

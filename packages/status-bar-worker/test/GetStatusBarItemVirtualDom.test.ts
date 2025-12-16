@@ -7,8 +7,8 @@ test('getStatusBarItemVirtualDom should return button with icon and text element
   const statusBarItem = {
     command: 'test.command',
     elements: [
-      { type: 'icon', value: 'test-icon' },
-      { type: 'text', value: 'Test Item' },
+      { type: 'icon' as const, value: 'test-icon' },
+      { type: 'text' as const, value: 'Test Item' },
     ],
     name: 'test.item',
     tooltip: 'Test Tooltip',
@@ -38,7 +38,7 @@ test('getStatusBarItemVirtualDom should return button with icon and text element
 
 test('getStatusBarItemVirtualDom should return button with text element', () => {
   const statusBarItem = {
-    elements: [{ type: 'text', value: 'Test Item' }],
+    elements: [{ type: 'text' as const, value: 'Test Item' }],
     name: 'test.item',
     tooltip: 'Test Tooltip',
   }
@@ -62,7 +62,7 @@ test('getStatusBarItemVirtualDom should return button with text element', () => 
 
 test('getStatusBarItemVirtualDom should handle empty strings', () => {
   const statusBarItem = {
-    elements: [{ type: 'text', value: '' }],
+    elements: [{ type: 'text' as const, value: '' }],
     name: '',
     tooltip: '',
   }
@@ -86,7 +86,7 @@ test('getStatusBarItemVirtualDom should handle empty strings', () => {
 
 test('getStatusBarItemVirtualDom should use tooltip as title', () => {
   const statusBarItem = {
-    elements: [{ type: 'text', value: 'Test Item' }],
+    elements: [{ type: 'text' as const, value: 'Test Item' }],
     name: 'test.item',
     tooltip: 'Custom Tooltip Text',
   }
@@ -96,7 +96,7 @@ test('getStatusBarItemVirtualDom should use tooltip as title', () => {
 
 test('getStatusBarItemVirtualDom should use text for text node value', () => {
   const statusBarItem = {
-    elements: [{ type: 'text', value: 'Custom Text Value' }],
+    elements: [{ type: 'text' as const, value: 'Custom Text Value' }],
     name: 'test.item',
     tooltip: 'Test Tooltip',
   }
@@ -106,7 +106,7 @@ test('getStatusBarItemVirtualDom should use text for text node value', () => {
 
 test('getStatusBarItemVirtualDom should have correct structure properties', () => {
   const statusBarItem = {
-    elements: [{ type: 'text', value: 'Test Item' }],
+    elements: [{ type: 'text' as const, value: 'Test Item' }],
     name: 'test.item',
     tooltip: 'Test Tooltip',
   }

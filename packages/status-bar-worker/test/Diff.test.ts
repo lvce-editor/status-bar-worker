@@ -24,13 +24,13 @@ test('diff should return empty array when states are equal', () => {
 
 test('diff should return RenderItems when left items differ', () => {
   const item1: StatusBarItem = {
+    elements: [{ type: 'text', value: 'Test' }],
     name: 'test',
-    text: 'Test',
     tooltip: 'Test tooltip',
   }
   const item2: StatusBarItem = {
+    elements: [{ type: 'text', value: 'Test 2' }],
     name: 'test2',
-    text: 'Test 2',
     tooltip: 'Test tooltip 2',
   }
   const oldState: StatusBarState = {
@@ -49,13 +49,13 @@ test('diff should return RenderItems when left items differ', () => {
 
 test('diff should return RenderItems when right items differ', () => {
   const item1: StatusBarItem = {
+    elements: [{ type: 'text', value: 'Test' }],
     name: 'test',
-    text: 'Test',
     tooltip: 'Test tooltip',
   }
   const item2: StatusBarItem = {
+    elements: [{ type: 'text', value: 'Test 2' }],
     name: 'test2',
-    text: 'Test 2',
     tooltip: 'Test tooltip 2',
   }
   const oldState: StatusBarState = {
@@ -74,13 +74,13 @@ test('diff should return RenderItems when right items differ', () => {
 
 test('diff should return RenderItems when both left and right items differ', () => {
   const item1: StatusBarItem = {
+    elements: [{ type: 'text', value: 'Test' }],
     name: 'test',
-    text: 'Test',
     tooltip: 'Test tooltip',
   }
   const item2: StatusBarItem = {
+    elements: [{ type: 'text', value: 'Test 2' }],
     name: 'test2',
-    text: 'Test 2',
     tooltip: 'Test tooltip 2',
   }
   const oldState: StatusBarState = {
@@ -99,8 +99,8 @@ test('diff should return RenderItems when both left and right items differ', () 
 
 test('diff should return RenderItems when left array length differs', () => {
   const item1: StatusBarItem = {
+    elements: [{ type: 'text', value: 'Test' }],
     name: 'test',
-    text: 'Test',
     tooltip: 'Test tooltip',
   }
   const oldState: StatusBarState = {
@@ -119,8 +119,8 @@ test('diff should return RenderItems when left array length differs', () => {
 
 test('diff should return RenderItems when right array length differs', () => {
   const item1: StatusBarItem = {
+    elements: [{ type: 'text', value: 'Test' }],
     name: 'test',
-    text: 'Test',
     tooltip: 'Test tooltip',
   }
   const oldState: StatusBarState = {

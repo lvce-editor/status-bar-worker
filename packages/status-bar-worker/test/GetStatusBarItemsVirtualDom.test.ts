@@ -11,7 +11,7 @@ test('getStatusBarItemsVirtualDom should return container div with empty array',
 test('getStatusBarItemsVirtualDom should return container div with single item', () => {
   const items = [
     {
-      elements: [{ type: 'text', value: 'Test Item' }],
+      elements: [{ type: 'text' as const, value: 'Test Item' }],
       name: 'test.item',
       tooltip: 'Test Tooltip',
     },
@@ -42,12 +42,12 @@ test('getStatusBarItemsVirtualDom should return container div with single item',
 test('getStatusBarItemsVirtualDom should return container div with multiple items', () => {
   const items = [
     {
-      elements: [{ type: 'text', value: 'Item 1' }],
+      elements: [{ type: 'text' as const, value: 'Item 1' }],
       name: 'item1',
       tooltip: 'Tooltip 1',
     },
     {
-      elements: [{ type: 'text', value: 'Item 2' }],
+      elements: [{ type: 'text' as const, value: 'Item 2' }],
       name: 'item2',
       tooltip: 'Tooltip 2',
     },
@@ -92,7 +92,7 @@ test('getStatusBarItemsVirtualDom should return container div with multiple item
 test('getStatusBarItemsVirtualDom should use provided className', () => {
   const items = [
     {
-      elements: [{ type: 'text', value: 'Test Item' }],
+      elements: [{ type: 'text' as const, value: 'Test Item' }],
       name: 'test.item',
       tooltip: 'Test Tooltip',
     },
@@ -110,8 +110,8 @@ test('getStatusBarItemsVirtualDom should handle items with all fields', () => {
     {
       command: 'test.command',
       elements: [
-        { type: 'icon', value: 'test-icon' },
-        { type: 'text', value: 'Test Item' },
+        { type: 'icon' as const, value: 'test-icon' },
+        { type: 'text' as const, value: 'Test Item' },
       ],
       name: 'test.item',
       tooltip: 'Test Tooltip',
