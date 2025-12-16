@@ -1,6 +1,7 @@
 import { expect, test } from '@jest/globals'
 import { ExtensionHost, RendererWorker } from '@lvce-editor/rpc-registry'
 import type { StatusBarState } from '../src/parts/StatusBarState/StatusBarState.ts'
+import * as ClassNames from '../src/parts/ClassNames/ClassNames.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as ExtensionHostActivationEvent from '../src/parts/ExtensionHostActivationEvent/ExtensionHostActivationEvent.ts'
 import * as ExtensionHostCommandType from '../src/parts/ExtensionHostCommandType/ExtensionHostCommandType.ts'
@@ -42,23 +43,28 @@ test('loadContent should load status bar items when preference is true', async (
   expect(result.statusBarItemsLeft).toEqual([
     {
       command: 'test.command',
-      icon: 'test-icon',
+      elements: [
+        { type: 'icon', value: 'test-icon' },
+        { type: 'text', value: 'Test Item' },
+      ],
       name: 'test.item',
-      text: 'Test Item',
       tooltip: 'Test Tooltip',
     },
     {
-      command: '',
-      icon: '',
+      command: undefined,
+      elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
-      text: 'Notifications',
       tooltip: '',
     },
     {
-      command: '',
-      icon: '',
+      command: undefined,
+      elements: [
+        { type: 'icon', value: ClassNames.ProblemsErrorIcon },
+        { type: 'text', value: '0' },
+        { type: 'icon', value: ClassNames.ProblemsWarningIcon },
+        { type: 'text', value: '0' },
+      ],
       name: 'Problems',
-      text: 'Problems',
       tooltip: '',
     },
   ])
@@ -108,17 +114,20 @@ test('loadContent should return empty array when preference is undefined', async
 
   expect(result.statusBarItemsLeft).toEqual([
     {
-      command: '',
-      icon: '',
+      command: undefined,
+      elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
-      text: 'Notifications',
       tooltip: '',
     },
     {
-      command: '',
-      icon: '',
+      command: undefined,
+      elements: [
+        { type: 'icon', value: ClassNames.ProblemsErrorIcon },
+        { type: 'text', value: '0' },
+        { type: 'icon', value: ClassNames.ProblemsWarningIcon },
+        { type: 'text', value: '0' },
+      ],
       name: 'Problems',
-      text: 'Problems',
       tooltip: '',
     },
   ])
@@ -183,30 +192,37 @@ test('loadContent should handle multiple status bar items', async () => {
   expect(result.statusBarItemsLeft).toEqual([
     {
       command: 'command1',
-      icon: 'icon1',
+      elements: [
+        { type: 'icon', value: 'icon1' },
+        { type: 'text', value: 'Item 1' },
+      ],
       name: 'item1',
-      text: 'Item 1',
       tooltip: 'Tooltip 1',
     },
     {
       command: 'command2',
-      icon: 'icon2',
+      elements: [
+        { type: 'icon', value: 'icon2' },
+        { type: 'text', value: 'Item 2' },
+      ],
       name: 'item2',
-      text: 'Item 2',
       tooltip: 'Tooltip 2',
     },
     {
-      command: '',
-      icon: '',
+      command: undefined,
+      elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
-      text: 'Notifications',
       tooltip: '',
     },
     {
-      command: '',
-      icon: '',
+      command: undefined,
+      elements: [
+        { type: 'icon', value: ClassNames.ProblemsErrorIcon },
+        { type: 'text', value: '0' },
+        { type: 'icon', value: ClassNames.ProblemsWarningIcon },
+        { type: 'text', value: '0' },
+      ],
       name: 'Problems',
-      text: 'Problems',
       tooltip: '',
     },
   ])

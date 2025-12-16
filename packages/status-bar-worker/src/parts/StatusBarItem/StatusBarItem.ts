@@ -1,7 +1,8 @@
+import type { StatusBarItemElement } from '../StatusBarItemElement/StatusBarItemElement.ts'
+
 export type StatusBarItem = {
   readonly command?: string
-  readonly icon?: string
+  readonly elements: readonly StatusBarItemElement[]
   readonly name: string
-  readonly text: string
   readonly tooltip: string
 }

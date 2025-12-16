@@ -16,8 +16,8 @@ test('getStatusBarVirtualDom should return empty array when both arrays are empt
 test('getStatusBarVirtualDom should return items for left when only left has items', () => {
   const leftItems: readonly StatusBarItem[] = [
     {
+      elements: [{ type: 'text', value: 'Item 1' }],
       name: 'item1',
-      text: 'Item 1',
       tooltip: 'Tooltip 1',
     },
   ]
@@ -34,8 +34,8 @@ test('getStatusBarVirtualDom should return items for left when only left has ite
 test('getStatusBarVirtualDom should return items for right when only right has items', () => {
   const rightItems: readonly StatusBarItem[] = [
     {
+      elements: [{ type: 'text', value: 'Item 1' }],
       name: 'item1',
-      text: 'Item 1',
       tooltip: 'Tooltip 1',
     },
   ]
@@ -52,15 +52,15 @@ test('getStatusBarVirtualDom should return items for right when only right has i
 test('getStatusBarVirtualDom should return items for both when both have items', () => {
   const leftItems: readonly StatusBarItem[] = [
     {
+      elements: [{ type: 'text', value: 'Left Item' }],
       name: 'leftItem',
-      text: 'Left Item',
       tooltip: 'Left Tooltip',
     },
   ]
   const rightItems: readonly StatusBarItem[] = [
     {
+      elements: [{ type: 'text', value: 'Right Item' }],
       name: 'rightItem',
-      text: 'Right Item',
       tooltip: 'Right Tooltip',
     },
   ]
@@ -75,8 +75,8 @@ test('getStatusBarVirtualDom should return items for both when both have items',
 test('getStatusBarVirtualDom should skip empty arrays', () => {
   const leftItems: readonly StatusBarItem[] = [
     {
+      elements: [{ type: 'text', value: 'Item 1' }],
       name: 'item1',
-      text: 'Item 1',
       tooltip: 'Tooltip 1',
     },
   ]
@@ -88,13 +88,13 @@ test('getStatusBarVirtualDom should skip empty arrays', () => {
 test('getStatusBarVirtualDom should handle multiple items in left array', () => {
   const leftItems: readonly StatusBarItem[] = [
     {
+      elements: [{ type: 'text', value: 'Item 1' }],
       name: 'item1',
-      text: 'Item 1',
       tooltip: 'Tooltip 1',
     },
     {
+      elements: [{ type: 'text', value: 'Item 2' }],
       name: 'item2',
-      text: 'Item 2',
       tooltip: 'Tooltip 2',
     },
   ]
@@ -107,13 +107,13 @@ test('getStatusBarVirtualDom should handle multiple items in left array', () => 
 test('getStatusBarVirtualDom should handle multiple items in right array', () => {
   const rightItems: readonly StatusBarItem[] = [
     {
+      elements: [{ type: 'text', value: 'Item 1' }],
       name: 'item1',
-      text: 'Item 1',
       tooltip: 'Tooltip 1',
     },
     {
+      elements: [{ type: 'text', value: 'Item 2' }],
       name: 'item2',
-      text: 'Item 2',
       tooltip: 'Tooltip 2',
     },
   ]

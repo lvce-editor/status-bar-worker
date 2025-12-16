@@ -21,9 +21,11 @@ test('applyRender should return commands when diffResult contains RenderItems', 
     statusBarItemsLeft: [
       {
         command: 'command1',
-        icon: 'icon1',
+        elements: [
+          { type: 'icon', value: 'icon1' },
+          { type: 'text', value: 'Item 1' },
+        ],
         name: 'item1',
-        text: 'Item 1',
         tooltip: 'Tooltip 1',
       },
     ],
@@ -45,9 +47,11 @@ test('applyRender should return multiple commands when diffResult contains multi
     statusBarItemsLeft: [
       {
         command: 'command1',
-        icon: 'icon1',
+        elements: [
+          { type: 'icon', value: 'icon1' },
+          { type: 'text', value: 'Item 1' },
+        ],
         name: 'item1',
-        text: 'Item 1',
         tooltip: 'Tooltip 1',
       },
     ],

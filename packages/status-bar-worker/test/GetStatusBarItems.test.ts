@@ -1,5 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { ExtensionHost, RendererWorker } from '@lvce-editor/rpc-registry'
+import * as ClassNames from '../src/parts/ClassNames/ClassNames.ts'
 import * as ExtensionHostActivationEvent from '../src/parts/ExtensionHostActivationEvent/ExtensionHostActivationEvent.ts'
 import * as ExtensionHostCommandType from '../src/parts/ExtensionHostCommandType/ExtensionHostCommandType.ts'
 import * as GetStatusBarItems from '../src/parts/GetStatusBarItems/GetStatusBarItems.ts'
@@ -36,23 +37,28 @@ test('getStatusBarItems should return transformed items when showItems is true',
   expect(result).toEqual([
     {
       command: 'test.command',
-      icon: 'test-icon',
+      elements: [
+        { type: 'icon', value: 'test-icon' },
+        { type: 'text', value: 'Test Item' },
+      ],
       name: 'test.item',
-      text: 'Test Item',
       tooltip: 'Test Tooltip',
     },
     {
-      command: '',
-      icon: '',
+      command: undefined,
+      elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
-      text: 'Notifications',
       tooltip: '',
     },
     {
-      command: '',
-      icon: '',
+      command: undefined,
+      elements: [
+        { type: 'icon', value: ClassNames.ProblemsErrorIcon },
+        { type: 'text', value: '0' },
+        { type: 'icon', value: ClassNames.ProblemsWarningIcon },
+        { type: 'text', value: '0' },
+      ],
       name: 'Problems',
-      text: 'Problems',
       tooltip: '',
     },
   ])
@@ -77,17 +83,20 @@ test('getStatusBarItems should return empty array when no items are returned', a
 
   expect(result).toEqual([
     {
-      command: '',
-      icon: '',
+      command: undefined,
+      elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
-      text: 'Notifications',
       tooltip: '',
     },
     {
-      command: '',
-      icon: '',
+      command: undefined,
+      elements: [
+        { type: 'icon', value: ClassNames.ProblemsErrorIcon },
+        { type: 'text', value: '0' },
+        { type: 'icon', value: ClassNames.ProblemsWarningIcon },
+        { type: 'text', value: '0' },
+      ],
       name: 'Problems',
-      text: 'Problems',
       tooltip: '',
     },
   ])
@@ -112,17 +121,20 @@ test('getStatusBarItems should handle null items', async () => {
 
   expect(result).toEqual([
     {
-      command: '',
-      icon: '',
+      command: undefined,
+      elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
-      text: 'Notifications',
       tooltip: '',
     },
     {
-      command: '',
-      icon: '',
+      command: undefined,
+      elements: [
+        { type: 'icon', value: ClassNames.ProblemsErrorIcon },
+        { type: 'text', value: '0' },
+        { type: 'icon', value: ClassNames.ProblemsWarningIcon },
+        { type: 'text', value: '0' },
+      ],
       name: 'Problems',
-      text: 'Problems',
       tooltip: '',
     },
   ])
@@ -147,17 +159,20 @@ test('getStatusBarItems should handle undefined items', async () => {
 
   expect(result).toEqual([
     {
-      command: '',
-      icon: '',
+      command: undefined,
+      elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
-      text: 'Notifications',
       tooltip: '',
     },
     {
-      command: '',
-      icon: '',
+      command: undefined,
+      elements: [
+        { type: 'icon', value: ClassNames.ProblemsErrorIcon },
+        { type: 'text', value: '0' },
+        { type: 'icon', value: ClassNames.ProblemsWarningIcon },
+        { type: 'text', value: '0' },
+      ],
       name: 'Problems',
-      text: 'Problems',
       tooltip: '',
     },
   ])
@@ -189,31 +204,32 @@ test('getStatusBarItems should default missing fields to empty strings', async (
 
   expect(result).toEqual([
     {
-      command: '',
-      icon: '',
+      command: undefined,
+      elements: [{ type: 'text', value: '' }],
       name: 'item1',
-      text: '',
       tooltip: '',
     },
     {
-      command: '',
-      icon: '',
+      command: undefined,
+      elements: [{ type: 'text', value: 'Item 2' }],
       name: '',
-      text: 'Item 2',
       tooltip: '',
     },
     {
-      command: '',
-      icon: '',
+      command: undefined,
+      elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
-      text: 'Notifications',
       tooltip: '',
     },
     {
-      command: '',
-      icon: '',
+      command: undefined,
+      elements: [
+        { type: 'icon', value: ClassNames.ProblemsErrorIcon },
+        { type: 'text', value: '0' },
+        { type: 'icon', value: ClassNames.ProblemsWarningIcon },
+        { type: 'text', value: '0' },
+      ],
       name: 'Problems',
-      text: 'Problems',
       tooltip: '',
     },
   ])
@@ -254,30 +270,37 @@ test('getStatusBarItems should handle multiple items', async () => {
   expect(result).toEqual([
     {
       command: 'command1',
-      icon: 'icon1',
+      elements: [
+        { type: 'icon', value: 'icon1' },
+        { type: 'text', value: 'Item 1' },
+      ],
       name: 'item1',
-      text: 'Item 1',
       tooltip: 'Tooltip 1',
     },
     {
       command: 'command2',
-      icon: 'icon2',
+      elements: [
+        { type: 'icon', value: 'icon2' },
+        { type: 'text', value: 'Item 2' },
+      ],
       name: 'item2',
-      text: 'Item 2',
       tooltip: 'Tooltip 2',
     },
     {
-      command: '',
-      icon: '',
+      command: undefined,
+      elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
-      text: 'Notifications',
       tooltip: '',
     },
     {
-      command: '',
-      icon: '',
+      command: undefined,
+      elements: [
+        { type: 'icon', value: ClassNames.ProblemsErrorIcon },
+        { type: 'text', value: '0' },
+        { type: 'icon', value: ClassNames.ProblemsWarningIcon },
+        { type: 'text', value: '0' },
+      ],
       name: 'Problems',
-      text: 'Problems',
       tooltip: '',
     },
   ])
