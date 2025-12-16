@@ -1,45 +1,10 @@
 import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
-import type { UiStatusBarItem } from '../UiStatusBarItem/UiStatusBarItem.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as ExtensionHostStatusBarItems from '../ExtensionHost/ExtensionHostStatusBarItems.ts'
 import * as ExtensionHostManagement from '../ExtensionHostManagement/ExtensionHostManagement.ts'
 import * as InputName from '../InputName/InputName.ts'
-
-const toUiStatusBarItem = (extensionHostStatusBarItem: any): UiStatusBarItem => {
-  return {
-    command: extensionHostStatusBarItem.command || '',
-    icon: extensionHostStatusBarItem.icon || '',
-    name: extensionHostStatusBarItem.id || extensionHostStatusBarItem.name || '',
-    text: extensionHostStatusBarItem.text || '',
-    tooltip: extensionHostStatusBarItem.tooltip || '',
-  }
-}
-
-const toUiStatusBarItems = (statusBarItems: readonly any[] | null | undefined): UiStatusBarItem[] => {
-  if (!statusBarItems) {
-    return []
-  }
-  return statusBarItems.map(toUiStatusBarItem)
-}
-
-const toStatusBarItem = (uiStatusBarItem: UiStatusBarItem): StatusBarItem => {
-  const elements: Array<StatusBarItem['elements'][number]> = []
-  if (uiStatusBarItem.icon) {
-    elements.push({ type: 'icon', value: uiStatusBarItem.icon })
-  }
-  if (uiStatusBarItem.text) {
-    elements.push({ type: 'text', value: uiStatusBarItem.text })
-  }
-  if (elements.length === 0) {
-    elements.push({ type: 'text', value: '' })
-  }
-  return {
-    command: uiStatusBarItem.command || undefined,
-    elements,
-    name: uiStatusBarItem.name,
-    tooltip: uiStatusBarItem.tooltip,
-  }
-}
+import * as ToStatusBarItem from '../ToStatusBarItem/ToStatusBarItem.ts'
+import * as ToUiStatusBarItems from '../ToUiStatusBarItems/ToUiStatusBarItems.ts'
 
 export const getStatusBarItems = async (showItems: boolean): Promise<StatusBarItem[]> => {
   if (!showItems) {
@@ -47,7 +12,7 @@ export const getStatusBarItems = async (showItems: boolean): Promise<StatusBarIt
   }
   await ExtensionHostManagement.activateByEvent('onSourceControl')
   const extensionStatusBarItems = await ExtensionHostStatusBarItems.getStatusBarItems()
-  const uiStatusBarItems = toUiStatusBarItems(extensionStatusBarItems)
+  const uiStatusBarItems = ToUiStatusBarItems.toUiStatusBarItems(extensionStatusBarItems)
   const extraItems: readonly StatusBarItem[] = [
     {
       command: undefined,
@@ -67,5 +32,5 @@ export const getStatusBarItems = async (showItems: boolean): Promise<StatusBarIt
       tooltip: '',
     },
   ]
-  return [...uiStatusBarItems.map(toStatusBarItem), ...extraItems]
+  return [...uiStatusBarItems.map(ToStatusBarItem.toStatusBarItem), ...extraItems]
 }
