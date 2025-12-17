@@ -8,12 +8,12 @@ test('should update existing item in left status bar', () => {
   const state: StatusBarState = { ...createDefaultState(), uid: 1 }
   const item1: StatusBarItem = {
     name: 'item1',
-    text: 'Original Text',
+    elements: [{ type: 'text', value: 'Original Text' }],
     tooltip: 'Original Tooltip',
   }
   const item2: StatusBarItem = {
     name: 'item2',
-    text: 'Item 2',
+    elements: [{ type: 'text', value: 'Item 2' }],
     tooltip: 'Tooltip 2',
   }
   const stateWithItems: StatusBarState = {
@@ -21,9 +21,11 @@ test('should update existing item in left status bar', () => {
     statusBarItemsLeft: [item1, item2],
   }
   const updatedItem: StatusBarItem = {
-    icon: 'updated-icon',
     name: 'item1',
-    text: 'Updated Text',
+    elements: [
+      { type: 'icon', value: 'updated-icon' },
+      { type: 'text', value: 'Updated Text' },
+    ],
     tooltip: 'Updated Tooltip',
   }
   const result = ItemLeftUpdate.itemLeftUpdate(stateWithItems, updatedItem)
@@ -38,7 +40,7 @@ test('should insert item at beginning when item does not exist', () => {
   const state: StatusBarState = { ...createDefaultState(), uid: 2 }
   const item1: StatusBarItem = {
     name: 'item1',
-    text: 'Item 1',
+    elements: [{ type: 'text', value: 'Item 1' }],
     tooltip: 'Tooltip 1',
   }
   const stateWithItems: StatusBarState = {
@@ -47,7 +49,7 @@ test('should insert item at beginning when item does not exist', () => {
   }
   const newItem: StatusBarItem = {
     name: 'newItem',
-    text: 'New Item',
+    elements: [{ type: 'text', value: 'New Item' }],
     tooltip: 'New Tooltip',
   }
   const result = ItemLeftUpdate.itemLeftUpdate(stateWithItems, newItem)
@@ -60,17 +62,17 @@ test('should update item in middle of array', () => {
   const state: StatusBarState = { ...createDefaultState(), uid: 3 }
   const item1: StatusBarItem = {
     name: 'item1',
-    text: 'Item 1',
+    elements: [{ type: 'text', value: 'Item 1' }],
     tooltip: 'Tooltip 1',
   }
   const item2: StatusBarItem = {
     name: 'item2',
-    text: 'Item 2',
+    elements: [{ type: 'text', value: 'Item 2' }],
     tooltip: 'Tooltip 2',
   }
   const item3: StatusBarItem = {
     name: 'item3',
-    text: 'Item 3',
+    elements: [{ type: 'text', value: 'Item 3' }],
     tooltip: 'Tooltip 3',
   }
   const stateWithItems: StatusBarState = {
@@ -79,7 +81,7 @@ test('should update item in middle of array', () => {
   }
   const updatedItem: StatusBarItem = {
     name: 'item2',
-    text: 'Updated Item 2',
+    elements: [{ type: 'text', value: 'Updated Item 2' }],
     tooltip: 'Updated Tooltip 2',
   }
   const result = ItemLeftUpdate.itemLeftUpdate(stateWithItems, updatedItem)
@@ -93,12 +95,12 @@ test('should preserve right status bar items', () => {
   const state: StatusBarState = { ...createDefaultState(), uid: 4 }
   const leftItem: StatusBarItem = {
     name: 'leftItem',
-    text: 'Left Item',
+    elements: [{ type: 'text', value: 'Left Item' }],
     tooltip: 'Left Tooltip',
   }
   const rightItem: StatusBarItem = {
     name: 'rightItem',
-    text: 'Right Item',
+    elements: [{ type: 'text', value: 'Right Item' }],
     tooltip: 'Right Tooltip',
   }
   const stateWithItems: StatusBarState = {
@@ -108,7 +110,7 @@ test('should preserve right status bar items', () => {
   }
   const updatedLeftItem: StatusBarItem = {
     name: 'leftItem',
-    text: 'Updated Left Item',
+    elements: [{ type: 'text', value: 'Updated Left Item' }],
     tooltip: 'Updated Left Tooltip',
   }
   const result = ItemLeftUpdate.itemLeftUpdate(stateWithItems, updatedLeftItem)
@@ -120,7 +122,7 @@ test('should preserve uid', () => {
   const state: StatusBarState = { ...createDefaultState(), uid: 42 }
   const item: StatusBarItem = {
     name: 'item',
-    text: 'Item',
+    elements: [{ type: 'text', value: 'Item' }],
     tooltip: 'Tooltip',
   }
   const stateWithItems: StatusBarState = {
@@ -129,7 +131,7 @@ test('should preserve uid', () => {
   }
   const updatedItem: StatusBarItem = {
     name: 'item',
-    text: 'Updated Item',
+    elements: [{ type: 'text', value: 'Updated Item' }],
     tooltip: 'Updated Tooltip',
   }
   const result = ItemLeftUpdate.itemLeftUpdate(stateWithItems, updatedItem)
@@ -140,7 +142,7 @@ test('should handle empty left items array', () => {
   const state: StatusBarState = { ...createDefaultState(), uid: 5 }
   const newItem: StatusBarItem = {
     name: 'newItem',
-    text: 'New Item',
+    elements: [{ type: 'text', value: 'New Item' }],
     tooltip: 'New Tooltip',
   }
   const result = ItemLeftUpdate.itemLeftUpdate(state, newItem)
@@ -152,7 +154,7 @@ test('should update item with all optional properties', () => {
   const state: StatusBarState = { ...createDefaultState(), uid: 6 }
   const item: StatusBarItem = {
     name: 'item',
-    text: 'Item',
+    elements: [{ type: 'text', value: 'Item' }],
     tooltip: 'Tooltip',
   }
   const stateWithItems: StatusBarState = {
@@ -161,13 +163,15 @@ test('should update item with all optional properties', () => {
   }
   const updatedItem: StatusBarItem = {
     command: 'command-name',
-    icon: 'icon-name',
     name: 'item',
-    text: 'Updated Text',
+    elements: [
+      { type: 'icon', value: 'icon-name' },
+      { type: 'text', value: 'Updated Text' },
+    ],
     tooltip: 'Updated Tooltip',
   }
   const result = ItemLeftUpdate.itemLeftUpdate(stateWithItems, updatedItem)
   expect(result.statusBarItemsLeft[0]).toEqual(updatedItem)
-  expect(result.statusBarItemsLeft[0].icon).toBe('icon-name')
-  expect(result.statusBarItemsLeft[0].command).toBe('command-name')
+  expect(result.statusBarItemsLeft[0]?.elements.find((e) => e.type === 'icon')?.value).toBe('icon-name')
+  expect(result.statusBarItemsLeft[0]?.command).toBe('command-name')
 })

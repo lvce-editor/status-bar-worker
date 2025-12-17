@@ -22,12 +22,12 @@ test('diff2 should return RenderItems when left items differ', () => {
   const uid = 1
   const item1: StatusBarItem = {
     name: 'test',
-    text: 'Test',
+    elements: [{ type: 'text', value: 'Test' }],
     tooltip: 'Test tooltip',
   }
   const item2: StatusBarItem = {
     name: 'test2',
-    text: 'Test 2',
+    elements: [{ type: 'text', value: 'Test 2' }],
     tooltip: 'Test tooltip 2',
   }
   const oldState = {
@@ -51,12 +51,12 @@ test('diff2 should return RenderItems when right items differ', () => {
   const uid = 1
   const item1: StatusBarItem = {
     name: 'test',
-    text: 'Test',
+    elements: [{ type: 'text', value: 'Test' }],
     tooltip: 'Test tooltip',
   }
   const item2: StatusBarItem = {
     name: 'test2',
-    text: 'Test 2',
+    elements: [{ type: 'text', value: 'Test 2' }],
     tooltip: 'Test tooltip 2',
   }
   const oldState = {
@@ -80,12 +80,12 @@ test('diff2 should return RenderItems when both left and right items differ', ()
   const uid = 1
   const item1: StatusBarItem = {
     name: 'test',
-    text: 'Test',
+    elements: [{ type: 'text', value: 'Test' }],
     tooltip: 'Test tooltip',
   }
   const item2: StatusBarItem = {
     name: 'test2',
-    text: 'Test 2',
+    elements: [{ type: 'text', value: 'Test 2' }],
     tooltip: 'Test tooltip 2',
   }
   const oldState = {
@@ -109,7 +109,7 @@ test('diff2 should return RenderItems when left array length differs', () => {
   const uid = 1
   const item1: StatusBarItem = {
     name: 'test',
-    text: 'Test',
+    elements: [{ type: 'text', value: 'Test' }],
     tooltip: 'Test tooltip',
   }
   const oldState = {
@@ -133,7 +133,7 @@ test('diff2 should return RenderItems when right array length differs', () => {
   const uid = 1
   const item1: StatusBarItem = {
     name: 'test',
-    text: 'Test',
+    elements: [{ type: 'text', value: 'Test' }],
     tooltip: 'Test tooltip',
   }
   const oldState = {
@@ -170,12 +170,12 @@ test('diff2 should return RenderItems when multiple items are added', () => {
   const uid = 1
   const item1: StatusBarItem = {
     name: 'test1',
-    text: 'Test 1',
+    elements: [{ type: 'text', value: 'Test 1' }],
     tooltip: 'Test tooltip 1',
   }
   const item2: StatusBarItem = {
     name: 'test2',
-    text: 'Test 2',
+    elements: [{ type: 'text', value: 'Test 2' }],
     tooltip: 'Test tooltip 2',
   }
   const oldState = {
@@ -199,12 +199,12 @@ test('diff2 should return RenderItems when items are removed', () => {
   const uid = 1
   const item1: StatusBarItem = {
     name: 'test1',
-    text: 'Test 1',
+    elements: [{ type: 'text', value: 'Test 1' }],
     tooltip: 'Test tooltip 1',
   }
   const item2: StatusBarItem = {
     name: 'test2',
-    text: 'Test 2',
+    elements: [{ type: 'text', value: 'Test 2' }],
     tooltip: 'Test tooltip 2',
   }
   const oldState = {
@@ -228,12 +228,12 @@ test('diff2 should return RenderItems when item text changes', () => {
   const uid = 1
   const item1: StatusBarItem = {
     name: 'test',
-    text: 'Test',
+    elements: [{ type: 'text', value: 'Test' }],
     tooltip: 'Test tooltip',
   }
   const item2: StatusBarItem = {
     name: 'test',
-    text: 'Test Updated',
+    elements: [{ type: 'text', value: 'Test Updated' }],
     tooltip: 'Test tooltip',
   }
   const oldState = {
@@ -257,12 +257,12 @@ test('diff2 should return RenderItems when item tooltip changes', () => {
   const uid = 1
   const item1: StatusBarItem = {
     name: 'test',
-    text: 'Test',
+    elements: [{ type: 'text', value: 'Test' }],
     tooltip: 'Test tooltip',
   }
   const item2: StatusBarItem = {
     name: 'test',
-    text: 'Test',
+    elements: [{ type: 'text', value: 'Test' }],
     tooltip: 'Updated tooltip',
   }
   const oldState = {
@@ -287,7 +287,7 @@ test('diff2 should work with different uids independently', () => {
   const uid2 = 2
   const item1: StatusBarItem = {
     name: 'test1',
-    text: 'Test 1',
+    elements: [{ type: 'text', value: 'Test 1' }],
     tooltip: 'Test tooltip 1',
   }
   const state1 = {
