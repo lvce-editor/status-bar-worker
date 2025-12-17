@@ -17,13 +17,13 @@ test('saveState should return empty arrays when state has no items', () => {
 test('saveState should return itemsLeft when only left items exist', () => {
   const uid = 2
   const item1: StatusBarItem = {
-    name: 'item1',
     elements: [{ type: 'text', value: 'Item 1' }],
+    name: 'item1',
     tooltip: 'Tooltip 1',
   }
   const item2: StatusBarItem = {
-    name: 'item2',
     elements: [{ type: 'text', value: 'Item 2' }],
+    name: 'item2',
     tooltip: 'Tooltip 2',
   }
   const state: StatusBarState = {
@@ -40,13 +40,13 @@ test('saveState should return itemsLeft when only left items exist', () => {
 test('saveState should return itemsRight when only right items exist', () => {
   const uid = 3
   const item1: StatusBarItem = {
-    name: 'item1',
     elements: [{ type: 'text', value: 'Item 1' }],
+    name: 'item1',
     tooltip: 'Tooltip 1',
   }
   const item2: StatusBarItem = {
-    name: 'item2',
     elements: [{ type: 'text', value: 'Item 2' }],
+    name: 'item2',
     tooltip: 'Tooltip 2',
   }
   const state: StatusBarState = {
@@ -63,23 +63,23 @@ test('saveState should return itemsRight when only right items exist', () => {
 test('saveState should return both itemsLeft and itemsRight', () => {
   const uid = 4
   const leftItem1: StatusBarItem = {
-    name: 'left1',
     elements: [{ type: 'text', value: 'Left 1' }],
+    name: 'left1',
     tooltip: 'Left Tooltip 1',
   }
   const leftItem2: StatusBarItem = {
-    name: 'left2',
     elements: [{ type: 'text', value: 'Left 2' }],
+    name: 'left2',
     tooltip: 'Left Tooltip 2',
   }
   const rightItem1: StatusBarItem = {
-    name: 'right1',
     elements: [{ type: 'text', value: 'Right 1' }],
+    name: 'right1',
     tooltip: 'Right Tooltip 1',
   }
   const rightItem2: StatusBarItem = {
-    name: 'right2',
     elements: [{ type: 'text', value: 'Right 2' }],
+    name: 'right2',
     tooltip: 'Right Tooltip 2',
   }
   const state: StatusBarState = {
@@ -98,11 +98,11 @@ test('saveState should return items with all properties', () => {
   const uid = 5
   const item: StatusBarItem = {
     command: 'test.command',
-    name: 'test-item',
     elements: [
       { type: 'icon', value: 'test-icon' },
       { type: 'text', value: 'Test Item' },
     ],
+    name: 'test-item',
     tooltip: 'Test Tooltip',
   }
   const state: StatusBarState = {
@@ -123,8 +123,8 @@ test('saveState should return items with all properties', () => {
 test('saveState should return items with optional properties missing', () => {
   const uid = 6
   const item: StatusBarItem = {
-    name: 'item',
     elements: [{ type: 'text', value: 'Item' }],
+    name: 'item',
     tooltip: 'Tooltip',
   }
   const state: StatusBarState = {
@@ -143,14 +143,14 @@ test('saveState should return items with optional properties missing', () => {
 test('saveState should handle multiple items in both arrays', () => {
   const uid = 7
   const leftItems: StatusBarItem[] = [
-    { name: 'left1', elements: [{ type: 'text', value: 'Left 1' }], tooltip: 'T1' },
-    { name: 'left2', elements: [{ type: 'text', value: 'Left 2' }], tooltip: 'T2' },
-    { name: 'left3', elements: [{ type: 'text', value: 'Left 3' }], tooltip: 'T3' },
+    { elements: [{ type: 'text', value: 'Left 1' }], name: 'left1', tooltip: 'T1' },
+    { elements: [{ type: 'text', value: 'Left 2' }], name: 'left2', tooltip: 'T2' },
+    { elements: [{ type: 'text', value: 'Left 3' }], name: 'left3', tooltip: 'T3' },
   ]
   const rightItems: StatusBarItem[] = [
-    { name: 'right1', elements: [{ type: 'text', value: 'Right 1' }], tooltip: 'T1' },
-    { name: 'right2', elements: [{ type: 'text', value: 'Right 2' }], tooltip: 'T2' },
-    { name: 'right3', elements: [{ type: 'text', value: 'Right 3' }], tooltip: 'T3' },
+    { elements: [{ type: 'text', value: 'Right 1' }], name: 'right1', tooltip: 'T1' },
+    { elements: [{ type: 'text', value: 'Right 2' }], name: 'right2', tooltip: 'T2' },
+    { elements: [{ type: 'text', value: 'Right 3' }], name: 'right3', tooltip: 'T3' },
   ]
   const state: StatusBarState = {
     ...createDefaultState(),
@@ -176,8 +176,8 @@ test('saveState should work with different uid values', () => {
 
   const uid2 = 999
   const item: StatusBarItem = {
-    name: 'item',
     elements: [{ type: 'text', value: 'Item' }],
+    name: 'item',
     tooltip: 'Tooltip',
   }
   const state2: StatusBarState = {
@@ -193,13 +193,13 @@ test('saveState should work with different uid values', () => {
 test('saveState should return newState items, not oldState items', () => {
   const uid = 8
   const oldItem: StatusBarItem = {
-    name: 'old',
     elements: [{ type: 'text', value: 'Old' }],
+    name: 'old',
     tooltip: 'Old Tooltip',
   }
   const newItem: StatusBarItem = {
-    name: 'new',
     elements: [{ type: 'text', value: 'New' }],
+    name: 'new',
     tooltip: 'New Tooltip',
   }
   const oldState: StatusBarState = {
@@ -221,8 +221,8 @@ test('saveState should return newState items, not oldState items', () => {
 test('saveState should handle empty string values', () => {
   const uid = 9
   const item: StatusBarItem = {
-    name: '',
     elements: [{ type: 'text', value: '' }],
+    name: '',
     tooltip: '',
   }
   const state: StatusBarState = {
@@ -240,9 +240,9 @@ test('saveState should handle empty string values', () => {
 test('saveState should preserve item order', () => {
   const uid = 11
   const items: StatusBarItem[] = [
-    { name: 'first', elements: [{ type: 'text', value: 'First' }], tooltip: 'T1' },
-    { name: 'second', elements: [{ type: 'text', value: 'Second' }], tooltip: 'T2' },
-    { name: 'third', elements: [{ type: 'text', value: 'Third' }], tooltip: 'T3' },
+    { elements: [{ type: 'text', value: 'First' }], name: 'first', tooltip: 'T1' },
+    { elements: [{ type: 'text', value: 'Second' }], name: 'second', tooltip: 'T2' },
+    { elements: [{ type: 'text', value: 'Third' }], name: 'third', tooltip: 'T3' },
   ]
   const state = {
     ...createDefaultState(),
@@ -259,8 +259,8 @@ test('saveState should preserve item order', () => {
 test('saveState should handle items with only name property', () => {
   const uid = 12
   const item: StatusBarItem = {
-    name: 'minimal',
     elements: [{ type: 'text', value: '' }],
+    name: 'minimal',
     tooltip: '',
   }
   const state: StatusBarState = {
@@ -277,11 +277,11 @@ test('saveState should handle items with command and icon', () => {
   const uid = 13
   const item: StatusBarItem = {
     command: 'extension.command',
-    name: 'command-item',
     elements: [
       { type: 'icon', value: '$(icon-name)' },
       { type: 'text', value: 'Command Item' },
     ],
+    name: 'command-item',
     tooltip: 'Command Tooltip',
   }
   const state: StatusBarState = {
@@ -298,8 +298,8 @@ test('saveState should handle items with command and icon', () => {
 test('saveState should handle zero uid', () => {
   const uid = 0
   const item: StatusBarItem = {
-    name: 'item',
     elements: [{ type: 'text', value: 'Item' }],
+    name: 'item',
     tooltip: 'Tooltip',
   }
   const state: StatusBarState = {
@@ -324,8 +324,8 @@ test('saveState should handle negative uid', () => {
 test('saveState should handle large uid values', () => {
   const uid = 999_999
   const item: StatusBarItem = {
-    name: 'item',
     elements: [{ type: 'text', value: 'Item' }],
+    name: 'item',
     tooltip: 'Tooltip',
   }
   const state: StatusBarState = {
@@ -352,22 +352,22 @@ test('saveState should handle mixed items with and without optional properties',
   const uid = 15
   const items: StatusBarItem[] = [
     {
-      name: 'minimal',
       elements: [{ type: 'text', value: '' }],
+      name: 'minimal',
       tooltip: '',
     },
     {
       command: 'cmd',
-      name: 'full',
       elements: [
         { type: 'icon', value: 'icon' },
         { type: 'text', value: 'Full' },
       ],
+      name: 'full',
       tooltip: 'Tooltip',
     },
     {
-      name: 'partial',
       elements: [{ type: 'text', value: 'Partial' }],
+      name: 'partial',
       tooltip: 'Tooltip',
     },
   ]
@@ -387,8 +387,8 @@ test('saveState should handle mixed items with and without optional properties',
 test('saveState should handle very long item arrays', () => {
   const uid = 16
   const items: StatusBarItem[] = Array.from({ length: 100 }, (_, i) => ({
-    name: `item${i}`,
     elements: [{ type: 'text', value: `Item ${i}` }],
+    name: `item${i}`,
     tooltip: `Tooltip ${i}`,
   }))
   const state = {
@@ -408,8 +408,8 @@ test('saveState should handle very long item arrays', () => {
 test('saveState should handle items with special characters in text', () => {
   const uid = 17
   const item: StatusBarItem = {
-    name: 'special',
     elements: [{ type: 'text', value: 'Special chars: !@#$%^&*()' }],
+    name: 'special',
     tooltip: 'Tooltip with "quotes" and \'apostrophes\'',
   }
   const state: StatusBarState = {
@@ -426,8 +426,8 @@ test('saveState should handle items with special characters in text', () => {
 test('saveState should handle items with unicode characters', () => {
   const uid = 18
   const item: StatusBarItem = {
-    name: 'unicode',
     elements: [{ type: 'text', value: 'Unicode: 🚀 中文 العربية' }],
+    name: 'unicode',
     tooltip: 'Tooltip: 🎉',
   }
   const state: StatusBarState = {
@@ -446,8 +446,8 @@ test('saveState should handle items with long text values', () => {
   const longText = 'A'.repeat(1000)
   const longTooltip = 'B'.repeat(2000)
   const item: StatusBarItem = {
-    name: 'long',
     elements: [{ type: 'text', value: longText }],
+    name: 'long',
     tooltip: longTooltip,
   }
   const state: StatusBarState = {

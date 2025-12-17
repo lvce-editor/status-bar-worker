@@ -7,13 +7,13 @@ import * as ItemRightUpdate from '../src/parts/ItemRightUpdate/ItemRightUpdate.t
 test('itemRightUpdate should update existing item by name', () => {
   const state: StatusBarState = { ...createDefaultState(), uid: 1 }
   const item1: StatusBarItem = {
-    name: 'item1',
     elements: [{ type: 'text', value: 'text1' }],
+    name: 'item1',
     tooltip: 'tooltip1',
   }
   const item2: StatusBarItem = {
-    name: 'item2',
     elements: [{ type: 'text', value: 'text2' }],
+    name: 'item2',
     tooltip: 'tooltip2',
   }
   const stateWithItems: StatusBarState = {
@@ -21,8 +21,8 @@ test('itemRightUpdate should update existing item by name', () => {
     statusBarItemsRight: [item1, item2],
   }
   const updatedItem: StatusBarItem = {
-    name: 'item1',
     elements: [{ type: 'text', value: 'updated text' }],
+    name: 'item1',
     tooltip: 'updated tooltip',
   }
   const result = ItemRightUpdate.itemRightUpdate(stateWithItems, updatedItem)
@@ -36,8 +36,8 @@ test('itemRightUpdate should update existing item by name', () => {
 test('itemRightUpdate should add new item when name does not exist', () => {
   const state: StatusBarState = { ...createDefaultState(), uid: 1 }
   const item1: StatusBarItem = {
-    name: 'item1',
     elements: [{ type: 'text', value: 'text1' }],
+    name: 'item1',
     tooltip: 'tooltip1',
   }
   const stateWithItems: StatusBarState = {
@@ -45,8 +45,8 @@ test('itemRightUpdate should add new item when name does not exist', () => {
     statusBarItemsRight: [item1],
   }
   const newItem: StatusBarItem = {
-    name: 'item2',
     elements: [{ type: 'text', value: 'text2' }],
+    name: 'item2',
     tooltip: 'tooltip2',
   }
   const result = ItemRightUpdate.itemRightUpdate(stateWithItems, newItem)
@@ -60,8 +60,8 @@ test('itemRightUpdate should add new item when name does not exist', () => {
 test('itemRightUpdate should handle empty array', () => {
   const state: StatusBarState = { ...createDefaultState(), uid: 1 }
   const newItem: StatusBarItem = {
-    name: 'item1',
     elements: [{ type: 'text', value: 'text1' }],
+    name: 'item1',
     tooltip: 'tooltip1',
   }
   const result = ItemRightUpdate.itemRightUpdate(state, newItem)
@@ -74,8 +74,8 @@ test('itemRightUpdate should handle empty array', () => {
 test('itemRightUpdate should not mutate original state', () => {
   const state: StatusBarState = { ...createDefaultState(), uid: 1 }
   const item1: StatusBarItem = {
-    name: 'item1',
     elements: [{ type: 'text', value: 'text1' }],
+    name: 'item1',
     tooltip: 'tooltip1',
   }
   const stateWithItems: StatusBarState = {
@@ -83,8 +83,8 @@ test('itemRightUpdate should not mutate original state', () => {
     statusBarItemsRight: [item1],
   }
   const updatedItem: StatusBarItem = {
-    name: 'item1',
     elements: [{ type: 'text', value: 'updated text' }],
+    name: 'item1',
     tooltip: 'updated tooltip',
   }
   const originalItems = [...stateWithItems.statusBarItemsRight]
@@ -95,18 +95,18 @@ test('itemRightUpdate should not mutate original state', () => {
 test('itemRightUpdate should update item in middle of array', () => {
   const state: StatusBarState = { ...createDefaultState(), uid: 1 }
   const item1: StatusBarItem = {
-    name: 'item1',
     elements: [{ type: 'text', value: 'text1' }],
+    name: 'item1',
     tooltip: 'tooltip1',
   }
   const item2: StatusBarItem = {
-    name: 'item2',
     elements: [{ type: 'text', value: 'text2' }],
+    name: 'item2',
     tooltip: 'tooltip2',
   }
   const item3: StatusBarItem = {
-    name: 'item3',
     elements: [{ type: 'text', value: 'text3' }],
+    name: 'item3',
     tooltip: 'tooltip3',
   }
   const stateWithItems: StatusBarState = {
@@ -114,8 +114,8 @@ test('itemRightUpdate should update item in middle of array', () => {
     statusBarItemsRight: [item1, item2, item3],
   }
   const updatedItem: StatusBarItem = {
-    name: 'item2',
     elements: [{ type: 'text', value: 'updated text' }],
+    name: 'item2',
     tooltip: 'updated tooltip',
   }
   const result = ItemRightUpdate.itemRightUpdate(stateWithItems, updatedItem)
