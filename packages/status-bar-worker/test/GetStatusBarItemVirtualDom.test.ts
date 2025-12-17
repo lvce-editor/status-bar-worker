@@ -3,18 +3,20 @@ import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import * as ClassNames from '../src/parts/ClassNames/ClassNames.ts'
 import * as GetStatusBarItemVirtualDom from '../src/parts/GetStatusBarItemVirtualDom/GetStatusBarItemVirtualDom.ts'
 
-test('getStatusBarItemVirtualDom should return div and text node with all properties', () => {
+test('getStatusBarItemVirtualDom should return button with icon and text elements', () => {
   const statusBarItem = {
     command: 'test.command',
-    icon: 'test-icon',
+    elements: [
+      { type: 'icon' as const, value: 'test-icon' },
+      { type: 'text' as const, value: 'Test Item' },
+    ],
     name: 'test.item',
-    text: 'Test Item',
     tooltip: 'Test Tooltip',
   }
   const result = GetStatusBarItemVirtualDom.getStatusBarItemVirtualDom(statusBarItem)
-  expect(result.length).toBe(2)
+  expect(result.length).toBe(3)
   expect(result[0]).toEqual({
-    childCount: 1,
+    childCount: 2,
     className: ClassNames.StatusBarItem,
     name: 'test.item',
     role: 'button',
@@ -24,15 +26,20 @@ test('getStatusBarItemVirtualDom should return div and text node with all proper
   })
   expect(result[1]).toEqual({
     childCount: 0,
+    className: 'test-icon',
+    type: VirtualDomElements.Div,
+  })
+  expect(result[2]).toEqual({
+    childCount: 0,
     text: 'Test Item',
     type: VirtualDomElements.Text,
   })
 })
 
-test('getStatusBarItemVirtualDom should return div and text node with minimal properties', () => {
+test('getStatusBarItemVirtualDom should return button with text element', () => {
   const statusBarItem = {
+    elements: [{ type: 'text' as const, value: 'Test Item' }],
     name: 'test.item',
-    text: 'Test Item',
     tooltip: 'Test Tooltip',
   }
   const result = GetStatusBarItemVirtualDom.getStatusBarItemVirtualDom(statusBarItem)
@@ -55,8 +62,8 @@ test('getStatusBarItemVirtualDom should return div and text node with minimal pr
 
 test('getStatusBarItemVirtualDom should handle empty strings', () => {
   const statusBarItem = {
+    elements: [{ type: 'text' as const, value: '' }],
     name: '',
-    text: '',
     tooltip: '',
   }
   const result = GetStatusBarItemVirtualDom.getStatusBarItemVirtualDom(statusBarItem)
@@ -79,8 +86,8 @@ test('getStatusBarItemVirtualDom should handle empty strings', () => {
 
 test('getStatusBarItemVirtualDom should use tooltip as title', () => {
   const statusBarItem = {
+    elements: [{ type: 'text' as const, value: 'Test Item' }],
     name: 'test.item',
-    text: 'Test Item',
     tooltip: 'Custom Tooltip Text',
   }
   const result = GetStatusBarItemVirtualDom.getStatusBarItemVirtualDom(statusBarItem)
@@ -89,8 +96,8 @@ test('getStatusBarItemVirtualDom should use tooltip as title', () => {
 
 test('getStatusBarItemVirtualDom should use text for text node value', () => {
   const statusBarItem = {
+    elements: [{ type: 'text' as const, value: 'Custom Text Value' }],
     name: 'test.item',
-    text: 'Custom Text Value',
     tooltip: 'Test Tooltip',
   }
   const result = GetStatusBarItemVirtualDom.getStatusBarItemVirtualDom(statusBarItem)
@@ -99,8 +106,8 @@ test('getStatusBarItemVirtualDom should use text for text node value', () => {
 
 test('getStatusBarItemVirtualDom should have correct structure properties', () => {
   const statusBarItem = {
+    elements: [{ type: 'text' as const, value: 'Test Item' }],
     name: 'test.item',
-    text: 'Test Item',
     tooltip: 'Test Tooltip',
   }
   const result = GetStatusBarItemVirtualDom.getStatusBarItemVirtualDom(statusBarItem)

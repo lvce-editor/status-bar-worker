@@ -4,8 +4,8 @@ import type { StatusBarState } from '../StatusBarState/StatusBarState.ts'
 export const itemLeftCreate = (state: StatusBarState, name: string, text: string, tooltip: string): StatusBarState => {
   const { statusBarItemsLeft } = state
   const newItem: StatusBarItem = {
+    elements: [{ type: 'text', value: text }],
     name,
-    text,
     tooltip,
   }
   const newStatusBarItemsLeft = [...statusBarItemsLeft, newItem]

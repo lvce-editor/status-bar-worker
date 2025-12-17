@@ -7,8 +7,8 @@ import * as ItemRightCreate from '../src/parts/ItemRightCreate/ItemRightCreate.t
 test('itemRightCreate should add item to empty right array', () => {
   const state: StatusBarState = CreateDefaultState.createDefaultState()
   const newItem: StatusBarItem = {
+    elements: [{ type: 'text', value: 'Test Item' }],
     name: 'test.item',
-    text: 'Test Item',
     tooltip: 'Test Tooltip',
   }
 
@@ -17,21 +17,21 @@ test('itemRightCreate should add item to empty right array', () => {
   expect(result.statusBarItemsRight).toHaveLength(1)
   expect(result.statusBarItemsRight[0]).toEqual(newItem)
   expect(result.statusBarItemsRight[0]?.name).toBe('test.item')
-  expect(result.statusBarItemsRight[0]?.text).toBe('Test Item')
+  expect(result.statusBarItemsRight[0]?.elements.find((e) => e.type === 'text')?.value).toBe('Test Item')
   expect(result.statusBarItemsRight[0]?.tooltip).toBe('Test Tooltip')
 })
 
 test('itemRightCreate should add item to non-empty right array', () => {
   const state: StatusBarState = CreateDefaultState.createDefaultState()
   const firstItem: StatusBarItem = {
+    elements: [{ type: 'text', value: 'First Item' }],
     name: 'first.item',
-    text: 'First Item',
     tooltip: 'First Tooltip',
   }
   const stateWithFirstItem: StatusBarState = ItemRightCreate.itemRightCreate(state, firstItem)
   const secondItem: StatusBarItem = {
+    elements: [{ type: 'text', value: 'Second Item' }],
     name: 'second.item',
-    text: 'Second Item',
     tooltip: 'Second Tooltip',
   }
 
@@ -45,8 +45,8 @@ test('itemRightCreate should add item to non-empty right array', () => {
 test('itemRightCreate should not modify left array', () => {
   const state: StatusBarState = CreateDefaultState.createDefaultState()
   const newItem: StatusBarItem = {
+    elements: [{ type: 'text', value: 'Test Item' }],
     name: 'test.item',
-    text: 'Test Item',
     tooltip: 'Test Tooltip',
   }
 
@@ -59,8 +59,8 @@ test('itemRightCreate should not modify left array', () => {
 test('itemRightCreate should preserve uid', () => {
   const state: StatusBarState = CreateDefaultState.createDefaultState()
   const newItem: StatusBarItem = {
+    elements: [{ type: 'text', value: 'Test Item' }],
     name: 'test.item',
-    text: 'Test Item',
     tooltip: 'Test Tooltip',
   }
 
@@ -72,8 +72,8 @@ test('itemRightCreate should preserve uid', () => {
 test('itemRightCreate should return new state object', () => {
   const state: StatusBarState = CreateDefaultState.createDefaultState()
   const newItem: StatusBarItem = {
+    elements: [{ type: 'text', value: 'Test Item' }],
     name: 'test.item',
-    text: 'Test Item',
     tooltip: 'Test Tooltip',
   }
 
@@ -86,8 +86,8 @@ test('itemRightCreate should return new state object', () => {
 test('itemRightCreate should not mutate original state', () => {
   const state: StatusBarState = CreateDefaultState.createDefaultState()
   const newItem: StatusBarItem = {
+    elements: [{ type: 'text', value: 'Test Item' }],
     name: 'test.item',
-    text: 'Test Item',
     tooltip: 'Test Tooltip',
   }
 
@@ -101,9 +101,11 @@ test('itemRightCreate should handle item with all properties', () => {
   const state: StatusBarState = CreateDefaultState.createDefaultState()
   const newItem: StatusBarItem = {
     command: 'test.command',
-    icon: 'test-icon',
+    elements: [
+      { type: 'icon', value: 'test-icon' },
+      { type: 'text', value: 'Test Item' },
+    ],
     name: 'test.item',
-    text: 'Test Item',
     tooltip: 'Test Tooltip',
   }
 
@@ -111,14 +113,14 @@ test('itemRightCreate should handle item with all properties', () => {
 
   expect(result.statusBarItemsRight[0]).toEqual(newItem)
   expect(result.statusBarItemsRight[0]?.command).toBe('test.command')
-  expect(result.statusBarItemsRight[0]?.icon).toBe('test-icon')
+  expect(result.statusBarItemsRight[0]?.elements.find((e) => e.type === 'icon')?.value).toBe('test-icon')
 })
 
 test('itemRightCreate should handle item with optional properties missing', () => {
   const state: StatusBarState = CreateDefaultState.createDefaultState()
   const newItem: StatusBarItem = {
+    elements: [{ type: 'text', value: 'Test Item' }],
     name: 'test.item',
-    text: 'Test Item',
     tooltip: 'Test Tooltip',
   }
 
@@ -126,5 +128,5 @@ test('itemRightCreate should handle item with optional properties missing', () =
 
   expect(result.statusBarItemsRight[0]).toEqual(newItem)
   expect(result.statusBarItemsRight[0]?.command).toBeUndefined()
-  expect(result.statusBarItemsRight[0]?.icon).toBeUndefined()
+  expect(result.statusBarItemsRight[0]?.elements.find((e) => e.type === 'icon')).toBeUndefined()
 })

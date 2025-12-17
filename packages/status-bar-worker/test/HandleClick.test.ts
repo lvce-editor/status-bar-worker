@@ -15,9 +15,11 @@ test.skip('handleClick should return state with items unchanged', async () => {
     statusBarItemsLeft: [
       {
         command: 'test.command',
-        icon: 'test-icon',
+        elements: [
+          { type: 'icon' as const, value: 'test-icon' },
+          { type: 'text' as const, value: 'Test' },
+        ],
         name: 'test-item',
-        text: 'Test',
         tooltip: 'Test tooltip',
       },
     ],
@@ -43,25 +45,31 @@ test.skip('handleClick should return state with different name', async () => {
     statusBarItemsLeft: [
       {
         command: 'command1',
-        icon: 'icon1',
+        elements: [
+          { type: 'icon' as const, value: 'icon1' },
+          { type: 'text' as const, value: 'Item 1' },
+        ],
         name: 'item1',
-        text: 'Item 1',
         tooltip: 'Tooltip 1',
       },
       {
         command: 'command2',
-        icon: 'icon2',
+        elements: [
+          { type: 'icon' as const, value: 'icon2' },
+          { type: 'text' as const, value: 'Item 2' },
+        ],
         name: 'item2',
-        text: 'Item 2',
         tooltip: 'Tooltip 2',
       },
     ],
     statusBarItemsRight: [
       {
         command: 'command3',
-        icon: 'icon3',
+        elements: [
+          { type: 'icon' as const, value: 'icon3' },
+          { type: 'text' as const, value: 'Item 3' },
+        ],
         name: 'item3',
-        text: 'Item 3',
         tooltip: 'Tooltip 3',
       },
     ],

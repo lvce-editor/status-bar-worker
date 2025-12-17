@@ -23,9 +23,11 @@ test('renderItems should return SetDom2 command with items in left side', () => 
     statusBarItemsLeft: [
       {
         command: 'command1',
-        icon: 'icon1',
+        elements: [
+          { type: 'icon', value: 'icon1' },
+          { type: 'text', value: 'Item 1' },
+        ],
         name: 'item1',
-        text: 'Item 1',
         tooltip: 'Tooltip 1',
       },
     ],
@@ -47,9 +49,11 @@ test('renderItems should return SetDom2 command with items in right side', () =>
     statusBarItemsRight: [
       {
         command: 'command2',
-        icon: 'icon2',
+        elements: [
+          { type: 'icon', value: 'icon2' },
+          { type: 'text', value: 'Item 2' },
+        ],
         name: 'item2',
-        text: 'Item 2',
         tooltip: 'Tooltip 2',
       },
     ],
@@ -71,18 +75,22 @@ test('renderItems should return SetDom2 command with items in both sides', () =>
     statusBarItemsLeft: [
       {
         command: 'command1',
-        icon: 'icon1',
+        elements: [
+          { type: 'icon', value: 'icon1' },
+          { type: 'text', value: 'Item 1' },
+        ],
         name: 'item1',
-        text: 'Item 1',
         tooltip: 'Tooltip 1',
       },
     ],
     statusBarItemsRight: [
       {
         command: 'command2',
-        icon: 'icon2',
+        elements: [
+          { type: 'icon', value: 'icon2' },
+          { type: 'text', value: 'Item 2' },
+        ],
         name: 'item2',
-        text: 'Item 2',
         tooltip: 'Tooltip 2',
       },
     ],
@@ -112,9 +120,11 @@ test('renderItems should ignore oldState and only use newState', () => {
     statusBarItemsLeft: [
       {
         command: 'old-command',
-        icon: 'old-icon',
+        elements: [
+          { type: 'icon', value: 'old-icon' },
+          { type: 'text', value: 'Old Item' },
+        ],
         name: 'old-item',
-        text: 'Old Item',
         tooltip: 'Old Tooltip',
       },
     ],
@@ -125,9 +135,11 @@ test('renderItems should ignore oldState and only use newState', () => {
     statusBarItemsLeft: [
       {
         command: 'new-command',
-        icon: 'new-icon',
+        elements: [
+          { type: 'icon', value: 'new-icon' },
+          { type: 'text', value: 'New Item' },
+        ],
         name: 'new-item',
-        text: 'New Item',
         tooltip: 'New Tooltip',
       },
     ],
@@ -147,25 +159,31 @@ test('renderItems should handle multiple items', () => {
     statusBarItemsLeft: [
       {
         command: 'command1',
-        icon: 'icon1',
+        elements: [
+          { type: 'icon', value: 'icon1' },
+          { type: 'text', value: 'Item 1' },
+        ],
         name: 'item1',
-        text: 'Item 1',
         tooltip: 'Tooltip 1',
       },
       {
         command: 'command2',
-        icon: 'icon2',
+        elements: [
+          { type: 'icon', value: 'icon2' },
+          { type: 'text', value: 'Item 2' },
+        ],
         name: 'item2',
-        text: 'Item 2',
         tooltip: 'Tooltip 2',
       },
     ],
     statusBarItemsRight: [
       {
         command: 'command3',
-        icon: 'icon3',
+        elements: [
+          { type: 'icon', value: 'icon3' },
+          { type: 'text', value: 'Item 3' },
+        ],
         name: 'item3',
-        text: 'Item 3',
         tooltip: 'Tooltip 3',
       },
     ],

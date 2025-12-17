@@ -1,47 +1,36 @@
-import type { UiStatusBarItem } from '../UiStatusBarItem/UiStatusBarItem.ts'
+import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
+import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as ExtensionHostStatusBarItems from '../ExtensionHost/ExtensionHostStatusBarItems.ts'
 import * as ExtensionHostManagement from '../ExtensionHostManagement/ExtensionHostManagement.ts'
 import * as InputName from '../InputName/InputName.ts'
+import * as ToStatusBarItem from '../ToStatusBarItem/ToStatusBarItem.ts'
+import * as ToUiStatusBarItems from '../ToUiStatusBarItems/ToUiStatusBarItems.ts'
 
-const toUiStatusBarItem = (extensionHostStatusBarItem: any): UiStatusBarItem => {
-  return {
-    command: extensionHostStatusBarItem.command || '',
-    icon: extensionHostStatusBarItem.icon || '',
-    name: extensionHostStatusBarItem.id || extensionHostStatusBarItem.name || '',
-    text: extensionHostStatusBarItem.text || '',
-    tooltip: extensionHostStatusBarItem.tooltip || '',
-  }
-}
-
-const toUiStatusBarItems = (statusBarItems: readonly any[] | null | undefined): UiStatusBarItem[] => {
-  if (!statusBarItems) {
-    return []
-  }
-  return statusBarItems.map(toUiStatusBarItem)
-}
-
-export const getStatusBarItems = async (showItems: boolean): Promise<UiStatusBarItem[]> => {
+export const getStatusBarItems = async (showItems: boolean): Promise<StatusBarItem[]> => {
   if (!showItems) {
     return []
   }
   await ExtensionHostManagement.activateByEvent('onSourceControl')
   const extensionStatusBarItems = await ExtensionHostStatusBarItems.getStatusBarItems()
-  const uiStatusBarItems = toUiStatusBarItems(extensionStatusBarItems)
-  const extraItems: readonly UiStatusBarItem[] = [
+  const uiStatusBarItems = ToUiStatusBarItems.toUiStatusBarItems(extensionStatusBarItems)
+  const extraItems: readonly StatusBarItem[] = [
     {
-      command: '',
-      icon: '',
+      command: undefined,
+      elements: [{ type: 'text', value: 'Notifications' }],
       name: InputName.Notifications,
-      text: 'Notifications',
       tooltip: '',
     },
     {
-      command: '',
-      icon: '',
+      command: undefined,
+      elements: [
+        { type: 'icon', value: ClassNames.ProblemsErrorIcon },
+        { type: 'text', value: '0' },
+        { type: 'icon', value: ClassNames.ProblemsWarningIcon },
+        { type: 'text', value: '0' },
+      ],
       name: InputName.Problems,
-      text: 'Problems',
       tooltip: '',
     },
   ]
-  return [...uiStatusBarItems, ...extraItems]
+  return [...uiStatusBarItems.map(ToStatusBarItem.toStatusBarItem), ...extraItems]
 }
