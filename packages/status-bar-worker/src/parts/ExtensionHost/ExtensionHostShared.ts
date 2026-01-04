@@ -17,6 +17,8 @@ export const executeProviders = async ({
   noProviderFoundMessage = 'No provider found',
   noProviderFoundResult,
   params,
+  platform,
+  assetDir,
 }: ExecuteProvidersOptions): Promise<any> => {
   await ExtensionHostManagement.activateByEvent(event)
   // @ts-ignore
