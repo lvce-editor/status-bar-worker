@@ -26,7 +26,7 @@ test('executeProviders should activate by event and invoke method with params', 
     platform: 0,
   })
 
-  expect(mockRendererRpc.invocations).toEqual([['ExtensionHostManagement.activateByEvent', 'test.event']])
+  expect(mockRendererRpc.invocations).toEqual([['ExtensionHostManagement.activateByEvent', 'test.event', '', 0]])
   expect(mockExtensionHostRpc.invocations).toEqual([['test.method', 'param1', 'param2']])
   expect(result).toBe('test-result')
 })
@@ -50,7 +50,7 @@ test('executeProviders should use default noProviderFoundMessage', async () => {
     platform: 0,
   })
 
-  expect(mockRendererRpc.invocations).toEqual([['ExtensionHostManagement.activateByEvent', 'test.event']])
+  expect(mockRendererRpc.invocations).toEqual([['ExtensionHostManagement.activateByEvent', 'test.event', '', 0]])
   expect(mockExtensionHostRpc.invocations).toEqual([['test.method']])
   expect(result).toBe('result')
 })
