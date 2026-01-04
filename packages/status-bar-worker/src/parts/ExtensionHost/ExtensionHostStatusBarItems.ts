@@ -13,14 +13,16 @@ const combineResults = (results: readonly any[]): any[] => {
   return results.flat()
 }
 
-export const getStatusBarItems = (): Promise<any[]> => {
+export const getStatusBarItems = (assetDir: string, platform: number): Promise<any[]> => {
   return ExtensionHostShared.executeProviders({
+    assetDir,
     combineResults,
     event: ExtensionHostActivationEvent.OnStatusBarItem,
     method: ExtensionHostCommandType.GetStatusBarItems,
     noProviderFoundMessage: 'No status bar item provider found',
     noProviderFoundResult: [],
     params: [],
+    platform,
   })
 }
 

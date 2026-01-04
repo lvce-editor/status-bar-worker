@@ -8,17 +8,21 @@ type ExecuteProvidersOptions = {
   readonly noProviderFoundMessage?: string
   readonly noProviderFoundResult: any
   readonly params: readonly any[]
+  readonly assetDir: string
+  readonly platform: number
 }
 
 export const executeProviders = async ({
+  assetDir,
   combineResults,
   event,
   method,
   noProviderFoundMessage = 'No provider found',
   noProviderFoundResult,
   params,
+  platform,
 }: ExecuteProvidersOptions): Promise<any> => {
-  await ExtensionHostManagement.activateByEvent(event)
+  await ExtensionHostManagement.activateByEvent(event, assetDir, platform)
   // @ts-ignore
   const result = await ExtensionHost.invoke(method, ...params)
   return result
@@ -29,10 +33,19 @@ type ExecuteProviderOptions = {
   readonly method: string
   readonly noProviderFoundMessage: string
   readonly params: readonly any[]
+  readonly assetDir: string
+  readonly platform: number
 }
 
-export const executeProvider = async ({ event, method, noProviderFoundMessage, params }: ExecuteProviderOptions): Promise<any> => {
-  await ExtensionHostManagement.activateByEvent(event)
+export const executeProvider = async ({
+  assetDir,
+  event,
+  method,
+  noProviderFoundMessage,
+  params,
+  platform,
+}: ExecuteProviderOptions): Promise<any> => {
+  await ExtensionHostManagement.activateByEvent(event, assetDir, platform)
   // @ts-ignore
   const result = ExtensionHost.invoke(method, ...params)
   return result

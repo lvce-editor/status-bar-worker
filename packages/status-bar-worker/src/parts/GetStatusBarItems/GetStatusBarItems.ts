@@ -6,12 +6,12 @@ import * as InputName from '../InputName/InputName.ts'
 import * as ToStatusBarItem from '../ToStatusBarItem/ToStatusBarItem.ts'
 import * as ToUiStatusBarItems from '../ToUiStatusBarItems/ToUiStatusBarItems.ts'
 
-export const getStatusBarItems = async (showItems: boolean): Promise<StatusBarItem[]> => {
+export const getStatusBarItems = async (showItems: boolean, assetDir: string, platform: number): Promise<StatusBarItem[]> => {
   if (!showItems) {
     return []
   }
-  await ExtensionHostManagement.activateByEvent('onSourceControl')
-  const extensionStatusBarItems = await ExtensionHostStatusBarItems.getStatusBarItems()
+  await ExtensionHostManagement.activateByEvent('onSourceControl', assetDir, platform)
+  const extensionStatusBarItems = await ExtensionHostStatusBarItems.getStatusBarItems(assetDir, platform)
   const uiStatusBarItems = ToUiStatusBarItems.toUiStatusBarItems(extensionStatusBarItems)
   const extraItems: readonly StatusBarItem[] = [
     {

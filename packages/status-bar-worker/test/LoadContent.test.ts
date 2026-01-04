@@ -35,8 +35,8 @@ test('loadContent should load status bar items when preference is true', async (
 
   expect(mockRendererRpc.invocations).toEqual([
     ['Preferences.get', 'statusBar.itemsVisible'],
-    ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl],
-    ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem],
+    ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl, '', 0],
+    ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem, '', 0],
   ])
   expect(mockExtensionHostRpc.invocations).toEqual([[ExtensionHostCommandType.GetStatusBarItems]])
 
@@ -107,8 +107,8 @@ test('loadContent should return empty array when preference is undefined', async
 
   expect(mockRendererRpc.invocations).toEqual([
     ['Preferences.get', 'statusBar.itemsVisible'],
-    ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl],
-    ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem],
+    ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl, '', 0],
+    ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem, '', 0],
   ])
   expect(mockExtensionHostRpc.invocations).toEqual([[ExtensionHostCommandType.GetStatusBarItems]])
 
@@ -184,8 +184,8 @@ test('loadContent should handle multiple status bar items', async () => {
 
   expect(mockRendererRpc.invocations).toEqual([
     ['Preferences.get', 'statusBar.itemsVisible'],
-    ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl],
-    ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem],
+    ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl, '', 0],
+    ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem, '', 0],
   ])
   expect(mockExtensionHostRpc.invocations).toEqual([[ExtensionHostCommandType.GetStatusBarItems]])
 
