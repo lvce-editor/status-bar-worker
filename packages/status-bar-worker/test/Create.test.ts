@@ -5,7 +5,7 @@ import * as StatusBarStates from '../src/parts/StatusBarStates/StatusBarStates.t
 
 test('create should store state with the given uid', () => {
   const uid = 123
-  Create.create(uid, 0, '')
+  Create.create(uid, '', 0, 0, 0, 0, 0, '')
   const result = StatusBarStates.get(uid)
   const { newState } = result
   const newStateTyped: StatusBarState = newState
