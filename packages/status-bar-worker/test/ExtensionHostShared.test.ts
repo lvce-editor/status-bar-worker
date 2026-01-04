@@ -16,12 +16,14 @@ test('executeProviders should activate by event and invoke method with params', 
   })
 
   const result = await ExtensionHostShared.executeProviders({
+    assetDir: '',
     combineResults,
     event: 'test.event',
     method: 'test.method',
     noProviderFoundMessage: 'No provider',
     noProviderFoundResult: null,
     params: ['param1', 'param2'],
+    platform: 0,
   })
 
   expect(mockRendererRpc.invocations).toEqual([['ExtensionHostManagement.activateByEvent', 'test.event']])
@@ -39,11 +41,13 @@ test('executeProviders should use default noProviderFoundMessage', async () => {
   })
 
   const result = await ExtensionHostShared.executeProviders({
+    assetDir: '',
     combineResults,
     event: 'test.event',
     method: 'test.method',
     noProviderFoundResult: null,
     params: [],
+    platform: 0,
   })
 
   expect(mockRendererRpc.invocations).toEqual([['ExtensionHostManagement.activateByEvent', 'test.event']])
@@ -61,10 +65,12 @@ test('executeProvider should activate by event and invoke method with params', a
   })
 
   const result = await ExtensionHostShared.executeProvider({
+    assetDir: '',
     event: 'test.event',
     method: 'test.method',
     noProviderFoundMessage: 'No provider',
     params: ['param1', 'param2'],
+    platform: 0,
   })
 
   expect(mockRendererRpc.invocations).toEqual([['ExtensionHostManagement.activateByEvent', 'test.event']])
