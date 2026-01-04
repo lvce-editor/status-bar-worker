@@ -6,7 +6,7 @@ import * as ExtensionHostCommandType from '../src/parts/ExtensionHostCommandType
 import * as GetStatusBarItems from '../src/parts/GetStatusBarItems/GetStatusBarItems.ts'
 
 test('getStatusBarItems should return empty array when showItems is false', async () => {
-  const result = await GetStatusBarItems.getStatusBarItems(false)
+  const result = await GetStatusBarItems.getStatusBarItems(false, '', 0)
   expect(result).toEqual([])
 })
 
@@ -27,7 +27,7 @@ test('getStatusBarItems should return transformed items when showItems is true',
     ],
   })
 
-  const result = await GetStatusBarItems.getStatusBarItems(true)
+  const result = await GetStatusBarItems.getStatusBarItems(true, '', 0)
 
   expect(mockRendererRpc.invocations).toEqual([
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl],
@@ -73,7 +73,7 @@ test('getStatusBarItems should return empty array when no items are returned', a
     [ExtensionHostCommandType.GetStatusBarItems]: async () => [],
   })
 
-  const result = await GetStatusBarItems.getStatusBarItems(true)
+  const result = await GetStatusBarItems.getStatusBarItems(true, '', 0)
 
   expect(mockRendererRpc.invocations).toEqual([
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl],
@@ -111,7 +111,7 @@ test('getStatusBarItems should handle null items', async () => {
     [ExtensionHostCommandType.GetStatusBarItems]: async () => null,
   })
 
-  const result = await GetStatusBarItems.getStatusBarItems(true)
+  const result = await GetStatusBarItems.getStatusBarItems(true, '', 0)
 
   expect(mockRendererRpc.invocations).toEqual([
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl],
@@ -149,7 +149,7 @@ test('getStatusBarItems should handle undefined items', async () => {
     [ExtensionHostCommandType.GetStatusBarItems]: async () => undefined,
   })
 
-  const result = await GetStatusBarItems.getStatusBarItems(true)
+  const result = await GetStatusBarItems.getStatusBarItems(true, '', 0)
 
   expect(mockRendererRpc.invocations).toEqual([
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl],
@@ -194,7 +194,7 @@ test('getStatusBarItems should default missing fields to empty strings', async (
     ],
   })
 
-  const result = await GetStatusBarItems.getStatusBarItems(true)
+  const result = await GetStatusBarItems.getStatusBarItems(true, '', 0)
 
   expect(mockRendererRpc.invocations).toEqual([
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl],
@@ -259,7 +259,7 @@ test('getStatusBarItems should handle multiple items', async () => {
     ],
   })
 
-  const result = await GetStatusBarItems.getStatusBarItems(true)
+  const result = await GetStatusBarItems.getStatusBarItems(true, '', 0)
 
   expect(mockRendererRpc.invocations).toEqual([
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl],
