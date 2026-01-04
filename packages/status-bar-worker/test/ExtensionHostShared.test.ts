@@ -73,7 +73,7 @@ test('executeProvider should activate by event and invoke method with params', a
     platform: 0,
   })
 
-  expect(mockRendererRpc.invocations).toEqual([['ExtensionHostManagement.activateByEvent', 'test.event']])
+  expect(mockRendererRpc.invocations).toEqual([['ExtensionHostManagement.activateByEvent', 'test.event', '', 0]])
   expect(mockExtensionHostRpc.invocations).toEqual([['test.method', 'param1', 'param2']])
   expect(result).toBe('test-result')
 })
