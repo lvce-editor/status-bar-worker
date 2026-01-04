@@ -26,7 +26,7 @@ test('getStatusBarItems should activate by event and invoke GetStatusBarItems', 
     ],
   })
 
-  const result = await ExtensionHostStatusBarItems.getStatusBarItems()
+  const result = await ExtensionHostStatusBarItems.getStatusBarItems('', 0)
 
   expect(mockRendererRpc.invocations).toEqual([['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem]])
   expect(mockExtensionHostRpc.invocations).toEqual([[ExtensionHostCommandType.GetStatusBarItems]])
@@ -47,7 +47,7 @@ test('getStatusBarItems should return empty array when no items are returned', a
     [ExtensionHostCommandType.GetStatusBarItems]: async () => [],
   })
 
-  const result = await ExtensionHostStatusBarItems.getStatusBarItems()
+  const result = await ExtensionHostStatusBarItems.getStatusBarItems('', 0)
 
   expect(mockRendererRpc.invocations).toEqual([['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem]])
   expect(mockExtensionHostRpc.invocations).toEqual([[ExtensionHostCommandType.GetStatusBarItems]])
@@ -72,7 +72,7 @@ test('getStatusBarItems should return items from provider', async () => {
     ],
   })
 
-  const result = await ExtensionHostStatusBarItems.getStatusBarItems()
+  const result = await ExtensionHostStatusBarItems.getStatusBarItems('', 0)
 
   expect(mockRendererRpc.invocations).toEqual([['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem]])
   expect(mockExtensionHostRpc.invocations).toEqual([[ExtensionHostCommandType.GetStatusBarItems]])
@@ -130,7 +130,7 @@ test('onChange should pass empty params array to executeProviders', async () => 
     [ExtensionHostCommandType.GetStatusBarItems]: async () => [],
   })
 
-  await ExtensionHostStatusBarItems.getStatusBarItems()
+  await ExtensionHostStatusBarItems.getStatusBarItems('', 0)
 
   expect(mockRendererRpc.invocations).toEqual([['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem]])
   expect(mockExtensionHostRpc.invocations).toEqual([[ExtensionHostCommandType.GetStatusBarItems]])
