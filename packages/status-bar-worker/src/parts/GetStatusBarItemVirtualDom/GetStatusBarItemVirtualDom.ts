@@ -9,7 +9,7 @@ export const getStatusBarItemVirtualDom = (statusBarItem: StatusBarItem): readon
   const elementNodes = elements.flatMap(getStatusBarItemElementVirtualDom)
   return [
     {
-      childCount: elementNodes.length,
+      childCount: elements.length,
       className: ClassNames.StatusBarItem,
       name,
       role: AriaRoles.Button,
