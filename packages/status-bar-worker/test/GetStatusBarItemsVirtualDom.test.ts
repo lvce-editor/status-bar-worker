@@ -17,7 +17,7 @@ test('getStatusBarItemsVirtualDom should return container div with single item',
     },
   ]
   const result = GetStatusBarItemsVirtualDom.getStatusBarItemsVirtualDom(items, 'test-class')
-  expect(result.length).toBe(3)
+  expect(result.length).toBe(4)
   expect(result[0]).toEqual({
     childCount: 1,
     className: 'test-class',
@@ -33,6 +33,11 @@ test('getStatusBarItemsVirtualDom should return container div with single item',
     type: VirtualDomElements.Button,
   })
   expect(result[2]).toEqual({
+    childCount: 1,
+    className: 'StatusBarItemLabel',
+    type: VirtualDomElements.Span,
+  })
+  expect(result[3]).toEqual({
     childCount: 0,
     text: 'Test Item',
     type: VirtualDomElements.Text,
@@ -53,7 +58,7 @@ test('getStatusBarItemsVirtualDom should return container div with multiple item
     },
   ]
   const result = GetStatusBarItemsVirtualDom.getStatusBarItemsVirtualDom(items, 'test-class')
-  expect(result.length).toBe(5)
+  expect(result.length).toBe(7)
   expect(result[0]).toEqual({
     childCount: 2,
     className: 'test-class',
@@ -69,11 +74,16 @@ test('getStatusBarItemsVirtualDom should return container div with multiple item
     type: VirtualDomElements.Button,
   })
   expect(result[2]).toEqual({
+    childCount: 1,
+    className: 'StatusBarItemLabel',
+    type: VirtualDomElements.Span,
+  })
+  expect(result[3]).toEqual({
     childCount: 0,
     text: 'Item 1',
     type: VirtualDomElements.Text,
   })
-  expect(result[3]).toEqual({
+  expect(result[4]).toEqual({
     childCount: 1,
     className: ClassNames.StatusBarItem,
     name: 'item2',
@@ -82,7 +92,12 @@ test('getStatusBarItemsVirtualDom should return container div with multiple item
     title: 'Tooltip 2',
     type: VirtualDomElements.Button,
   })
-  expect(result[4]).toEqual({
+  expect(result[5]).toEqual({
+    childCount: 1,
+    className: 'StatusBarItemLabel',
+    type: VirtualDomElements.Span,
+  })
+  expect(result[6]).toEqual({
     childCount: 0,
     text: 'Item 2',
     type: VirtualDomElements.Text,
@@ -118,7 +133,7 @@ test('getStatusBarItemsVirtualDom should handle items with all fields', () => {
     },
   ]
   const result = GetStatusBarItemsVirtualDom.getStatusBarItemsVirtualDom(items, 'test-class')
-  expect(result.length).toBe(4)
+  expect(result.length).toBe(5)
   expect(result[0]).toEqual({
     childCount: 1,
     className: 'test-class',
@@ -135,10 +150,15 @@ test('getStatusBarItemsVirtualDom should handle items with all fields', () => {
   })
   expect(result[2]).toEqual({
     childCount: 0,
-    className: 'test-icon',
+    className: 'MaskIcon test-icon',
     type: VirtualDomElements.Div,
   })
   expect(result[3]).toEqual({
+    childCount: 1,
+    className: 'StatusBarItemLabel',
+    type: VirtualDomElements.Span,
+  })
+  expect(result[4]).toEqual({
     childCount: 0,
     text: 'Test Item',
     type: VirtualDomElements.Text,

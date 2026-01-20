@@ -14,7 +14,7 @@ test('getStatusBarItemVirtualDom should return button with icon and text element
     tooltip: 'Test Tooltip',
   }
   const result = GetStatusBarItemVirtualDom.getStatusBarItemVirtualDom(statusBarItem)
-  expect(result.length).toBe(3)
+  expect(result.length).toBe(4)
   expect(result[0]).toEqual({
     childCount: 2,
     className: ClassNames.StatusBarItem,
@@ -26,10 +26,15 @@ test('getStatusBarItemVirtualDom should return button with icon and text element
   })
   expect(result[1]).toEqual({
     childCount: 0,
-    className: 'test-icon',
+    className: 'MaskIcon test-icon',
     type: VirtualDomElements.Div,
   })
   expect(result[2]).toEqual({
+    childCount: 1,
+    className: 'StatusBarItemLabel',
+    type: VirtualDomElements.Span,
+  })
+  expect(result[3]).toEqual({
     childCount: 0,
     text: 'Test Item',
     type: VirtualDomElements.Text,
@@ -43,7 +48,7 @@ test('getStatusBarItemVirtualDom should return button with text element', () => 
     tooltip: 'Test Tooltip',
   }
   const result = GetStatusBarItemVirtualDom.getStatusBarItemVirtualDom(statusBarItem)
-  expect(result.length).toBe(2)
+  expect(result.length).toBe(3)
   expect(result[0]).toEqual({
     childCount: 1,
     className: ClassNames.StatusBarItem,
@@ -54,6 +59,11 @@ test('getStatusBarItemVirtualDom should return button with text element', () => 
     type: VirtualDomElements.Button,
   })
   expect(result[1]).toEqual({
+    childCount: 1,
+    className: 'StatusBarItemLabel',
+    type: VirtualDomElements.Span,
+  })
+  expect(result[2]).toEqual({
     childCount: 0,
     text: 'Test Item',
     type: VirtualDomElements.Text,
@@ -67,7 +77,7 @@ test('getStatusBarItemVirtualDom should handle empty strings', () => {
     tooltip: '',
   }
   const result = GetStatusBarItemVirtualDom.getStatusBarItemVirtualDom(statusBarItem)
-  expect(result.length).toBe(2)
+  expect(result.length).toBe(3)
   expect(result[0]).toEqual({
     childCount: 1,
     className: ClassNames.StatusBarItem,
@@ -78,6 +88,11 @@ test('getStatusBarItemVirtualDom should handle empty strings', () => {
     type: VirtualDomElements.Button,
   })
   expect(result[1]).toEqual({
+    childCount: 1,
+    className: 'StatusBarItemLabel',
+    type: VirtualDomElements.Span,
+  })
+  expect(result[2]).toEqual({
     childCount: 0,
     text: '',
     type: VirtualDomElements.Text,
@@ -101,7 +116,7 @@ test('getStatusBarItemVirtualDom should use text for text node value', () => {
     tooltip: 'Test Tooltip',
   }
   const result = GetStatusBarItemVirtualDom.getStatusBarItemVirtualDom(statusBarItem)
-  expect(result[1].text).toBe('Custom Text Value')
+  expect(result[2].text).toBe('Custom Text Value')
 })
 
 test('getStatusBarItemVirtualDom should have correct structure properties', () => {
@@ -116,5 +131,6 @@ test('getStatusBarItemVirtualDom should have correct structure properties', () =
   expect(result[0].role).toBe('button')
   expect(result[0].tabIndex).toBe(-1)
   expect(result[0].type).toBe(VirtualDomElements.Button)
-  expect(result[1].type).toBe(VirtualDomElements.Text)
+  expect(result[1].type).toBe(VirtualDomElements.Span)
+  expect(result[2].type).toBe(VirtualDomElements.Text)
 })
