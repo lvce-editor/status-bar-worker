@@ -8,7 +8,9 @@ export const loadContent = async (state: StatusBarState): Promise<StatusBarState
   const statusBarItems = await GetStatusBarItems.getStatusBarItems(statusBarItemsPreference, assetDir, platform)
   return {
     ...state,
+    errorCount: 0,
     statusBarItemsLeft: [...statusBarItems],
     statusBarItemsRight: [],
+    warningCount: 0,
   }
 }
