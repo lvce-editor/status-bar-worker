@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as StatusBarPreferences from '../src/parts/StatusBarPreferences/StatusBarPreferences.ts'
 
 test('itemsVisible should return true when preference is true', async () => {
-  using mockRpc = RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'Preferences.get': async (key: string) => {
       if (key === 'statusBar.itemsVisible') {
         return true
@@ -17,7 +17,7 @@ test('itemsVisible should return true when preference is true', async () => {
 })
 
 test('itemsVisible should return false when preference is false', async () => {
-  using mockRpc = RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'Preferences.get': async (key: string) => {
       if (key === 'statusBar.itemsVisible') {
         return false
@@ -31,7 +31,7 @@ test('itemsVisible should return false when preference is false', async () => {
 })
 
 test('itemsVisible should return false when preference is undefined', async () => {
-  using mockRpc = RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'Preferences.get': async () => undefined,
   })
   const value = await StatusBarPreferences.itemsVisible()

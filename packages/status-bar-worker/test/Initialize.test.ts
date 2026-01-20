@@ -7,7 +7,7 @@ afterEach(() => {
 })
 
 test('initialize should create extension host rpc and set it', async () => {
-  using mockRendererRpc = RendererWorker.registerMockRpc({
+  const mockRendererRpc = RendererWorker.registerMockRpc({
     'SendMessagePortToExtensionHostWorker.sendMessagePortToExtensionHostWorker': async () => {},
   })
   ;(mockRendererRpc as any).invokeAndTransfer = async (method: string, ...args: ReadonlyArray<any>): Promise<any> => {

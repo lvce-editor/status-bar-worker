@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Preferences from '../src/parts/Preferences/Preferences.ts'
 
 test('get should return preference value', async () => {
-  using mockRpc = RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'Preferences.get': async (key: string) => {
       if (key === 'test.key') {
         return 'test.value'
@@ -17,7 +17,7 @@ test('get should return preference value', async () => {
 })
 
 test('get should return undefined for non-existent key', async () => {
-  using mockRpc = RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'Preferences.get': async () => undefined,
   })
   const value = await Preferences.get('non.existent.key')
@@ -26,7 +26,7 @@ test('get should return undefined for non-existent key', async () => {
 })
 
 test('get should handle different preference types', async () => {
-  using mockRpc = RendererWorker.registerMockRpc({
+  const mockRpc = RendererWorker.registerMockRpc({
     'Preferences.get': async (key: string) => {
       if (key === 'number.key') {
         return 42

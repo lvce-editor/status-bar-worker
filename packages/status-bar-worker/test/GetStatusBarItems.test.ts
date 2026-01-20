@@ -11,7 +11,7 @@ test('getStatusBarItems should return empty array when showItems is false', asyn
 })
 
 test('getStatusBarItems should return transformed items when showItems is true', async () => {
-  using mockRendererRpc = RendererWorker.registerMockRpc({
+  const mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
@@ -45,27 +45,27 @@ test('getStatusBarItems should return transformed items when showItems is true',
       tooltip: 'Test Tooltip',
     },
     {
-      command: undefined,
+      command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
-      tooltip: '',
+      tooltip: 'Notifications',
     },
     {
-      command: undefined,
+      command: '',
       elements: [
-        { type: 'icon', value: ClassNames.ProblemsErrorIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconError' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: ClassNames.ProblemsWarningIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
-      tooltip: '',
+      tooltip: 'Problems',
     },
   ])
 })
 
 test('getStatusBarItems should return empty array when no items are returned', async () => {
-  using mockRendererRpc = RendererWorker.registerMockRpc({
+  const mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
@@ -83,27 +83,27 @@ test('getStatusBarItems should return empty array when no items are returned', a
 
   expect(result).toEqual([
     {
-      command: undefined,
+      command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
-      tooltip: '',
+      tooltip: 'Notifications',
     },
     {
-      command: undefined,
+      command: '',
       elements: [
-        { type: 'icon', value: ClassNames.ProblemsErrorIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconError' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: ClassNames.ProblemsWarningIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
-      tooltip: '',
+      tooltip: 'Problems',
     },
   ])
 })
 
 test('getStatusBarItems should handle null items', async () => {
-  using mockRendererRpc = RendererWorker.registerMockRpc({
+  const mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
@@ -121,27 +121,27 @@ test('getStatusBarItems should handle null items', async () => {
 
   expect(result).toEqual([
     {
-      command: undefined,
+      command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
-      tooltip: '',
+      tooltip: 'Notifications',
     },
     {
-      command: undefined,
+      command: '',
       elements: [
-        { type: 'icon', value: ClassNames.ProblemsErrorIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconError' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: ClassNames.ProblemsWarningIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
-      tooltip: '',
+      tooltip: 'Problems',
     },
   ])
 })
 
 test('getStatusBarItems should handle undefined items', async () => {
-  using mockRendererRpc = RendererWorker.registerMockRpc({
+  const mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
@@ -159,27 +159,27 @@ test('getStatusBarItems should handle undefined items', async () => {
 
   expect(result).toEqual([
     {
-      command: undefined,
+      command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
-      tooltip: '',
+      tooltip: 'Notifications',
     },
     {
-      command: undefined,
+      command: '',
       elements: [
-        { type: 'icon', value: ClassNames.ProblemsErrorIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconError' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: ClassNames.ProblemsWarningIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
-      tooltip: '',
+      tooltip: 'Problems',
     },
   ])
 })
 
 test('getStatusBarItems should default missing fields to empty strings', async () => {
-  using mockRendererRpc = RendererWorker.registerMockRpc({
+  const mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
@@ -216,27 +216,27 @@ test('getStatusBarItems should default missing fields to empty strings', async (
       tooltip: '',
     },
     {
-      command: undefined,
+      command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
-      tooltip: '',
+      tooltip: 'Notifications',
     },
     {
-      command: undefined,
+      command: '',
       elements: [
-        { type: 'icon', value: ClassNames.ProblemsErrorIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconError' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: ClassNames.ProblemsWarningIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
-      tooltip: '',
+      tooltip: 'Problems',
     },
   ])
 })
 
 test('getStatusBarItems should handle multiple items', async () => {
-  using mockRendererRpc = RendererWorker.registerMockRpc({
+  const mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
@@ -287,21 +287,21 @@ test('getStatusBarItems should handle multiple items', async () => {
       tooltip: 'Tooltip 2',
     },
     {
-      command: undefined,
+      command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
-      tooltip: '',
+      tooltip: 'Notifications',
     },
     {
-      command: undefined,
+      command: '',
       elements: [
-        { type: 'icon', value: ClassNames.ProblemsErrorIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconError' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: ClassNames.ProblemsWarningIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
-      tooltip: '',
+      tooltip: 'Problems',
     },
   ])
 })

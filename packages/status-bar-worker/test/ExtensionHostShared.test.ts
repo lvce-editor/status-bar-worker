@@ -7,7 +7,7 @@ const combineResults = (results: readonly any[]): any => {
 }
 
 test('executeProviders should activate by event and invoke method with params', async () => {
-  using mockRendererRpc = RendererWorker.registerMockRpc({
+  const mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
@@ -32,7 +32,7 @@ test('executeProviders should activate by event and invoke method with params', 
 })
 
 test('executeProviders should use default noProviderFoundMessage', async () => {
-  using mockRendererRpc = RendererWorker.registerMockRpc({
+  const mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
@@ -56,7 +56,7 @@ test('executeProviders should use default noProviderFoundMessage', async () => {
 })
 
 test('executeProvider should activate by event and invoke method with params', async () => {
-  using mockRendererRpc = RendererWorker.registerMockRpc({
+  const mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
   })
 

@@ -13,7 +13,7 @@ afterEach(() => {
 })
 
 test('getStatusBarItems should activate by event and invoke GetStatusBarItems', async () => {
-  using mockRendererRpc = RendererWorker.registerMockRpc({
+  const mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
@@ -39,7 +39,7 @@ test('getStatusBarItems should activate by event and invoke GetStatusBarItems', 
 })
 
 test('getStatusBarItems should return empty array when no items are returned', async () => {
-  using mockRendererRpc = RendererWorker.registerMockRpc({
+  const mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
@@ -55,7 +55,7 @@ test('getStatusBarItems should return empty array when no items are returned', a
 })
 
 test('getStatusBarItems should return items from provider', async () => {
-  using mockRendererRpc = RendererWorker.registerMockRpc({
+  const mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
@@ -122,7 +122,7 @@ test('onChange should register multiple listeners independently', async () => {
 })
 
 test('onChange should pass empty params array to executeProviders', async () => {
-  using mockRendererRpc = RendererWorker.registerMockRpc({
+  const mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
