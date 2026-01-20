@@ -11,7 +11,7 @@ test('getStatusBarItems should return empty array when showItems is false', asyn
 })
 
 test('getStatusBarItems should return transformed items when showItems is true', async () => {
-  const mockRendererRpc = RendererWorker.registerMockRpc({
+  using mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
@@ -65,7 +65,7 @@ test('getStatusBarItems should return transformed items when showItems is true',
 })
 
 test('getStatusBarItems should return empty array when no items are returned', async () => {
-  const mockRendererRpc = RendererWorker.registerMockRpc({
+  using mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
@@ -103,7 +103,7 @@ test('getStatusBarItems should return empty array when no items are returned', a
 })
 
 test('getStatusBarItems should handle null items', async () => {
-  const mockRendererRpc = RendererWorker.registerMockRpc({
+  using mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
@@ -141,7 +141,7 @@ test('getStatusBarItems should handle null items', async () => {
 })
 
 test('getStatusBarItems should handle undefined items', async () => {
-  const mockRendererRpc = RendererWorker.registerMockRpc({
+  using mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
@@ -179,7 +179,7 @@ test('getStatusBarItems should handle undefined items', async () => {
 })
 
 test('getStatusBarItems should default missing fields to empty strings', async () => {
-  const mockRendererRpc = RendererWorker.registerMockRpc({
+  using mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
@@ -236,7 +236,7 @@ test('getStatusBarItems should default missing fields to empty strings', async (
 })
 
 test('getStatusBarItems should handle multiple items', async () => {
-  const mockRendererRpc = RendererWorker.registerMockRpc({
+  using mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
