@@ -8,8 +8,7 @@ import * as StatusBarStates from '../src/parts/StatusBarStates/StatusBarStates.t
 test('saveState should return empty arrays when state has no items', () => {
   const uid = 1
   const state: StatusBarState = { ...createDefaultState(), uid }
-  StatusBarStates.set(uid, state, state)
-  const result = SaveState.saveState(uid)
+  const result = SaveState.saveState(state)
   expect(result.itemsLeft).toEqual([])
   expect(result.itemsRight).toEqual([])
 })
@@ -31,8 +30,7 @@ test('saveState should return itemsLeft when only left items exist', () => {
     statusBarItemsLeft: [item1, item2],
     uid,
   }
-  StatusBarStates.set(uid, state, state)
-  const result = SaveState.saveState(uid)
+  const result = SaveState.saveState(state)
   expect(result.itemsLeft).toEqual([item1, item2])
   expect(result.itemsRight).toEqual([])
 })
@@ -55,7 +53,7 @@ test('saveState should return itemsRight when only right items exist', () => {
     uid,
   }
   StatusBarStates.set(uid, state, state)
-  const result = SaveState.saveState(uid)
+  const result = SaveState.saveState(state)
   expect(result.itemsLeft).toEqual([])
   expect(result.itemsRight).toEqual([item1, item2])
 })
@@ -89,7 +87,7 @@ test('saveState should return both itemsLeft and itemsRight', () => {
     uid,
   }
   StatusBarStates.set(uid, state, state)
-  const result = SaveState.saveState(uid)
+  const result = SaveState.saveState(state)
   expect(result.itemsLeft).toEqual([leftItem1, leftItem2])
   expect(result.itemsRight).toEqual([rightItem1, rightItem2])
 })
@@ -111,7 +109,7 @@ test('saveState should return items with all properties', () => {
     uid,
   }
   StatusBarStates.set(uid, state, state)
-  const result = SaveState.saveState(uid)
+  const result = SaveState.saveState(state)
   expect(result.itemsLeft).toEqual([item])
   expect(result.itemsLeft[0].command).toBe('test.command')
   expect(result.itemsLeft[0]?.elements.find((e) => e.type === 'icon')?.value).toBe('test-icon')
@@ -133,7 +131,7 @@ test('saveState should return items with optional properties missing', () => {
     uid,
   }
   StatusBarStates.set(uid, state, state)
-  const result = SaveState.saveState(uid)
+  const result = SaveState.saveState(state)
   expect(result.itemsRight).toEqual([item])
   expect(result.itemsRight[0].name).toBe('item')
   expect(result.itemsRight[0]?.elements.find((e) => e.type === 'text')?.value).toBe('Item')
@@ -159,7 +157,7 @@ test('saveState should handle multiple items in both arrays', () => {
     uid,
   }
   StatusBarStates.set(uid, state, state)
-  const result = SaveState.saveState(uid)
+  const result = SaveState.saveState(state)
   expect(result.itemsLeft).toHaveLength(3)
   expect(result.itemsRight).toHaveLength(3)
   expect(result.itemsLeft).toEqual(leftItems)
@@ -170,7 +168,7 @@ test('saveState should work with different uid values', () => {
   const uid1 = 10
   const state1: StatusBarState = { ...createDefaultState(), uid: uid1 }
   StatusBarStates.set(uid1, state1, state1)
-  const result1 = SaveState.saveState(uid1)
+  const result1 = SaveState.saveState(state1)
   expect(result1.itemsLeft).toEqual([])
   expect(result1.itemsRight).toEqual([])
 
@@ -186,7 +184,7 @@ test('saveState should work with different uid values', () => {
     uid: uid2,
   }
   StatusBarStates.set(uid2, state2, state2)
-  const result2 = SaveState.saveState(uid2)
+  const result2 = SaveState.saveState(state2)
   expect(result2.itemsLeft).toEqual([item])
 })
 
@@ -213,7 +211,7 @@ test('saveState should return newState items, not oldState items', () => {
     uid,
   }
   StatusBarStates.set(uid, oldState, newState)
-  const result = SaveState.saveState(uid)
+  const result = SaveState.saveState(newState)
   expect(result.itemsLeft).toEqual([newItem])
   expect(result.itemsLeft).not.toEqual([oldItem])
 })
@@ -231,7 +229,7 @@ test('saveState should handle empty string values', () => {
     uid,
   }
   StatusBarStates.set(uid, state, state)
-  const result = SaveState.saveState(uid)
+  const result = SaveState.saveState(state)
   expect(result.itemsLeft[0].name).toBe('')
   expect(result.itemsLeft[0]?.elements.find((e) => e.type === 'text')?.value).toBe('')
   expect(result.itemsLeft[0].tooltip).toBe('')
@@ -250,7 +248,7 @@ test('saveState should preserve item order', () => {
     uid,
   }
   StatusBarStates.set(uid, state, state)
-  const result = SaveState.saveState(uid)
+  const result = SaveState.saveState(state)
   expect(result.itemsLeft[0].name).toBe('first')
   expect(result.itemsLeft[1].name).toBe('second')
   expect(result.itemsLeft[2].name).toBe('third')
@@ -269,7 +267,7 @@ test('saveState should handle items with only name property', () => {
     uid,
   }
   StatusBarStates.set(uid, state, state)
-  const result = SaveState.saveState(uid)
+  const result = SaveState.saveState(state)
   expect(result.itemsRight[0].name).toBe('minimal')
 })
 
@@ -290,7 +288,7 @@ test('saveState should handle items with command and icon', () => {
     uid,
   }
   StatusBarStates.set(uid, state, state)
-  const result = SaveState.saveState(uid)
+  const result = SaveState.saveState(state)
   expect(result.itemsLeft[0].command).toBe('extension.command')
   expect(result.itemsLeft[0]?.elements.find((e) => e.type === 'icon')?.value).toBe('$(icon-name)')
 })
@@ -308,7 +306,7 @@ test('saveState should handle zero uid', () => {
     uid,
   }
   StatusBarStates.set(uid, state, state)
-  const result = SaveState.saveState(uid)
+  const result = SaveState.saveState(state)
   expect(result.itemsLeft).toEqual([item])
 })
 
@@ -316,7 +314,7 @@ test('saveState should handle negative uid', () => {
   const uid = -1
   const state: StatusBarState = { ...createDefaultState(), uid }
   StatusBarStates.set(uid, state, state)
-  const result = SaveState.saveState(uid)
+  const result = SaveState.saveState(state)
   expect(result.itemsLeft).toEqual([])
   expect(result.itemsRight).toEqual([])
 })
@@ -334,7 +332,7 @@ test('saveState should handle large uid values', () => {
     uid,
   }
   StatusBarStates.set(uid, state, state)
-  const result = SaveState.saveState(uid)
+  const result = SaveState.saveState(state)
   expect(result.itemsRight).toEqual([item])
 })
 
@@ -342,7 +340,7 @@ test('saveState should return readonly arrays', () => {
   const uid = 14
   const state: StatusBarState = { ...createDefaultState(), uid }
   StatusBarStates.set(uid, state, state)
-  const result = SaveState.saveState(uid)
+  const result = SaveState.saveState(state)
   expect(Object.isFrozen(result.itemsLeft)).toBe(false)
   expect(Array.isArray(result.itemsLeft)).toBe(true)
   expect(Array.isArray(result.itemsRight)).toBe(true)
@@ -377,7 +375,7 @@ test('saveState should handle mixed items with and without optional properties',
     uid,
   }
   StatusBarStates.set(uid, state, state)
-  const result = SaveState.saveState(uid)
+  const result = SaveState.saveState(state)
   expect(result.itemsLeft).toHaveLength(3)
   expect(result.itemsLeft[0].name).toBe('minimal')
   expect(result.itemsLeft[1].command).toBe('cmd')
@@ -398,7 +396,7 @@ test('saveState should handle very long item arrays', () => {
     uid,
   }
   StatusBarStates.set(uid, state, state)
-  const result = SaveState.saveState(uid)
+  const result = SaveState.saveState(state)
   expect(result.itemsLeft).toHaveLength(100)
   expect(result.itemsRight).toHaveLength(100)
   expect(result.itemsLeft[0].name).toBe('item0')
@@ -418,7 +416,7 @@ test('saveState should handle items with special characters in text', () => {
     uid,
   }
   StatusBarStates.set(uid, state, state)
-  const result = SaveState.saveState(uid)
+  const result = SaveState.saveState(state)
   expect(result.itemsLeft[0]?.elements.find((e) => e.type === 'text')?.value).toBe('Special chars: !@#$%^&*()')
   expect(result.itemsLeft[0].tooltip).toBe('Tooltip with "quotes" and \'apostrophes\'')
 })
@@ -436,7 +434,7 @@ test('saveState should handle items with unicode characters', () => {
     uid,
   }
   StatusBarStates.set(uid, state, state)
-  const result = SaveState.saveState(uid)
+  const result = SaveState.saveState(state)
   expect(result.itemsRight[0]?.elements.find((e) => e.type === 'text')?.value).toBe('Unicode: 🚀 中文 العربية')
   expect(result.itemsRight[0].tooltip).toBe('Tooltip: 🎉')
 })
@@ -456,7 +454,7 @@ test('saveState should handle items with long text values', () => {
     uid,
   }
   StatusBarStates.set(uid, state, state)
-  const result = SaveState.saveState(uid)
+  const result = SaveState.saveState(state)
   const textElement = result.itemsLeft[0]?.elements.find((e) => e.type === 'text')
   expect(textElement?.value).toBe(longText)
   expect(result.itemsLeft[0].tooltip).toBe(longTooltip)
