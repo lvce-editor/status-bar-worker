@@ -1,11 +1,13 @@
 import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
-import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as InputName from '../InputName/InputName.ts'
 
 <<<<<<< Updated upstream
 export const getBuiltinStatusBarItems = async (): Promise<readonly StatusBarItem[]> => {
+  const errorCount = 0
+  const warningCount = 0
   const extraItems: readonly StatusBarItem[] = [
     {
+<<<<<<< HEAD
       command: undefined,
 =======
 const getProblemsAriaLabel = (errorCount: number, warningCount: number): string => {
@@ -28,11 +30,15 @@ export const getBuiltinStatusBarItems = async (errorCount: number, warningCount:
       ariaLabel: 'Notifications',
       command: '', // TODO should show notifications center
 >>>>>>> Stashed changes
+=======
+      command: '', // TODO should show notifications center
+>>>>>>> origin/main
       elements: [{ type: 'text', value: 'Notifications' }],
       name: InputName.Notifications,
-      tooltip: '',
+      tooltip: 'Notifications',
     },
     {
+<<<<<<< HEAD
 <<<<<<< Updated upstream
       command: undefined,
       elements: [
@@ -49,9 +55,17 @@ export const getBuiltinStatusBarItems = async (errorCount: number, warningCount:
         { type: 'icon', value: ClassNames.ProblemsWarningIcon },
         { type: 'text', value: `${warningCount}` },
 >>>>>>> Stashed changes
+=======
+      command: '', // TODO should show problems view
+      elements: [
+        { type: 'icon', value: `MaskIcon MaskIconError` },
+        { type: 'text', value: `${errorCount}` },
+        { type: 'icon', value: `MaskIcon MaskIconWarning` },
+        { type: 'text', value: `${warningCount}` },
+>>>>>>> origin/main
       ],
       name: InputName.Problems,
-      tooltip: '',
+      tooltip: 'Problems',
     },
   ]
   return extraItems

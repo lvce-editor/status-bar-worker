@@ -1,14 +1,13 @@
 import { expect, test } from '@jest/globals'
 import { ExtensionHost, RendererWorker } from '@lvce-editor/rpc-registry'
 import type { StatusBarState } from '../src/parts/StatusBarState/StatusBarState.ts'
-import * as ClassNames from '../src/parts/ClassNames/ClassNames.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as ExtensionHostActivationEvent from '../src/parts/ExtensionHostActivationEvent/ExtensionHostActivationEvent.ts'
 import * as ExtensionHostCommandType from '../src/parts/ExtensionHostCommandType/ExtensionHostCommandType.ts'
 import * as LoadContent from '../src/parts/LoadContent/LoadContent.ts'
 
 test('loadContent should load status bar items when preference is true', async () => {
-  const mockRendererRpc = RendererWorker.registerMockRpc({
+  using mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
     'Preferences.get': async (key: string) => {
       if (key === 'statusBar.itemsVisible') {
@@ -52,19 +51,25 @@ test('loadContent should load status bar items when preference is true', async (
       tooltip: 'Test Tooltip',
     },
     {
+<<<<<<< HEAD
       ariaLabel: 'Notifications',
+=======
+>>>>>>> origin/main
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
+<<<<<<< HEAD
       ariaLabel: 'No Problems',
+=======
+>>>>>>> origin/main
       command: '',
       elements: [
-        { type: 'icon', value: ClassNames.ProblemsErrorIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconError' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: ClassNames.ProblemsWarningIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
@@ -76,7 +81,7 @@ test('loadContent should load status bar items when preference is true', async (
 })
 
 test('loadContent should return empty array when preference is false', async () => {
-  const mockRendererRpc = RendererWorker.registerMockRpc({
+  using mockRendererRpc = RendererWorker.registerMockRpc({
     'Preferences.get': async (key: string) => {
       if (key === 'statusBar.itemsVisible') {
         return false
@@ -96,7 +101,7 @@ test('loadContent should return empty array when preference is false', async () 
 })
 
 test('loadContent should return empty array when preference is undefined', async () => {
-  const mockRendererRpc = RendererWorker.registerMockRpc({
+  using mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
     'Preferences.get': async () => undefined,
   })
@@ -117,19 +122,25 @@ test('loadContent should return empty array when preference is undefined', async
 
   expect(result.statusBarItemsLeft).toEqual([
     {
+<<<<<<< HEAD
       ariaLabel: 'Notifications',
+=======
+>>>>>>> origin/main
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
+<<<<<<< HEAD
       ariaLabel: 'No Problems',
+=======
+>>>>>>> origin/main
       command: '',
       elements: [
-        { type: 'icon', value: ClassNames.ProblemsErrorIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconError' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: ClassNames.ProblemsWarningIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
@@ -141,7 +152,7 @@ test('loadContent should return empty array when preference is undefined', async
 })
 
 test('loadContent should preserve existing state properties', async () => {
-  const mockRendererRpc = RendererWorker.registerMockRpc({
+  using mockRendererRpc = RendererWorker.registerMockRpc({
     'Preferences.get': async () => false,
   })
 
@@ -160,7 +171,7 @@ test('loadContent should preserve existing state properties', async () => {
 })
 
 test('loadContent should handle multiple status bar items', async () => {
-  const mockRendererRpc = RendererWorker.registerMockRpc({
+  using mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
     'Preferences.get': async () => true,
   })
@@ -216,19 +227,25 @@ test('loadContent should handle multiple status bar items', async () => {
       tooltip: 'Tooltip 2',
     },
     {
+<<<<<<< HEAD
       ariaLabel: 'Notifications',
+=======
+>>>>>>> origin/main
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
+<<<<<<< HEAD
       ariaLabel: 'No Problems',
+=======
+>>>>>>> origin/main
       command: '',
       elements: [
-        { type: 'icon', value: ClassNames.ProblemsErrorIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconError' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: ClassNames.ProblemsWarningIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',

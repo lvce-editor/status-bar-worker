@@ -1,6 +1,5 @@
 import { expect, test } from '@jest/globals'
 import { ExtensionHost, RendererWorker } from '@lvce-editor/rpc-registry'
-import * as ClassNames from '../src/parts/ClassNames/ClassNames.ts'
 import * as ExtensionHostActivationEvent from '../src/parts/ExtensionHostActivationEvent/ExtensionHostActivationEvent.ts'
 import * as ExtensionHostCommandType from '../src/parts/ExtensionHostCommandType/ExtensionHostCommandType.ts'
 import * as GetStatusBarItems from '../src/parts/GetStatusBarItems/GetStatusBarItems.ts'
@@ -11,7 +10,7 @@ test('getStatusBarItems should return empty array when showItems is false', asyn
 })
 
 test('getStatusBarItems should return transformed items when showItems is true', async () => {
-  const mockRendererRpc = RendererWorker.registerMockRpc({
+  using mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
@@ -46,19 +45,25 @@ test('getStatusBarItems should return transformed items when showItems is true',
       tooltip: 'Test Tooltip',
     },
     {
+<<<<<<< HEAD
       ariaLabel: 'Notifications',
+=======
+>>>>>>> origin/main
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
+<<<<<<< HEAD
       ariaLabel: 'No Problems',
+=======
+>>>>>>> origin/main
       command: '',
       elements: [
-        { type: 'icon', value: ClassNames.ProblemsErrorIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconError' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: ClassNames.ProblemsWarningIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
@@ -68,7 +73,7 @@ test('getStatusBarItems should return transformed items when showItems is true',
 })
 
 test('getStatusBarItems should return empty array when no items are returned', async () => {
-  const mockRendererRpc = RendererWorker.registerMockRpc({
+  using mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
@@ -86,19 +91,25 @@ test('getStatusBarItems should return empty array when no items are returned', a
 
   expect(result).toEqual([
     {
+<<<<<<< HEAD
       ariaLabel: 'Notifications',
+=======
+>>>>>>> origin/main
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
+<<<<<<< HEAD
       ariaLabel: 'No Problems',
+=======
+>>>>>>> origin/main
       command: '',
       elements: [
-        { type: 'icon', value: ClassNames.ProblemsErrorIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconError' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: ClassNames.ProblemsWarningIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
@@ -108,7 +119,7 @@ test('getStatusBarItems should return empty array when no items are returned', a
 })
 
 test('getStatusBarItems should handle null items', async () => {
-  const mockRendererRpc = RendererWorker.registerMockRpc({
+  using mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
@@ -126,19 +137,25 @@ test('getStatusBarItems should handle null items', async () => {
 
   expect(result).toEqual([
     {
+<<<<<<< HEAD
       ariaLabel: 'Notifications',
+=======
+>>>>>>> origin/main
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
+<<<<<<< HEAD
       ariaLabel: 'No Problems',
+=======
+>>>>>>> origin/main
       command: '',
       elements: [
-        { type: 'icon', value: ClassNames.ProblemsErrorIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconError' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: ClassNames.ProblemsWarningIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
@@ -148,7 +165,7 @@ test('getStatusBarItems should handle null items', async () => {
 })
 
 test('getStatusBarItems should handle undefined items', async () => {
-  const mockRendererRpc = RendererWorker.registerMockRpc({
+  using mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
@@ -166,19 +183,25 @@ test('getStatusBarItems should handle undefined items', async () => {
 
   expect(result).toEqual([
     {
+<<<<<<< HEAD
       ariaLabel: 'Notifications',
+=======
+>>>>>>> origin/main
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
+<<<<<<< HEAD
       ariaLabel: 'No Problems',
+=======
+>>>>>>> origin/main
       command: '',
       elements: [
-        { type: 'icon', value: ClassNames.ProblemsErrorIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconError' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: ClassNames.ProblemsWarningIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
@@ -188,7 +211,7 @@ test('getStatusBarItems should handle undefined items', async () => {
 })
 
 test('getStatusBarItems should default missing fields to empty strings', async () => {
-  const mockRendererRpc = RendererWorker.registerMockRpc({
+  using mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
@@ -227,19 +250,25 @@ test('getStatusBarItems should default missing fields to empty strings', async (
       tooltip: '',
     },
     {
+<<<<<<< HEAD
       ariaLabel: 'Notifications',
+=======
+>>>>>>> origin/main
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
+<<<<<<< HEAD
       ariaLabel: 'No Problems',
+=======
+>>>>>>> origin/main
       command: '',
       elements: [
-        { type: 'icon', value: ClassNames.ProblemsErrorIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconError' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: ClassNames.ProblemsWarningIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
@@ -249,7 +278,7 @@ test('getStatusBarItems should default missing fields to empty strings', async (
 })
 
 test('getStatusBarItems should handle multiple items', async () => {
-  const mockRendererRpc = RendererWorker.registerMockRpc({
+  using mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
   })
 
@@ -302,19 +331,25 @@ test('getStatusBarItems should handle multiple items', async () => {
       tooltip: 'Tooltip 2',
     },
     {
+<<<<<<< HEAD
       ariaLabel: 'Notifications',
+=======
+>>>>>>> origin/main
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
+<<<<<<< HEAD
       ariaLabel: 'No Problems',
+=======
+>>>>>>> origin/main
       command: '',
       elements: [
-        { type: 'icon', value: ClassNames.ProblemsErrorIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconError' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: ClassNames.ProblemsWarningIcon },
+        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
