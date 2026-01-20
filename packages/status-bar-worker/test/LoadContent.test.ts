@@ -51,25 +51,19 @@ test('loadContent should load status bar items when preference is true', async (
       tooltip: 'Test Tooltip',
     },
     {
-<<<<<<< HEAD
       ariaLabel: 'Notifications',
-=======
->>>>>>> origin/main
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
-<<<<<<< HEAD
       ariaLabel: 'No Problems',
-=======
->>>>>>> origin/main
       command: '',
       elements: [
-        { type: 'icon', value: 'MaskIcon MaskIconError' },
+        { type: 'icon', value: 'ProblemsErrorIcon' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
+        { type: 'icon', value: 'ProblemsWarningIcon' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
@@ -122,25 +116,19 @@ test('loadContent should return empty array when preference is undefined', async
 
   expect(result.statusBarItemsLeft).toEqual([
     {
-<<<<<<< HEAD
       ariaLabel: 'Notifications',
-=======
->>>>>>> origin/main
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
-<<<<<<< HEAD
       ariaLabel: 'No Problems',
-=======
->>>>>>> origin/main
       command: '',
       elements: [
-        { type: 'icon', value: 'MaskIcon MaskIconError' },
+        { type: 'icon', value: 'ProblemsErrorIcon' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
+        { type: 'icon', value: 'ProblemsWarningIcon' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
@@ -227,25 +215,19 @@ test('loadContent should handle multiple status bar items', async () => {
       tooltip: 'Tooltip 2',
     },
     {
-<<<<<<< HEAD
       ariaLabel: 'Notifications',
-=======
->>>>>>> origin/main
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
-<<<<<<< HEAD
       ariaLabel: 'No Problems',
-=======
->>>>>>> origin/main
       command: '',
       elements: [
-        { type: 'icon', value: 'MaskIcon MaskIconError' },
+        { type: 'icon', value: 'ProblemsErrorIcon' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
+        { type: 'icon', value: 'ProblemsWarningIcon' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',

@@ -45,25 +45,19 @@ test('getStatusBarItems should return transformed items when showItems is true',
       tooltip: 'Test Tooltip',
     },
     {
-<<<<<<< HEAD
       ariaLabel: 'Notifications',
-=======
->>>>>>> origin/main
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
-<<<<<<< HEAD
       ariaLabel: 'No Problems',
-=======
->>>>>>> origin/main
       command: '',
       elements: [
-        { type: 'icon', value: 'MaskIcon MaskIconError' },
+        { type: 'icon', value: 'ProblemsErrorIcon' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
+        { type: 'icon', value: 'ProblemsWarningIcon' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
@@ -91,25 +85,19 @@ test('getStatusBarItems should return empty array when no items are returned', a
 
   expect(result).toEqual([
     {
-<<<<<<< HEAD
       ariaLabel: 'Notifications',
-=======
->>>>>>> origin/main
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
-<<<<<<< HEAD
       ariaLabel: 'No Problems',
-=======
->>>>>>> origin/main
       command: '',
       elements: [
-        { type: 'icon', value: 'MaskIcon MaskIconError' },
+        { type: 'icon', value: 'ProblemsErrorIcon' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
+        { type: 'icon', value: 'ProblemsWarningIcon' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
@@ -137,25 +125,19 @@ test('getStatusBarItems should handle null items', async () => {
 
   expect(result).toEqual([
     {
-<<<<<<< HEAD
       ariaLabel: 'Notifications',
-=======
->>>>>>> origin/main
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
-<<<<<<< HEAD
       ariaLabel: 'No Problems',
-=======
->>>>>>> origin/main
       command: '',
       elements: [
-        { type: 'icon', value: 'MaskIcon MaskIconError' },
+        { type: 'icon', value: 'ProblemsErrorIcon' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
+        { type: 'icon', value: 'ProblemsWarningIcon' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
@@ -183,25 +165,19 @@ test('getStatusBarItems should handle undefined items', async () => {
 
   expect(result).toEqual([
     {
-<<<<<<< HEAD
       ariaLabel: 'Notifications',
-=======
->>>>>>> origin/main
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
-<<<<<<< HEAD
       ariaLabel: 'No Problems',
-=======
->>>>>>> origin/main
       command: '',
       elements: [
-        { type: 'icon', value: 'MaskIcon MaskIconError' },
+        { type: 'icon', value: 'ProblemsErrorIcon' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
+        { type: 'icon', value: 'ProblemsWarningIcon' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
@@ -250,25 +226,19 @@ test('getStatusBarItems should default missing fields to empty strings', async (
       tooltip: '',
     },
     {
-<<<<<<< HEAD
       ariaLabel: 'Notifications',
-=======
->>>>>>> origin/main
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
-<<<<<<< HEAD
       ariaLabel: 'No Problems',
-=======
->>>>>>> origin/main
       command: '',
       elements: [
-        { type: 'icon', value: 'MaskIcon MaskIconError' },
+        { type: 'icon', value: 'ProblemsErrorIcon' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
+        { type: 'icon', value: 'ProblemsWarningIcon' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
@@ -331,25 +301,19 @@ test('getStatusBarItems should handle multiple items', async () => {
       tooltip: 'Tooltip 2',
     },
     {
-<<<<<<< HEAD
       ariaLabel: 'Notifications',
-=======
->>>>>>> origin/main
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
-<<<<<<< HEAD
       ariaLabel: 'No Problems',
-=======
->>>>>>> origin/main
       command: '',
       elements: [
-        { type: 'icon', value: 'MaskIcon MaskIconError' },
+        { type: 'icon', value: 'ProblemsErrorIcon' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
+        { type: 'icon', value: 'ProblemsWarningIcon' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
