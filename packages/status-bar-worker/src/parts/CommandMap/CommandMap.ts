@@ -11,7 +11,7 @@ import { render2 } from '../Render2/Render2.ts'
 import { renderEventListeners } from '../RenderEventListeners/RenderEventListeners.ts'
 import { resize } from '../Resize/Resize.ts'
 import { saveState } from '../SaveState/SaveState.ts'
-import { getCommandIds, wrapCommand } from '../StatusBarStates/StatusBarStates.ts'
+import { getCommandIds, wrapCommand, wrapGetter } from '../StatusBarStates/StatusBarStates.ts'
 
 export const commandMap = {
   'StatusBar.create': StatusBar.create,
@@ -26,6 +26,6 @@ export const commandMap = {
   'StatusBar.render2': render2,
   'StatusBar.renderEventListeners': renderEventListeners,
   'StatusBar.resize': wrapCommand(resize),
-  'StatusBar.saveState': saveState,
+  'StatusBar.saveState': wrapGetter(saveState),
   'StatusBar.terminate': terminate,
 }
