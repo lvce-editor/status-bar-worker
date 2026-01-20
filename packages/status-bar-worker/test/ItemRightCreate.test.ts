@@ -7,6 +7,7 @@ import * as ItemRightCreate from '../src/parts/ItemRightCreate/ItemRightCreate.t
 test('itemRightCreate should add item to empty right array', () => {
   const state: StatusBarState = CreateDefaultState.createDefaultState()
   const newItem: StatusBarItem = {
+    ariaLabel: 'Test Item',
     elements: [{ type: 'text', value: 'Test Item' }],
     name: 'test.item',
     tooltip: 'Test Tooltip',
@@ -24,12 +25,14 @@ test('itemRightCreate should add item to empty right array', () => {
 test('itemRightCreate should add item to non-empty right array', () => {
   const state: StatusBarState = CreateDefaultState.createDefaultState()
   const firstItem: StatusBarItem = {
+    ariaLabel: 'First Item',
     elements: [{ type: 'text', value: 'First Item' }],
     name: 'first.item',
     tooltip: 'First Tooltip',
   }
   const stateWithFirstItem: StatusBarState = ItemRightCreate.itemRightCreate(state, firstItem)
   const secondItem: StatusBarItem = {
+    ariaLabel: 'Second Item',
     elements: [{ type: 'text', value: 'Second Item' }],
     name: 'second.item',
     tooltip: 'Second Tooltip',
@@ -45,6 +48,7 @@ test('itemRightCreate should add item to non-empty right array', () => {
 test('itemRightCreate should not modify left array', () => {
   const state: StatusBarState = CreateDefaultState.createDefaultState()
   const newItem: StatusBarItem = {
+    ariaLabel: 'Test Item',
     elements: [{ type: 'text', value: 'Test Item' }],
     name: 'test.item',
     tooltip: 'Test Tooltip',
@@ -59,6 +63,7 @@ test('itemRightCreate should not modify left array', () => {
 test('itemRightCreate should preserve uid', () => {
   const state: StatusBarState = CreateDefaultState.createDefaultState()
   const newItem: StatusBarItem = {
+    ariaLabel: 'Test Item',
     elements: [{ type: 'text', value: 'Test Item' }],
     name: 'test.item',
     tooltip: 'Test Tooltip',
@@ -72,6 +77,7 @@ test('itemRightCreate should preserve uid', () => {
 test('itemRightCreate should return new state object', () => {
   const state: StatusBarState = CreateDefaultState.createDefaultState()
   const newItem: StatusBarItem = {
+    ariaLabel: 'Test Item',
     elements: [{ type: 'text', value: 'Test Item' }],
     name: 'test.item',
     tooltip: 'Test Tooltip',
@@ -86,6 +92,7 @@ test('itemRightCreate should return new state object', () => {
 test('itemRightCreate should not mutate original state', () => {
   const state: StatusBarState = CreateDefaultState.createDefaultState()
   const newItem: StatusBarItem = {
+    ariaLabel: 'Test Item',
     elements: [{ type: 'text', value: 'Test Item' }],
     name: 'test.item',
     tooltip: 'Test Tooltip',
@@ -100,6 +107,7 @@ test('itemRightCreate should not mutate original state', () => {
 test('itemRightCreate should handle item with all properties', () => {
   const state: StatusBarState = CreateDefaultState.createDefaultState()
   const newItem: StatusBarItem = {
+    ariaLabel: 'Test Item',
     command: 'test.command',
     elements: [
       { type: 'icon', value: 'test-icon' },
@@ -119,6 +127,7 @@ test('itemRightCreate should handle item with all properties', () => {
 test('itemRightCreate should handle item with optional properties missing', () => {
   const state: StatusBarState = CreateDefaultState.createDefaultState()
   const newItem: StatusBarItem = {
+    ariaLabel: 'Test Item',
     elements: [{ type: 'text', value: 'Test Item' }],
     name: 'test.item',
     tooltip: 'Test Tooltip',
