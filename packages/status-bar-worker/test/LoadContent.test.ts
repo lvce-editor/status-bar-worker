@@ -8,7 +8,7 @@ import * as ExtensionHostCommandType from '../src/parts/ExtensionHostCommandType
 import * as LoadContent from '../src/parts/LoadContent/LoadContent.ts'
 
 test('loadContent should load status bar items when preference is true', async () => {
-  const mockRendererRpc = RendererWorker.registerMockRpc({
+  using mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
     'Preferences.get': async (key: string) => {
       if (key === 'statusBar.itemsVisible') {
@@ -73,7 +73,7 @@ test('loadContent should load status bar items when preference is true', async (
 })
 
 test('loadContent should return empty array when preference is false', async () => {
-  const mockRendererRpc = RendererWorker.registerMockRpc({
+  using mockRendererRpc = RendererWorker.registerMockRpc({
     'Preferences.get': async (key: string) => {
       if (key === 'statusBar.itemsVisible') {
         return false
@@ -93,7 +93,7 @@ test('loadContent should return empty array when preference is false', async () 
 })
 
 test('loadContent should return empty array when preference is undefined', async () => {
-  const mockRendererRpc = RendererWorker.registerMockRpc({
+  using mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
     'Preferences.get': async () => undefined,
   })
@@ -136,7 +136,7 @@ test('loadContent should return empty array when preference is undefined', async
 })
 
 test('loadContent should preserve existing state properties', async () => {
-  const mockRendererRpc = RendererWorker.registerMockRpc({
+  using mockRendererRpc = RendererWorker.registerMockRpc({
     'Preferences.get': async () => false,
   })
 
@@ -155,7 +155,7 @@ test('loadContent should preserve existing state properties', async () => {
 })
 
 test('loadContent should handle multiple status bar items', async () => {
-  const mockRendererRpc = RendererWorker.registerMockRpc({
+  using mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
     'Preferences.get': async () => true,
   })
