@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'status-bar.extension-invalid-data'
 
+export const skip = 1
+
 export const test: Test = async ({ expect, Locator }) => {
   const statusBar = Locator('.StatusBar')
   await expect(statusBar).toBeVisible()

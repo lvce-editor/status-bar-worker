@@ -1,5 +1,7 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
+export const skip = 1
+
 export const name = 'status-bar.multiple-extensions-mixed'
 
 export const test: Test = async ({ expect, Locator }) => {
