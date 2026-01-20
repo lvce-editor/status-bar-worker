@@ -5,7 +5,7 @@ import type { StatusBarItemElement } from '../StatusBarItemElement/StatusBarItem
 const getTextVirtualDom = (element: StatusBarItemElement): readonly VirtualDomNode[] => {
   return [
     {
-      childCount: 0,
+      childCount: 1,
       className: 'StatusBarItemLabel',
       type: VirtualDomElements.Span,
     },
