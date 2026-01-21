@@ -5,7 +5,7 @@ import * as ExtensionHostCommandType from '../src/parts/ExtensionHostCommandType
 import * as GetStatusBarItems from '../src/parts/GetStatusBarItems/GetStatusBarItems.ts'
 
 test('getStatusBarItems should return empty array when showItems is false', async () => {
-  const result = await GetStatusBarItems.getStatusBarItems(false, '', 0)
+  const result = await GetStatusBarItems.getStatusBarItems(false, '', 0, 0, 0)
   expect(result).toEqual([])
 })
 
@@ -26,7 +26,7 @@ test('getStatusBarItems should return transformed items when showItems is true',
     ],
   })
 
-  const result = await GetStatusBarItems.getStatusBarItems(true, '', 0)
+  const result = await GetStatusBarItems.getStatusBarItems(true, '', 0, 0, 0)
 
   expect(mockRendererRpc.invocations).toEqual([
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl, '', 0],
@@ -35,6 +35,7 @@ test('getStatusBarItems should return transformed items when showItems is true',
   expect(mockExtensionHostRpc.invocations).toEqual([[ExtensionHostCommandType.GetStatusBarItems]])
   expect(result).toEqual([
     {
+      ariaLabel: 'Test Item',
       command: 'test.command',
       elements: [
         { type: 'icon', value: 'test-icon' },
@@ -44,17 +45,19 @@ test('getStatusBarItems should return transformed items when showItems is true',
       tooltip: 'Test Tooltip',
     },
     {
+      ariaLabel: 'Notifications',
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
+      ariaLabel: 'No Problems',
       command: '',
       elements: [
-        { type: 'icon', value: 'MaskIcon MaskIconError' },
+        { type: 'icon', value: 'ProblemsErrorIcon' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
+        { type: 'icon', value: 'ProblemsWarningIcon' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
@@ -72,7 +75,7 @@ test('getStatusBarItems should return empty array when no items are returned', a
     [ExtensionHostCommandType.GetStatusBarItems]: async () => [],
   })
 
-  const result = await GetStatusBarItems.getStatusBarItems(true, '', 0)
+  const result = await GetStatusBarItems.getStatusBarItems(true, '', 0, 0, 0)
 
   expect(mockRendererRpc.invocations).toEqual([
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl, '', 0],
@@ -82,17 +85,19 @@ test('getStatusBarItems should return empty array when no items are returned', a
 
   expect(result).toEqual([
     {
+      ariaLabel: 'Notifications',
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
+      ariaLabel: 'No Problems',
       command: '',
       elements: [
-        { type: 'icon', value: 'MaskIcon MaskIconError' },
+        { type: 'icon', value: 'ProblemsErrorIcon' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
+        { type: 'icon', value: 'ProblemsWarningIcon' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
@@ -110,7 +115,7 @@ test('getStatusBarItems should handle null items', async () => {
     [ExtensionHostCommandType.GetStatusBarItems]: async () => null,
   })
 
-  const result = await GetStatusBarItems.getStatusBarItems(true, '', 0)
+  const result = await GetStatusBarItems.getStatusBarItems(true, '', 0, 0, 0)
 
   expect(mockRendererRpc.invocations).toEqual([
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl, '', 0],
@@ -120,17 +125,19 @@ test('getStatusBarItems should handle null items', async () => {
 
   expect(result).toEqual([
     {
+      ariaLabel: 'Notifications',
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
+      ariaLabel: 'No Problems',
       command: '',
       elements: [
-        { type: 'icon', value: 'MaskIcon MaskIconError' },
+        { type: 'icon', value: 'ProblemsErrorIcon' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
+        { type: 'icon', value: 'ProblemsWarningIcon' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
@@ -148,7 +155,7 @@ test('getStatusBarItems should handle undefined items', async () => {
     [ExtensionHostCommandType.GetStatusBarItems]: async () => undefined,
   })
 
-  const result = await GetStatusBarItems.getStatusBarItems(true, '', 0)
+  const result = await GetStatusBarItems.getStatusBarItems(true, '', 0, 0, 0)
 
   expect(mockRendererRpc.invocations).toEqual([
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl, '', 0],
@@ -158,17 +165,19 @@ test('getStatusBarItems should handle undefined items', async () => {
 
   expect(result).toEqual([
     {
+      ariaLabel: 'Notifications',
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
+      ariaLabel: 'No Problems',
       command: '',
       elements: [
-        { type: 'icon', value: 'MaskIcon MaskIconError' },
+        { type: 'icon', value: 'ProblemsErrorIcon' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
+        { type: 'icon', value: 'ProblemsWarningIcon' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
@@ -193,7 +202,7 @@ test('getStatusBarItems should default missing fields to empty strings', async (
     ],
   })
 
-  const result = await GetStatusBarItems.getStatusBarItems(true, '', 0)
+  const result = await GetStatusBarItems.getStatusBarItems(true, '', 0, 0, 0)
 
   expect(mockRendererRpc.invocations).toEqual([
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl, '', 0],
@@ -203,29 +212,33 @@ test('getStatusBarItems should default missing fields to empty strings', async (
 
   expect(result).toEqual([
     {
+      ariaLabel: 'item1',
       command: undefined,
       elements: [{ type: 'text', value: '' }],
       name: 'item1',
       tooltip: '',
     },
     {
+      ariaLabel: 'Item 2',
       command: undefined,
       elements: [{ type: 'text', value: 'Item 2' }],
       name: '',
       tooltip: '',
     },
     {
+      ariaLabel: 'Notifications',
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
+      ariaLabel: 'No Problems',
       command: '',
       elements: [
-        { type: 'icon', value: 'MaskIcon MaskIconError' },
+        { type: 'icon', value: 'ProblemsErrorIcon' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
+        { type: 'icon', value: 'ProblemsWarningIcon' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
@@ -258,7 +271,7 @@ test('getStatusBarItems should handle multiple items', async () => {
     ],
   })
 
-  const result = await GetStatusBarItems.getStatusBarItems(true, '', 0)
+  const result = await GetStatusBarItems.getStatusBarItems(true, '', 0, 0, 0)
 
   expect(mockRendererRpc.invocations).toEqual([
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl, '', 0],
@@ -268,6 +281,7 @@ test('getStatusBarItems should handle multiple items', async () => {
 
   expect(result).toEqual([
     {
+      ariaLabel: 'Item 1',
       command: 'command1',
       elements: [
         { type: 'icon', value: 'icon1' },
@@ -277,6 +291,7 @@ test('getStatusBarItems should handle multiple items', async () => {
       tooltip: 'Tooltip 1',
     },
     {
+      ariaLabel: 'Item 2',
       command: 'command2',
       elements: [
         { type: 'icon', value: 'icon2' },
@@ -286,17 +301,19 @@ test('getStatusBarItems should handle multiple items', async () => {
       tooltip: 'Tooltip 2',
     },
     {
+      ariaLabel: 'Notifications',
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
+      ariaLabel: 'No Problems',
       command: '',
       elements: [
-        { type: 'icon', value: 'MaskIcon MaskIconError' },
+        { type: 'icon', value: 'ProblemsErrorIcon' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
+        { type: 'icon', value: 'ProblemsWarningIcon' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',

@@ -3,9 +3,9 @@ import * as GetStatusBarItems from '../GetStatusBarItems/GetStatusBarItems.ts'
 import * as StatusBarPreferences from '../StatusBarPreferences/StatusBarPreferences.ts'
 
 export const loadContent = async (state: StatusBarState): Promise<StatusBarState> => {
-  const { assetDir, platform } = state
+  const { assetDir, errorCount, platform, warningCount } = state
   const statusBarItemsPreference = await StatusBarPreferences.itemsVisible()
-  const statusBarItems = await GetStatusBarItems.getStatusBarItems(statusBarItemsPreference, assetDir, platform)
+  const statusBarItems = await GetStatusBarItems.getStatusBarItems(statusBarItemsPreference, assetDir, platform, errorCount, warningCount)
   return {
     ...state,
     errorCount: 0,

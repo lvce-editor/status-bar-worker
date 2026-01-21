@@ -5,18 +5,17 @@ import * as ClassNames from '../ClassNames/ClassNames.ts'
 import { getStatusBarItemElementVirtualDom } from '../GetStatusBarItemElementVirtualDom/GetStatusBarItemElementVirtualDom.ts'
 
 export const getStatusBarItemVirtualDom = (statusBarItem: StatusBarItem): readonly VirtualDomNode[] => {
-  const { elements, name, tooltip } = statusBarItem
+  const { ariaLabel, elements, name, tooltip } = statusBarItem
   const elementNodes = elements.flatMap(getStatusBarItemElementVirtualDom)
-  return [
-    {
-      childCount: elements.length,
-      className: ClassNames.StatusBarItem,
-      name,
-      role: AriaRoles.Button,
-      tabIndex: -1,
-      title: tooltip,
-      type: VirtualDomElements.Button,
-    },
-    ...elementNodes,
-  ]
+  const buttonNode: VirtualDomNode = {
+    ariaLabel,
+    childCount: elements.length,
+    className: ClassNames.StatusBarItem,
+    name,
+    role: AriaRoles.Button,
+    tabIndex: -1,
+    title: tooltip,
+    type: VirtualDomElements.Button,
+  }
+  return [buttonNode, ...elementNodes]
 }
