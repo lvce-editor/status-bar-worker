@@ -5,6 +5,7 @@ export const create = (uid: number, uri: string, x: number, y: number, width: nu
   const state: StatusBarState = {
     assetDir,
     errorCount: 0,
+    initial: true,
     platform,
     statusBarItemsLeft: [],
     statusBarItemsRight: [],
