@@ -5,11 +5,13 @@ import * as GetMatchingItem from '../src/parts/GetMatchingItem/GetMatchingItem.t
 test('getMatchingItem should return item from itemsLeft when found', () => {
   const itemsLeft: readonly StatusBarItem[] = [
     {
+      ariaLabel: 'Item 1',
       elements: [],
       name: 'item1',
       tooltip: 'Item 1',
     },
     {
+      ariaLabel: 'Item 2',
       elements: [],
       name: 'item2',
       tooltip: 'Item 2',
@@ -29,6 +31,7 @@ test('getMatchingItem should return item from itemsLeft when found', () => {
 test('getMatchingItem should return item from itemsRight when not found in itemsLeft', () => {
   const itemsLeft: readonly StatusBarItem[] = [
     {
+      ariaLabel: 'Item 1',
       elements: [],
       name: 'item1',
       tooltip: 'Item 1',
@@ -36,6 +39,7 @@ test('getMatchingItem should return item from itemsRight when not found in items
   ]
   const itemsRight: readonly StatusBarItem[] = [
     {
+      ariaLabel: 'Item 2',
       elements: [],
       name: 'item2',
       tooltip: 'Item 2',
@@ -54,6 +58,7 @@ test('getMatchingItem should return item from itemsRight when not found in items
 test('getMatchingItem should return undefined when item not found in either list', () => {
   const itemsLeft: readonly StatusBarItem[] = [
     {
+      ariaLabel: 'Item 1',
       elements: [],
       name: 'item1',
       tooltip: 'Item 1',
@@ -61,6 +66,7 @@ test('getMatchingItem should return undefined when item not found in either list
   ]
   const itemsRight: readonly StatusBarItem[] = [
     {
+      ariaLabel: 'Item 2',
       elements: [],
       name: 'item2',
       tooltip: 'Item 2',
@@ -84,11 +90,13 @@ test('getMatchingItem should return undefined when both lists are empty', () => 
 test('getMatchingItem should return first matching item from itemsLeft when multiple items with same name exist', () => {
   const itemsLeft: readonly StatusBarItem[] = [
     {
+      ariaLabel: 'Item 1 first',
       elements: [],
       name: 'item1',
       tooltip: 'Item 1 first',
     },
     {
+      ariaLabel: 'Item 1 second',
       elements: [],
       name: 'item1',
       tooltip: 'Item 1 second',
@@ -108,6 +116,7 @@ test('getMatchingItem should return first matching item from itemsLeft when mult
 test('getMatchingItem should prefer itemsLeft over itemsRight when item exists in both', () => {
   const itemsLeft: readonly StatusBarItem[] = [
     {
+      ariaLabel: 'Item 1 from left',
       elements: [],
       name: 'item1',
       tooltip: 'Item 1 from left',
@@ -115,6 +124,7 @@ test('getMatchingItem should prefer itemsLeft over itemsRight when item exists i
   ]
   const itemsRight: readonly StatusBarItem[] = [
     {
+      ariaLabel: 'Item 1 from right',
       elements: [],
       name: 'item1',
       tooltip: 'Item 1 from right',
@@ -133,6 +143,7 @@ test('getMatchingItem should prefer itemsLeft over itemsRight when item exists i
 test('getMatchingItem should handle items with command property', () => {
   const itemsLeft: readonly StatusBarItem[] = [
     {
+      ariaLabel: 'Item 1',
       command: 'test.command',
       elements: [],
       name: 'item1',
@@ -154,6 +165,7 @@ test('getMatchingItem should handle items with command property', () => {
 test('getMatchingItem should handle items with complex elements array', () => {
   const itemsLeft: readonly StatusBarItem[] = [
     {
+      ariaLabel: 'Item 1',
       elements: [
         { type: 'icon', value: 'test-icon' },
         { type: 'text', value: 'Test Item' },
@@ -176,6 +188,7 @@ test('getMatchingItem should handle items with complex elements array', () => {
 test('getMatchingItem should be case sensitive when searching by name', () => {
   const itemsLeft: readonly StatusBarItem[] = [
     {
+      ariaLabel: 'Item 1',
       elements: [],
       name: 'Item1',
       tooltip: 'Item 1',
