@@ -36,30 +36,22 @@
     "collectCoverage": true,
     "coverageThreshold": {
       "global": {
-        "branches": 70,
-        "functions": 70,
-        "lines": 70
+        "branches": 80,
+        "functions": 80,
+        "lines": 80
       }
     }
   },
-<<<<<<< HEAD
-=======
   "dependencies": {
     "@lvce-editor/virtual-dom-worker": "^6.8.0"
   },
->>>>>>> origin/main
   "devDependencies": {
     "@jest/globals": "^30.2.0",
     "@lvce-editor/assert": "^1.5.1",
     "@lvce-editor/rpc": "^5.5.0",
     "@lvce-editor/rpc-registry": "^8.1.0",
     "@lvce-editor/verror": "^1.7.0",
-<<<<<<< HEAD
-    "@lvce-editor/viewlet-registry": "^2.0.0",
-    "@lvce-editor/virtual-dom-worker": "^5.2.0",
-=======
     "@lvce-editor/viewlet-registry": "^3.0.0",
->>>>>>> origin/main
     "jest": "^30.2.0",
     "ts-jest": "^29.4.6"
   }
