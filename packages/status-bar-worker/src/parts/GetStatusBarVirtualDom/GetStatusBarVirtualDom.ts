@@ -1,8 +1,8 @@
 import { type VirtualDomNode, AriaRoles, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
-import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
-import * as GetStatusBarItemsVirtualDom from '../GetStatusBarItemsVirtualDom/GetStatusBarItemsVirtualDom.ts'
+import * as GetStatusBarItemsLeftDom from '../GetStatusBarItemsLeftDom/GetStatusBarItemsLeftDom.ts'
+import * as GetStatusBarItemsRightDom from '../GetStatusBarItemsRightDom/GetStatusBarItemsRightDom.ts'
 
 const getChildCount = (leftCount: number, rightCount: number): number => {
   let count = 0
@@ -27,8 +27,8 @@ export const getStatusBarVirtualDom = (
       role: AriaRoles.Status,
       type: VirtualDomElements.Div,
     },
-    ...GetStatusBarItemsVirtualDom.getStatusBarItemsVirtualDom(statusBarItemsLeft, ClassNames.StatusBarItemsLeft),
-    ...GetStatusBarItemsVirtualDom.getStatusBarItemsVirtualDom(statusBarItemsRight, ClassNames.StatusBarItemsRight),
+    ...GetStatusBarItemsLeftDom.getStatusBarItemsLeftDom(statusBarItemsLeft),
+    ...GetStatusBarItemsRightDom.getStatusBarItemsRightDom(statusBarItemsRight),
   ]
   return dom
 }
