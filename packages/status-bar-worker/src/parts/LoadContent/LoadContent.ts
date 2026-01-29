@@ -9,6 +9,7 @@ export const loadContent = async (state: StatusBarState): Promise<StatusBarState
   return {
     ...state,
     errorCount: 0,
+    initial: false,
     statusBarItemsLeft: [...statusBarItems],
     statusBarItemsRight: [],
     warningCount: 0,
