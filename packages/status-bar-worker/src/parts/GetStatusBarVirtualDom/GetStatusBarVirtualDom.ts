@@ -1,4 +1,4 @@
-import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import { type VirtualDomNode, AriaRoles, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
@@ -24,6 +24,7 @@ export const getStatusBarVirtualDom = (
       childCount: getChildCount(statusBarItemsLeft.length, statusBarItemsRight.length),
       className: 'StatusBar',
       onClick: DomEventListenerFunctions.HandleClick,
+      role: AriaRoles.Status,
       type: VirtualDomElements.Div,
     },
     ...GetStatusBarItemsVirtualDom.getStatusBarItemsVirtualDom(statusBarItemsLeft, ClassNames.StatusBarItemsLeft),
