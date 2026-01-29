@@ -22,6 +22,7 @@ test('getMatchingItem should return item from itemsLeft when found', () => {
   const result = GetMatchingItem.getMatchingItem(itemsLeft, itemsRight, 'item1')
 
   expect(result).toEqual({
+    ariaLabel: 'Item 1',
     elements: [],
     name: 'item1',
     tooltip: 'Item 1',
@@ -49,6 +50,7 @@ test('getMatchingItem should return item from itemsRight when not found in items
   const result = GetMatchingItem.getMatchingItem(itemsLeft, itemsRight, 'item2')
 
   expect(result).toEqual({
+    ariaLabel: 'Item 2',
     elements: [],
     name: 'item2',
     tooltip: 'Item 2',
@@ -107,6 +109,7 @@ test('getMatchingItem should return first matching item from itemsLeft when mult
   const result = GetMatchingItem.getMatchingItem(itemsLeft, itemsRight, 'item1')
 
   expect(result).toEqual({
+    ariaLabel: 'Item 1 first',
     elements: [],
     name: 'item1',
     tooltip: 'Item 1 first',
@@ -134,6 +137,7 @@ test('getMatchingItem should prefer itemsLeft over itemsRight when item exists i
   const result = GetMatchingItem.getMatchingItem(itemsLeft, itemsRight, 'item1')
 
   expect(result).toEqual({
+    ariaLabel: 'Item 1 from left',
     elements: [],
     name: 'item1',
     tooltip: 'Item 1 from left',
@@ -155,6 +159,7 @@ test('getMatchingItem should handle items with command property', () => {
   const result = GetMatchingItem.getMatchingItem(itemsLeft, itemsRight, 'item1')
 
   expect(result).toEqual({
+    ariaLabel: 'Item 1',
     command: 'test.command',
     elements: [],
     name: 'item1',
