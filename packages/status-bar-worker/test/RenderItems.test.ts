@@ -22,6 +22,7 @@ test('renderItems should return SetDom2 command with items in left side', () => 
     ...createDefaultState(),
     statusBarItemsLeft: [
       {
+        ariaLabel: 'Item 1',
         command: 'command1',
         elements: [
           { type: 'icon', value: 'icon1' },
@@ -48,6 +49,7 @@ test('renderItems should return SetDom2 command with items in right side', () =>
     ...createDefaultState(),
     statusBarItemsRight: [
       {
+        ariaLabel: 'Item 2',
         command: 'command2',
         elements: [
           { type: 'icon', value: 'icon2' },
@@ -74,6 +76,7 @@ test('renderItems should return SetDom2 command with items in both sides', () =>
     ...createDefaultState(),
     statusBarItemsLeft: [
       {
+        ariaLabel: 'Item 1',
         command: 'command1',
         elements: [
           { type: 'icon', value: 'icon1' },
@@ -85,6 +88,7 @@ test('renderItems should return SetDom2 command with items in both sides', () =>
     ],
     statusBarItemsRight: [
       {
+        ariaLabel: 'Item 2',
         command: 'command2',
         elements: [
           { type: 'icon', value: 'icon2' },
@@ -119,6 +123,7 @@ test('renderItems should ignore oldState and only use newState', () => {
     ...createDefaultState(),
     statusBarItemsLeft: [
       {
+        ariaLabel: 'Old Item',
         command: 'old-command',
         elements: [
           { type: 'icon', value: 'old-icon' },
@@ -134,6 +139,7 @@ test('renderItems should ignore oldState and only use newState', () => {
     ...createDefaultState(),
     statusBarItemsLeft: [
       {
+        ariaLabel: 'New Item',
         command: 'new-command',
         elements: [
           { type: 'icon', value: 'new-icon' },
@@ -158,6 +164,7 @@ test('renderItems should handle multiple items', () => {
     ...createDefaultState(),
     statusBarItemsLeft: [
       {
+        ariaLabel: 'Item 1',
         command: 'command1',
         elements: [
           { type: 'icon', value: 'icon1' },
@@ -167,6 +174,7 @@ test('renderItems should handle multiple items', () => {
         tooltip: 'Tooltip 1',
       },
       {
+        ariaLabel: 'Item 2',
         command: 'command2',
         elements: [
           { type: 'icon', value: 'icon2' },
@@ -178,6 +186,7 @@ test('renderItems should handle multiple items', () => {
     ],
     statusBarItemsRight: [
       {
+        ariaLabel: 'Item 3',
         command: 'command3',
         elements: [
           { type: 'icon', value: 'icon3' },

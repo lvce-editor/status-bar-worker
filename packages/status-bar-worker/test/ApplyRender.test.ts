@@ -46,6 +46,7 @@ test('applyRender should return multiple commands when diffResult contains multi
     ...createDefaultState(),
     statusBarItemsLeft: [
       {
+        ariaLabel: 'Item 1',
         command: 'command1',
         elements: [
           { type: 'icon', value: 'icon1' },
