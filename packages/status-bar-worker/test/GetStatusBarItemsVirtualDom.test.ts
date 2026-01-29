@@ -11,6 +11,7 @@ test('getStatusBarItemsVirtualDom should return container div with empty array',
 test('getStatusBarItemsVirtualDom should return container div with single item', () => {
   const items = [
     {
+      ariaLabel: 'Test Item',
       elements: [{ type: 'text' as const, value: 'Test Item' }],
       name: 'test.item',
       tooltip: 'Test Tooltip',
@@ -24,6 +25,7 @@ test('getStatusBarItemsVirtualDom should return container div with single item',
     type: VirtualDomElements.Div,
   })
   expect(result[1]).toEqual({
+    ariaLabel: 'Test Item',
     childCount: 1,
     className: ClassNames.StatusBarItem,
     name: 'test.item',
@@ -47,11 +49,13 @@ test('getStatusBarItemsVirtualDom should return container div with single item',
 test('getStatusBarItemsVirtualDom should return container div with multiple items', () => {
   const items = [
     {
+      ariaLabel: 'Item 1',
       elements: [{ type: 'text' as const, value: 'Item 1' }],
       name: 'item1',
       tooltip: 'Tooltip 1',
     },
     {
+      ariaLabel: 'Item 2',
       elements: [{ type: 'text' as const, value: 'Item 2' }],
       name: 'item2',
       tooltip: 'Tooltip 2',
@@ -65,6 +69,7 @@ test('getStatusBarItemsVirtualDom should return container div with multiple item
     type: VirtualDomElements.Div,
   })
   expect(result[1]).toEqual({
+    ariaLabel: 'Item 1',
     childCount: 1,
     className: ClassNames.StatusBarItem,
     name: 'item1',
@@ -84,6 +89,7 @@ test('getStatusBarItemsVirtualDom should return container div with multiple item
     type: VirtualDomElements.Text,
   })
   expect(result[4]).toEqual({
+    ariaLabel: 'Item 2',
     childCount: 1,
     className: ClassNames.StatusBarItem,
     name: 'item2',
@@ -107,6 +113,7 @@ test('getStatusBarItemsVirtualDom should return container div with multiple item
 test('getStatusBarItemsVirtualDom should use provided className', () => {
   const items = [
     {
+      ariaLabel: 'Test Item',
       elements: [{ type: 'text' as const, value: 'Test Item' }],
       name: 'test.item',
       tooltip: 'Test Tooltip',
@@ -123,6 +130,7 @@ test('getStatusBarItemsVirtualDom should use provided className', () => {
 test('getStatusBarItemsVirtualDom should handle items with all fields', () => {
   const items = [
     {
+      ariaLabel: 'Test Item',
       command: 'test.command',
       elements: [
         { type: 'icon' as const, value: 'test-icon' },
@@ -140,6 +148,7 @@ test('getStatusBarItemsVirtualDom should handle items with all fields', () => {
     type: VirtualDomElements.Div,
   })
   expect(result[1]).toEqual({
+    ariaLabel: 'Test Item',
     childCount: 2,
     className: ClassNames.StatusBarItem,
     name: 'test.item',

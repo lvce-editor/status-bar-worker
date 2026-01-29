@@ -22,11 +22,13 @@ test('isEqual should return true for identical states', () => {
 
 test('isEqual should return true for states with same items', () => {
   const item1: StatusBarItem = {
+    ariaLabel: 'Test',
     elements: [{ type: 'text', value: 'Test' }],
     name: 'test',
     tooltip: 'Test tooltip',
   }
   const item2: StatusBarItem = {
+    ariaLabel: 'Test 2',
     elements: [{ type: 'text', value: 'Test 2' }],
     name: 'test2',
     tooltip: 'Test tooltip 2',
@@ -48,11 +50,13 @@ test('isEqual should return true for states with same items', () => {
 
 test('isEqual should return false when left arrays differ', () => {
   const item1: StatusBarItem = {
+    ariaLabel: 'Test',
     elements: [{ type: 'text', value: 'Test' }],
     name: 'test',
     tooltip: 'Test tooltip',
   }
   const item2: StatusBarItem = {
+    ariaLabel: 'Test 2',
     elements: [{ type: 'text', value: 'Test 2' }],
     name: 'test2',
     tooltip: 'Test tooltip 2',
@@ -72,11 +76,13 @@ test('isEqual should return false when left arrays differ', () => {
 
 test('isEqual should return false when right arrays differ', () => {
   const item1: StatusBarItem = {
+    ariaLabel: 'Test',
     elements: [{ type: 'text', value: 'Test' }],
     name: 'test',
     tooltip: 'Test tooltip',
   }
   const item2: StatusBarItem = {
+    ariaLabel: 'Test 2',
     elements: [{ type: 'text', value: 'Test 2' }],
     name: 'test2',
     tooltip: 'Test tooltip 2',
@@ -96,11 +102,13 @@ test('isEqual should return false when right arrays differ', () => {
 
 test('isEqual should return false when both arrays differ', () => {
   const item1: StatusBarItem = {
+    ariaLabel: 'Test',
     elements: [{ type: 'text', value: 'Test' }],
     name: 'test',
     tooltip: 'Test tooltip',
   }
   const item2: StatusBarItem = {
+    ariaLabel: 'Test 2',
     elements: [{ type: 'text', value: 'Test 2' }],
     name: 'test2',
     tooltip: 'Test tooltip 2',
@@ -120,6 +128,7 @@ test('isEqual should return false when both arrays differ', () => {
 
 test('isEqual should return false when left array length differs', () => {
   const item1: StatusBarItem = {
+    ariaLabel: 'Test',
     elements: [{ type: 'text', value: 'Test' }],
     name: 'test',
     tooltip: 'Test tooltip',
@@ -139,6 +148,7 @@ test('isEqual should return false when left array length differs', () => {
 
 test('isEqual should return false when right array length differs', () => {
   const item1: StatusBarItem = {
+    ariaLabel: 'Test',
     elements: [{ type: 'text', value: 'Test' }],
     name: 'test',
     tooltip: 'Test tooltip',

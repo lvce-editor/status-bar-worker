@@ -41,6 +41,7 @@ test('loadContent should load status bar items when preference is true', async (
 
   expect(result.statusBarItemsLeft).toEqual([
     {
+      ariaLabel: 'Test Item',
       command: 'test.command',
       elements: [
         { type: 'icon', value: 'test-icon' },
@@ -50,17 +51,19 @@ test('loadContent should load status bar items when preference is true', async (
       tooltip: 'Test Tooltip',
     },
     {
+      ariaLabel: 'Notifications',
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
+      ariaLabel: 'No Problems',
       command: '',
       elements: [
-        { type: 'icon', value: 'MaskIcon MaskIconError' },
+        { type: 'icon', value: 'ProblemsErrorIcon' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
+        { type: 'icon', value: 'ProblemsWarningIcon' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
@@ -113,17 +116,19 @@ test('loadContent should return empty array when preference is undefined', async
 
   expect(result.statusBarItemsLeft).toEqual([
     {
+      ariaLabel: 'Notifications',
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
+      ariaLabel: 'No Problems',
       command: '',
       elements: [
-        { type: 'icon', value: 'MaskIcon MaskIconError' },
+        { type: 'icon', value: 'ProblemsErrorIcon' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
+        { type: 'icon', value: 'ProblemsWarningIcon' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',
@@ -190,6 +195,7 @@ test('loadContent should handle multiple status bar items', async () => {
 
   expect(result.statusBarItemsLeft).toEqual([
     {
+      ariaLabel: 'Item 1',
       command: 'command1',
       elements: [
         { type: 'icon', value: 'icon1' },
@@ -199,6 +205,7 @@ test('loadContent should handle multiple status bar items', async () => {
       tooltip: 'Tooltip 1',
     },
     {
+      ariaLabel: 'Item 2',
       command: 'command2',
       elements: [
         { type: 'icon', value: 'icon2' },
@@ -208,17 +215,19 @@ test('loadContent should handle multiple status bar items', async () => {
       tooltip: 'Tooltip 2',
     },
     {
+      ariaLabel: 'Notifications',
       command: '',
       elements: [{ type: 'text', value: 'Notifications' }],
       name: 'Notifications',
       tooltip: 'Notifications',
     },
     {
+      ariaLabel: 'No Problems',
       command: '',
       elements: [
-        { type: 'icon', value: 'MaskIcon MaskIconError' },
+        { type: 'icon', value: 'ProblemsErrorIcon' },
         { type: 'text', value: '0' },
-        { type: 'icon', value: 'MaskIcon MaskIconWarning' },
+        { type: 'icon', value: 'ProblemsWarningIcon' },
         { type: 'text', value: '0' },
       ],
       name: 'Problems',

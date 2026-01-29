@@ -12,7 +12,9 @@ export const toStatusBarItem = (uiStatusBarItem: UiStatusBarItem): StatusBarItem
   if (elements.length === 0) {
     elements.push({ type: 'text', value: '' })
   }
+  const ariaLabel = uiStatusBarItem.text || uiStatusBarItem.tooltip || uiStatusBarItem.name
   return {
+    ariaLabel,
     command: uiStatusBarItem.command || undefined,
     elements,
     name: uiStatusBarItem.name,

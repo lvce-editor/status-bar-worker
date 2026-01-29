@@ -5,13 +5,13 @@ import { getBuiltinStatusBarItems } from '../GetBuiltinStatusBarItems/GetBuiltin
 import * as ToStatusBarItem from '../ToStatusBarItem/ToStatusBarItem.ts'
 import * as ToUiStatusBarItems from '../ToUiStatusBarItems/ToUiStatusBarItems.ts'
 
-export const getStatusBarItems = async (showItems: boolean, assetDir: string, platform: number): Promise<readonly StatusBarItem[]> => {
+export const getStatusBarItems = async (showItems: boolean, assetDir: string, platform: number, errorCount: number, warningCount: number): Promise<readonly StatusBarItem[]> => {
   if (!showItems) {
     return []
   }
   await ExtensionHostManagement.activateByEvent('onSourceControl', assetDir, platform)
   const extensionStatusBarItems = await ExtensionHostStatusBarItems.getStatusBarItems(assetDir, platform)
   const uiStatusBarItems = ToUiStatusBarItems.toUiStatusBarItems(extensionStatusBarItems)
-  const extraItems = await getBuiltinStatusBarItems()
+  const extraItems = await getBuiltinStatusBarItems(errorCount, warningCount)
   return [...uiStatusBarItems.map(ToStatusBarItem.toStatusBarItem), ...extraItems]
 }

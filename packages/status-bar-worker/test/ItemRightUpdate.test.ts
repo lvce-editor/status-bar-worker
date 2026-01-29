@@ -7,11 +7,13 @@ import * as ItemRightUpdate from '../src/parts/ItemRightUpdate/ItemRightUpdate.t
 test('itemRightUpdate should update existing item by name', () => {
   const state: StatusBarState = { ...createDefaultState(), uid: 1 }
   const item1: StatusBarItem = {
+    ariaLabel: 'text1',
     elements: [{ type: 'text', value: 'text1' }],
     name: 'item1',
     tooltip: 'tooltip1',
   }
   const item2: StatusBarItem = {
+    ariaLabel: 'text2',
     elements: [{ type: 'text', value: 'text2' }],
     name: 'item2',
     tooltip: 'tooltip2',
@@ -21,6 +23,7 @@ test('itemRightUpdate should update existing item by name', () => {
     statusBarItemsRight: [item1, item2],
   }
   const updatedItem: StatusBarItem = {
+    ariaLabel: 'updated text',
     elements: [{ type: 'text', value: 'updated text' }],
     name: 'item1',
     tooltip: 'updated tooltip',
@@ -36,6 +39,7 @@ test('itemRightUpdate should update existing item by name', () => {
 test('itemRightUpdate should add new item when name does not exist', () => {
   const state: StatusBarState = { ...createDefaultState(), uid: 1 }
   const item1: StatusBarItem = {
+    ariaLabel: 'text1',
     elements: [{ type: 'text', value: 'text1' }],
     name: 'item1',
     tooltip: 'tooltip1',
@@ -45,6 +49,7 @@ test('itemRightUpdate should add new item when name does not exist', () => {
     statusBarItemsRight: [item1],
   }
   const newItem: StatusBarItem = {
+    ariaLabel: 'text2',
     elements: [{ type: 'text', value: 'text2' }],
     name: 'item2',
     tooltip: 'tooltip2',
@@ -60,6 +65,7 @@ test('itemRightUpdate should add new item when name does not exist', () => {
 test('itemRightUpdate should handle empty array', () => {
   const state: StatusBarState = { ...createDefaultState(), uid: 1 }
   const newItem: StatusBarItem = {
+    ariaLabel: 'text1',
     elements: [{ type: 'text', value: 'text1' }],
     name: 'item1',
     tooltip: 'tooltip1',
@@ -74,6 +80,7 @@ test('itemRightUpdate should handle empty array', () => {
 test('itemRightUpdate should not mutate original state', () => {
   const state: StatusBarState = { ...createDefaultState(), uid: 1 }
   const item1: StatusBarItem = {
+    ariaLabel: 'text1',
     elements: [{ type: 'text', value: 'text1' }],
     name: 'item1',
     tooltip: 'tooltip1',
@@ -83,6 +90,7 @@ test('itemRightUpdate should not mutate original state', () => {
     statusBarItemsRight: [item1],
   }
   const updatedItem: StatusBarItem = {
+    ariaLabel: 'updated text',
     elements: [{ type: 'text', value: 'updated text' }],
     name: 'item1',
     tooltip: 'updated tooltip',
@@ -95,16 +103,19 @@ test('itemRightUpdate should not mutate original state', () => {
 test('itemRightUpdate should update item in middle of array', () => {
   const state: StatusBarState = { ...createDefaultState(), uid: 1 }
   const item1: StatusBarItem = {
+    ariaLabel: 'text1',
     elements: [{ type: 'text', value: 'text1' }],
     name: 'item1',
     tooltip: 'tooltip1',
   }
   const item2: StatusBarItem = {
+    ariaLabel: 'text2',
     elements: [{ type: 'text', value: 'text2' }],
     name: 'item2',
     tooltip: 'tooltip2',
   }
   const item3: StatusBarItem = {
+    ariaLabel: 'text3',
     elements: [{ type: 'text', value: 'text3' }],
     name: 'item3',
     tooltip: 'tooltip3',
@@ -114,6 +125,7 @@ test('itemRightUpdate should update item in middle of array', () => {
     statusBarItemsRight: [item1, item2, item3],
   }
   const updatedItem: StatusBarItem = {
+    ariaLabel: 'updated text',
     elements: [{ type: 'text', value: 'updated text' }],
     name: 'item2',
     tooltip: 'updated tooltip',

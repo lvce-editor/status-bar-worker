@@ -32,6 +32,7 @@ test('handleClick should call handleClickNotification when item is Notifications
     ...createDefaultState(),
     statusBarItemsLeft: [
       {
+        ariaLabel: 'Notifications',
         elements: [],
         name: 'Notifications',
         tooltip: 'Notifications',
@@ -57,6 +58,7 @@ test('handleClick should call handleClickProblems when item is Problems', async 
     statusBarItemsLeft: [],
     statusBarItemsRight: [
       {
+        ariaLabel: 'Problems',
         elements: [],
         name: 'Problems',
         tooltip: 'Problems',
@@ -79,6 +81,7 @@ test('handleClick should call handleClickExtensionStatusBarItem for extension it
     ...createDefaultState(),
     statusBarItemsLeft: [
       {
+        ariaLabel: 'My Extension Item',
         command: 'my.extension.command',
         elements: [],
         name: 'my-extension-item',
@@ -102,6 +105,7 @@ test('handleClick should find item in statusBarItemsLeft', async () => {
     ...createDefaultState(),
     statusBarItemsLeft: [
       {
+        ariaLabel: 'Left Item',
         elements: [],
         name: 'left-item',
         tooltip: 'Left Item',
@@ -125,6 +129,7 @@ test('handleClick should find item in statusBarItemsRight', async () => {
     statusBarItemsLeft: [],
     statusBarItemsRight: [
       {
+        ariaLabel: 'Right Item',
         elements: [],
         name: 'right-item',
         tooltip: 'Right Item',
@@ -146,6 +151,7 @@ test('handleClick should prioritize left items over right items with same name',
     ...createDefaultState(),
     statusBarItemsLeft: [
       {
+        ariaLabel: 'Left Item',
         command: 'left.command',
         elements: [],
         name: 'duplicate-item',
@@ -154,6 +160,7 @@ test('handleClick should prioritize left items over right items with same name',
     ],
     statusBarItemsRight: [
       {
+        ariaLabel: 'Right Item',
         command: 'right.command',
         elements: [],
         name: 'duplicate-item',
@@ -176,6 +183,7 @@ test('handleClick should handle extension item with command property', async () 
     ...createDefaultState(),
     statusBarItemsLeft: [
       {
+        ariaLabel: 'Extension with Command',
         command: 'my.extension.command',
         elements: [],
         name: 'extension-with-command',
@@ -199,16 +207,19 @@ test('handleClick should handle multiple items in left array', async () => {
     ...createDefaultState(),
     statusBarItemsLeft: [
       {
+        ariaLabel: 'Item 1',
         elements: [],
         name: 'item-1',
         tooltip: 'Item 1',
       },
       {
+        ariaLabel: 'Item 2',
         elements: [],
         name: 'item-2',
         tooltip: 'Item 2',
       },
       {
+        ariaLabel: 'Item 3',
         elements: [],
         name: 'item-3',
         tooltip: 'Item 3',
@@ -232,16 +243,19 @@ test('handleClick should handle multiple items in right array', async () => {
     statusBarItemsLeft: [],
     statusBarItemsRight: [
       {
+        ariaLabel: 'Right 1',
         elements: [],
         name: 'right-1',
         tooltip: 'Right 1',
       },
       {
+        ariaLabel: 'Right 2',
         elements: [],
         name: 'right-2',
         tooltip: 'Right 2',
       },
       {
+        ariaLabel: 'Right 3',
         elements: [],
         name: 'right-3',
         tooltip: 'Right 3',
@@ -284,6 +298,7 @@ test('handleClick should not call RPC methods for item not found', async () => {
     ...createDefaultState(),
     statusBarItemsLeft: [
       {
+        ariaLabel: 'Existing Item',
         elements: [],
         name: 'existing-item',
         tooltip: 'Existing Item',
