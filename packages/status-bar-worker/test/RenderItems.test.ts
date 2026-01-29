@@ -6,7 +6,7 @@ import * as RenderItems from '../src/parts/RenderItems/RenderItems.ts'
 
 test('renderItems should return SetDom2 command with uid and empty dom when no items', () => {
   const oldState: StatusBarState = createDefaultState()
-  const newState: StatusBarState = { ...createDefaultState(), uid: 1 }
+  const newState: StatusBarState = { ...createDefaultState(), uid: 1, initial: false }
 
   const result = RenderItems.renderItems(oldState, newState)
 
@@ -20,6 +20,7 @@ test('renderItems should return SetDom2 command with items in left side', () => 
   const oldState: StatusBarState = createDefaultState()
   const newState: StatusBarState = {
     ...createDefaultState(),
+    initial: false,
     statusBarItemsLeft: [
       {
         ariaLabel: 'Item 1',
@@ -47,6 +48,7 @@ test('renderItems should return SetDom2 command with items in right side', () =>
   const oldState: StatusBarState = createDefaultState()
   const newState: StatusBarState = {
     ...createDefaultState(),
+    initial: false,
     statusBarItemsRight: [
       {
         ariaLabel: 'Item 2',
@@ -74,6 +76,7 @@ test('renderItems should return SetDom2 command with items in both sides', () =>
   const oldState: StatusBarState = createDefaultState()
   const newState: StatusBarState = {
     ...createDefaultState(),
+    initial: false,
     statusBarItemsLeft: [
       {
         ariaLabel: 'Item 1',
@@ -121,6 +124,7 @@ test('renderItems should use uid from newState', () => {
 test('renderItems should ignore oldState and only use newState', () => {
   const oldState: StatusBarState = {
     ...createDefaultState(),
+    initial: false,
     statusBarItemsLeft: [
       {
         ariaLabel: 'Old Item',
@@ -137,6 +141,7 @@ test('renderItems should ignore oldState and only use newState', () => {
   }
   const newState: StatusBarState = {
     ...createDefaultState(),
+    initial: false,
     statusBarItemsLeft: [
       {
         ariaLabel: 'New Item',
@@ -162,6 +167,7 @@ test('renderItems should handle multiple items', () => {
   const oldState: StatusBarState = createDefaultState()
   const newState: StatusBarState = {
     ...createDefaultState(),
+    initial: false,
     statusBarItemsLeft: [
       {
         ariaLabel: 'Item 1',
