@@ -6,7 +6,7 @@ import * as RenderItems from '../src/parts/RenderItems/RenderItems.ts'
 
 test('renderItems should return SetDom2 command with uid and empty dom when no items', () => {
   const oldState: StatusBarState = createDefaultState()
-  const newState: StatusBarState = { ...createDefaultState(), uid: 1, initial: false }
+  const newState: StatusBarState = { ...createDefaultState(), initial: false, uid: 1 }
 
   const result = RenderItems.renderItems(oldState, newState)
 
