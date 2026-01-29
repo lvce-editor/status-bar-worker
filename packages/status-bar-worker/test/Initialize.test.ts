@@ -1,8 +1,17 @@
 import { expect, test, afterEach } from '@jest/globals'
+import { type Rpc } from '@lvce-editor/rpc'
 import { ExtensionHost, RendererWorker } from '@lvce-editor/rpc-registry'
 import * as Initialize from '../src/parts/Initialize/Initialize.ts'
 
+const rpcInstances: Rpc[] = []
+
 afterEach(() => {
+  for (const rpc of rpcInstances) {
+    if (rpc && typeof (rpc as any).dispose === 'function') {
+      ;(rpc as any).dispose()
+    }
+  }
+  rpcInstances.length = 0
   ExtensionHost.registerMockRpc({})
 })
 
@@ -17,7 +26,10 @@ test('initialize should create extension host rpc and set it', async () => {
     throw new Error(`unexpected method ${method}`)
   }
 
-  await Initialize.initialize()
+  const rpc = await Initialize.initialize()
+  if (rpc) {
+    rpcInstances.push(rpc)
+  }
 
   expect(mockRendererRpc.invocations).toEqual([])
 })
