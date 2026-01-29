@@ -25,6 +25,7 @@ test('getStatusBarItemsVirtualDom should return container div with single item',
     type: VirtualDomElements.Div,
   })
   expect(result[1]).toEqual({
+    ariaLabel: 'Test Item',
     childCount: 1,
     className: ClassNames.StatusBarItem,
     name: 'test.item',
@@ -68,6 +69,7 @@ test('getStatusBarItemsVirtualDom should return container div with multiple item
     type: VirtualDomElements.Div,
   })
   expect(result[1]).toEqual({
+    ariaLabel: 'Item 1',
     childCount: 1,
     className: ClassNames.StatusBarItem,
     name: 'item1',
@@ -87,6 +89,7 @@ test('getStatusBarItemsVirtualDom should return container div with multiple item
     type: VirtualDomElements.Text,
   })
   expect(result[4]).toEqual({
+    ariaLabel: 'Item 2',
     childCount: 1,
     className: ClassNames.StatusBarItem,
     name: 'item2',
@@ -145,6 +148,7 @@ test('getStatusBarItemsVirtualDom should handle items with all fields', () => {
     type: VirtualDomElements.Div,
   })
   expect(result[1]).toEqual({
+    ariaLabel: 'Test Item',
     childCount: 2,
     className: ClassNames.StatusBarItem,
     name: 'test.item',
