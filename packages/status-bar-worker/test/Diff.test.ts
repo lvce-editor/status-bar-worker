@@ -22,7 +22,7 @@ test('diff should return empty array when states are equal', () => {
   expect(result).toEqual([])
 })
 
-test('diff should return RenderItems when left items differ', () => {
+test('diff should return RenderIncremental when left items differ', () => {
   const item1: StatusBarItem = {
     ariaLabel: 'Test',
     elements: [{ type: 'text', value: 'Test' }],
@@ -46,10 +46,10 @@ test('diff should return RenderItems when left items differ', () => {
     statusBarItemsRight: [],
   }
   const result = Diff.diff(oldState, newState)
-  expect(result).toEqual([DiffType.RenderItems])
+  expect(result).toEqual([DiffType.RenderIncremental])
 })
 
-test('diff should return RenderItems when right items differ', () => {
+test('diff should return RenderIncremental when right items differ', () => {
   const item1: StatusBarItem = {
     ariaLabel: 'Test',
     elements: [{ type: 'text', value: 'Test' }],
@@ -73,10 +73,10 @@ test('diff should return RenderItems when right items differ', () => {
     statusBarItemsRight: [item2],
   }
   const result = Diff.diff(oldState, newState)
-  expect(result).toEqual([DiffType.RenderItems])
+  expect(result).toEqual([DiffType.RenderIncremental])
 })
 
-test('diff should return RenderItems when both left and right items differ', () => {
+test('diff should return RenderIncremental when both left and right items differ', () => {
   const item1: StatusBarItem = {
     ariaLabel: 'Test',
     elements: [{ type: 'text', value: 'Test' }],
@@ -100,10 +100,10 @@ test('diff should return RenderItems when both left and right items differ', () 
     statusBarItemsRight: [item2],
   }
   const result = Diff.diff(oldState, newState)
-  expect(result).toEqual([DiffType.RenderItems])
+  expect(result).toEqual([DiffType.RenderIncremental])
 })
 
-test('diff should return RenderItems when left array length differs', () => {
+test('diff should return RenderIncremental when left array length differs', () => {
   const item1: StatusBarItem = {
     ariaLabel: 'Test',
     elements: [{ type: 'text', value: 'Test' }],
@@ -121,10 +121,10 @@ test('diff should return RenderItems when left array length differs', () => {
     statusBarItemsRight: [],
   }
   const result = Diff.diff(oldState, newState)
-  expect(result).toEqual([DiffType.RenderItems])
+  expect(result).toEqual([DiffType.RenderIncremental])
 })
 
-test('diff should return RenderItems when right array length differs', () => {
+test('diff should return RenderIncremental when right array length differs', () => {
   const item1: StatusBarItem = {
     ariaLabel: 'Test',
     elements: [{ type: 'text', value: 'Test' }],
@@ -142,7 +142,7 @@ test('diff should return RenderItems when right array length differs', () => {
     statusBarItemsRight: [],
   }
   const result = Diff.diff(oldState, newState)
-  expect(result).toEqual([DiffType.RenderItems])
+  expect(result).toEqual([DiffType.RenderIncremental])
 })
 
 test('diff should ignore uid when comparing', () => {

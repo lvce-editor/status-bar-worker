@@ -18,7 +18,7 @@ test('diff2 should return empty array when states are equal', () => {
   expect(result).toEqual([])
 })
 
-test('diff2 should return RenderItems when left items differ', () => {
+test('diff2 should return RenderIncremental when left items differ', () => {
   const uid = 1
   const item1: StatusBarItem = {
     ariaLabel: 'Test',
@@ -46,10 +46,10 @@ test('diff2 should return RenderItems when left items differ', () => {
   }
   StatusBarStates.set(uid, oldState, newState)
   const result = Diff2.diff2(uid)
-  expect(result).toEqual([DiffType.RenderItems])
+  expect(result).toEqual([DiffType.RenderIncremental])
 })
 
-test('diff2 should return RenderItems when right items differ', () => {
+test('diff2 should return RenderIncremental when right items differ', () => {
   const uid = 1
   const item1: StatusBarItem = {
     ariaLabel: 'Test',
@@ -77,10 +77,10 @@ test('diff2 should return RenderItems when right items differ', () => {
   }
   StatusBarStates.set(uid, oldState, newState)
   const result = Diff2.diff2(uid)
-  expect(result).toEqual([DiffType.RenderItems])
+  expect(result).toEqual([DiffType.RenderIncremental])
 })
 
-test('diff2 should return RenderItems when both left and right items differ', () => {
+test('diff2 should return RenderIncremental when both left and right items differ', () => {
   const uid = 1
   const item1: StatusBarItem = {
     ariaLabel: 'Test',
@@ -108,10 +108,10 @@ test('diff2 should return RenderItems when both left and right items differ', ()
   }
   StatusBarStates.set(uid, oldState, newState)
   const result = Diff2.diff2(uid)
-  expect(result).toEqual([DiffType.RenderItems])
+  expect(result).toEqual([DiffType.RenderIncremental])
 })
 
-test('diff2 should return RenderItems when left array length differs', () => {
+test('diff2 should return RenderIncremental when left array length differs', () => {
   const uid = 1
   const item1: StatusBarItem = {
     ariaLabel: 'Test',
@@ -133,10 +133,10 @@ test('diff2 should return RenderItems when left array length differs', () => {
   }
   StatusBarStates.set(uid, oldState, newState)
   const result = Diff2.diff2(uid)
-  expect(result).toEqual([DiffType.RenderItems])
+  expect(result).toEqual([DiffType.RenderIncremental])
 })
 
-test('diff2 should return RenderItems when right array length differs', () => {
+test('diff2 should return RenderIncremental when right array length differs', () => {
   const uid = 1
   const item1: StatusBarItem = {
     ariaLabel: 'Test',
@@ -158,7 +158,7 @@ test('diff2 should return RenderItems when right array length differs', () => {
   }
   StatusBarStates.set(uid, oldState, newState)
   const result = Diff2.diff2(uid)
-  expect(result).toEqual([DiffType.RenderItems])
+  expect(result).toEqual([DiffType.RenderIncremental])
 })
 
 test('diff2 should ignore uid when comparing', () => {
@@ -174,7 +174,7 @@ test('diff2 should ignore uid when comparing', () => {
   expect(result).toEqual([])
 })
 
-test('diff2 should return RenderItems when multiple items are added', () => {
+test('diff2 should return RenderIncremental when multiple items are added', () => {
   const uid = 1
   const item1: StatusBarItem = {
     ariaLabel: 'Test 1',
@@ -202,10 +202,10 @@ test('diff2 should return RenderItems when multiple items are added', () => {
   }
   StatusBarStates.set(uid, oldState, newState)
   const result = Diff2.diff2(uid)
-  expect(result).toEqual([DiffType.RenderItems])
+  expect(result).toEqual([DiffType.RenderIncremental])
 })
 
-test('diff2 should return RenderItems when items are removed', () => {
+test('diff2 should return RenderIncremental when items are removed', () => {
   const uid = 1
   const item1: StatusBarItem = {
     ariaLabel: 'Test 1',
@@ -233,10 +233,10 @@ test('diff2 should return RenderItems when items are removed', () => {
   }
   StatusBarStates.set(uid, oldState, newState)
   const result = Diff2.diff2(uid)
-  expect(result).toEqual([DiffType.RenderItems])
+  expect(result).toEqual([DiffType.RenderIncremental])
 })
 
-test('diff2 should return RenderItems when item text changes', () => {
+test('diff2 should return RenderIncremental when item text changes', () => {
   const uid = 1
   const item1: StatusBarItem = {
     ariaLabel: 'Test',
@@ -264,10 +264,10 @@ test('diff2 should return RenderItems when item text changes', () => {
   }
   StatusBarStates.set(uid, oldState, newState)
   const result = Diff2.diff2(uid)
-  expect(result).toEqual([DiffType.RenderItems])
+  expect(result).toEqual([DiffType.RenderIncremental])
 })
 
-test('diff2 should return RenderItems when item tooltip changes', () => {
+test('diff2 should return RenderIncremental when item tooltip changes', () => {
   const uid = 1
   const item1: StatusBarItem = {
     ariaLabel: 'Test',
@@ -295,7 +295,7 @@ test('diff2 should return RenderItems when item tooltip changes', () => {
   }
   StatusBarStates.set(uid, oldState, newState)
   const result = Diff2.diff2(uid)
-  expect(result).toEqual([DiffType.RenderItems])
+  expect(result).toEqual([DiffType.RenderIncremental])
 })
 
 test('diff2 should work with different uids independently', () => {
@@ -329,6 +329,6 @@ test('diff2 should work with different uids independently', () => {
   StatusBarStates.set(uid2, state3, state3)
   const result1 = Diff2.diff2(uid1)
   const result2 = Diff2.diff2(uid2)
-  expect(result1).toEqual([DiffType.RenderItems])
+  expect(result1).toEqual([DiffType.RenderIncremental])
   expect(result2).toEqual([])
 })
