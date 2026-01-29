@@ -33,7 +33,7 @@ if (!content.includes('// const statusBarWorkerUrl = ')) {
   await cp(rendererWorkerMainPath, rendererWorkerMainPath + '.original')
   const occurrence = `const statusBarWorkerUrl = \`\${assetDir}/packages/status-bar-worker/dist/statusBarWorkerMain.js\``
   const replacement = `// const statusBarWorkerUrl = \`\${assetDir}/packages/status-bar-worker/dist/statusBarWorkerMain.js\`
-  const statusBarWorkerUrl = \`${remoteUrl}\``
+const statusBarWorkerUrl = \`${remoteUrl}\``
 
   const newContent = content.replace(occurrence, replacement)
   await writeFile(rendererWorkerMainPath, newContent)
