@@ -128,6 +128,7 @@ test('isEqual should return false when both arrays differ', () => {
 
 test('isEqual should return false when left array length differs', () => {
   const item1: StatusBarItem = {
+    ariaLabel: 'Test',
     elements: [{ type: 'text', value: 'Test' }],
     name: 'test',
     tooltip: 'Test tooltip',
@@ -147,6 +148,7 @@ test('isEqual should return false when left array length differs', () => {
 
 test('isEqual should return false when right array length differs', () => {
   const item1: StatusBarItem = {
+    ariaLabel: 'Test',
     elements: [{ type: 'text', value: 'Test' }],
     name: 'test',
     tooltip: 'Test tooltip',
