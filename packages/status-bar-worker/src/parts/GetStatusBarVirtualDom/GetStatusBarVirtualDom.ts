@@ -24,6 +24,7 @@ export const getStatusBarVirtualDom = (
       childCount: getChildCount(statusBarItemsLeft.length, statusBarItemsRight.length),
       className: 'StatusBar',
       onClick: DomEventListenerFunctions.HandleClick,
+      onContextMenu: DomEventListenerFunctions.HandleContextMenu,
       role: AriaRoles.Status,
       type: VirtualDomElements.Div,
     },
