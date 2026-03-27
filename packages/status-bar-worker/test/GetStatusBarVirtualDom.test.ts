@@ -2,6 +2,7 @@ import { expect, test } from '@jest/globals'
 import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { StatusBarItem } from '../src/parts/StatusBarItem/StatusBarItem.ts'
 import * as ClassNames from '../src/parts/ClassNames/ClassNames.ts'
+import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as GetStatusBarVirtualDom from '../src/parts/GetStatusBarVirtualDom/GetStatusBarVirtualDom.ts'
 
 test('getStatusBarVirtualDom should return empty array when both arrays are empty', () => {
@@ -9,6 +10,7 @@ test('getStatusBarVirtualDom should return empty array when both arrays are empt
   expect(result.length).toBeGreaterThan(0)
   expect(result[0]).toMatchObject({
     className: 'StatusBar',
+    onContextMenu: DomEventListenerFunctions.HandleContextMenu,
     type: 4,
   })
 })
