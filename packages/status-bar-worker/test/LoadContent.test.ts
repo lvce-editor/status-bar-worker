@@ -13,6 +13,12 @@ test('loadContent should load status bar items when preference is true', async (
       if (key === 'statusBar.itemsVisible') {
         return true
       }
+      if (key === 'statusBar.builtinNotificationsEnabled') {
+        return true
+      }
+      if (key === 'statusBar.builtinProblemsEnabled') {
+        return true
+      }
       return undefined
     },
   })
@@ -34,6 +40,8 @@ test('loadContent should load status bar items when preference is true', async (
 
   expect(mockRendererRpc.invocations).toEqual([
     ['Preferences.get', 'statusBar.itemsVisible'],
+    ['Preferences.get', 'statusBar.builtinNotificationsEnabled'],
+    ['Preferences.get', 'statusBar.builtinProblemsEnabled'],
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl, '', 0],
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem, '', 0],
   ])
@@ -109,6 +117,8 @@ test('loadContent should return empty array when preference is undefined', async
 
   expect(mockRendererRpc.invocations).toEqual([
     ['Preferences.get', 'statusBar.itemsVisible'],
+    ['Preferences.get', 'statusBar.builtinNotificationsEnabled'],
+    ['Preferences.get', 'statusBar.builtinProblemsEnabled'],
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl, '', 0],
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem, '', 0],
   ])
@@ -161,7 +171,18 @@ test('loadContent should preserve existing state properties', async () => {
 test('loadContent should handle multiple status bar items', async () => {
   using mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
-    'Preferences.get': async () => true,
+    'Preferences.get': async (key: string) => {
+      if (key === 'statusBar.itemsVisible') {
+        return true
+      }
+      if (key === 'statusBar.builtinNotificationsEnabled') {
+        return true
+      }
+      if (key === 'statusBar.builtinProblemsEnabled') {
+        return true
+      }
+      return undefined
+    },
   })
 
   const mockExtensionHostRpc = ExtensionHost.registerMockRpc({
@@ -188,6 +209,8 @@ test('loadContent should handle multiple status bar items', async () => {
 
   expect(mockRendererRpc.invocations).toEqual([
     ['Preferences.get', 'statusBar.itemsVisible'],
+    ['Preferences.get', 'statusBar.builtinNotificationsEnabled'],
+    ['Preferences.get', 'statusBar.builtinProblemsEnabled'],
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl, '', 0],
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem, '', 0],
   ])

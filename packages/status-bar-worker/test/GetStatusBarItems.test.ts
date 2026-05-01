@@ -6,6 +6,8 @@ import * as GetStatusBarItems from '../src/parts/GetStatusBarItems/GetStatusBarI
 
 const defaultOptions = {
   assetDir: '',
+  builtinNotificationsEnabled: true,
+  builtinProblemsEnabled: true,
   errorCount: 0,
   platform: 0,
   showItems: true,
@@ -315,6 +317,41 @@ test('getStatusBarItems should handle multiple items', async () => {
       name: 'Notifications',
       tooltip: 'Notifications',
     },
+    {
+      ariaLabel: 'No Problems',
+      command: '',
+      elements: [
+        { type: 'icon', value: 'ProblemsErrorIcon' },
+        { type: 'text', value: '0' },
+        { type: 'icon', value: 'ProblemsWarningIcon' },
+        { type: 'text', value: '0' },
+      ],
+      name: 'Problems',
+      tooltip: 'Problems',
+    },
+  ])
+})
+
+test('getStatusBarItems should omit disabled builtin items', async () => {
+  using mockRendererRpc = RendererWorker.registerMockRpc({
+    'ExtensionHostManagement.activateByEvent': async () => {},
+  })
+
+  const mockExtensionHostRpc = ExtensionHost.registerMockRpc({
+    [ExtensionHostCommandType.GetStatusBarItems]: async () => [],
+  })
+
+  const result = await GetStatusBarItems.getStatusBarItems({
+    ...defaultOptions,
+    builtinNotificationsEnabled: false,
+  })
+
+  expect(mockRendererRpc.invocations).toEqual([
+    ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl, '', 0],
+    ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem, '', 0],
+  ])
+  expect(mockExtensionHostRpc.invocations).toEqual([[ExtensionHostCommandType.GetStatusBarItems]])
+  expect(result).toEqual([
     {
       ariaLabel: 'No Problems',
       command: '',
