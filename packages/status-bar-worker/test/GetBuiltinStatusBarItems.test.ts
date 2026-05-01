@@ -4,32 +4,48 @@ import * as GetNotificationsStatusBarItem from '../src/parts/GetNotificationsSta
 import * as GetProblemsStatusBarItem from '../src/parts/GetProblemsStatusBarItem/GetProblemsStatusBarItem.ts'
 
 test('getNotificationsStatusBarItem should return the notifications item', () => {
-  const result = GetNotificationsStatusBarItem.getNotificationsStatusBarItem()
+  const result = GetNotificationsStatusBarItem.getNotificationsStatusBarItem(true)
 
-  expect(result).toEqual({
-    ariaLabel: 'Notifications',
-    command: '',
-    elements: [{ type: 'text', value: 'Notifications' }],
-    name: 'Notifications',
-    tooltip: 'Notifications',
-  })
+  expect(result).toEqual([
+    {
+      ariaLabel: 'Notifications',
+      command: '',
+      elements: [{ type: 'text', value: 'Notifications' }],
+      name: 'Notifications',
+      tooltip: 'Notifications',
+    },
+  ])
+})
+
+test('getNotificationsStatusBarItem should return empty array when disabled', () => {
+  const result = GetNotificationsStatusBarItem.getNotificationsStatusBarItem(false)
+
+  expect(result).toEqual([])
 })
 
 test('getProblemsStatusBarItem should return the problems item', () => {
-  const result = GetProblemsStatusBarItem.getProblemsStatusBarItem(1, 2)
+  const result = GetProblemsStatusBarItem.getProblemsStatusBarItem(1, 2, true)
 
-  expect(result).toEqual({
-    ariaLabel: '1 Problem, 2 Warnings',
-    command: '',
-    elements: [
-      { type: 'icon', value: 'ProblemsErrorIcon' },
-      { type: 'text', value: '1' },
-      { type: 'icon', value: 'ProblemsWarningIcon' },
-      { type: 'text', value: '2' },
-    ],
-    name: 'Problems',
-    tooltip: 'Problems',
-  })
+  expect(result).toEqual([
+    {
+      ariaLabel: '1 Problem, 2 Warnings',
+      command: '',
+      elements: [
+        { type: 'icon', value: 'ProblemsErrorIcon' },
+        { type: 'text', value: '1' },
+        { type: 'icon', value: 'ProblemsWarningIcon' },
+        { type: 'text', value: '2' },
+      ],
+      name: 'Problems',
+      tooltip: 'Problems',
+    },
+  ])
+})
+
+test('getProblemsStatusBarItem should return empty array when disabled', () => {
+  const result = GetProblemsStatusBarItem.getProblemsStatusBarItem(1, 2, false)
+
+  expect(result).toEqual([])
 })
 
 test('getBuiltinStatusBarItems should return all builtin items by default', async () => {

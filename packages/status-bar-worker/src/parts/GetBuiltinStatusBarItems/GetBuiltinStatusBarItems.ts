@@ -12,12 +12,8 @@ export const getBuiltinStatusBarItems = async (
   warningCount: number,
   { notificationsEnabled = true, problemsEnabled = true }: GetBuiltinStatusBarItemsOptions = {},
 ): Promise<readonly StatusBarItem[]> => {
-  const extraItems: StatusBarItem[] = []
-  if (notificationsEnabled) {
-    extraItems.push(getNotificationsStatusBarItem())
-  }
-  if (problemsEnabled) {
-    extraItems.push(getProblemsStatusBarItem(errorCount, warningCount))
-  }
-  return extraItems
+  return [
+    ...getNotificationsStatusBarItem(notificationsEnabled),
+    ...getProblemsStatusBarItem(errorCount, warningCount, problemsEnabled),
+  ]
 }
