@@ -2,12 +2,13 @@ import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
 import * as ExtensionHostStatusBarItems from '../ExtensionHost/ExtensionHostStatusBarItems.ts'
 import * as ExtensionHostManagement from '../ExtensionHostManagement/ExtensionHostManagement.ts'
 import { getBuiltinStatusBarItems } from '../GetBuiltinStatusBarItems/GetBuiltinStatusBarItems.ts'
-import * as StatusBarPreferences from '../StatusBarPreferences/StatusBarPreferences.ts'
 import * as ToStatusBarItem from '../ToStatusBarItem/ToStatusBarItem.ts'
 import * as ToUiStatusBarItems from '../ToUiStatusBarItems/ToUiStatusBarItems.ts'
 
 export interface GetStatusBarItemsOptions {
   readonly assetDir: string
+  readonly builtinNotificationsEnabled?: boolean
+  readonly builtinProblemsEnabled?: boolean
   readonly errorCount: number
   readonly platform: number
   readonly showItems: boolean
@@ -16,6 +17,8 @@ export interface GetStatusBarItemsOptions {
 
 export const getStatusBarItems = async ({
   assetDir,
+  builtinNotificationsEnabled = true,
+  builtinProblemsEnabled = true,
   errorCount,
   platform,
   showItems,
@@ -24,16 +27,12 @@ export const getStatusBarItems = async ({
   if (!showItems) {
     return []
   }
-  const [notificationsEnabled, problemsEnabled] = await Promise.all([
-    StatusBarPreferences.builtinNotificationsEnabled(),
-    StatusBarPreferences.builtinProblemsEnabled(),
-  ])
   await ExtensionHostManagement.activateByEvent('onSourceControl', assetDir, platform)
   const extensionStatusBarItems = await ExtensionHostStatusBarItems.getStatusBarItems(assetDir, platform)
   const uiStatusBarItems = ToUiStatusBarItems.toUiStatusBarItems(extensionStatusBarItems)
   const extraItems = await getBuiltinStatusBarItems(errorCount, warningCount, {
-    notificationsEnabled,
-    problemsEnabled,
+    notificationsEnabled: builtinNotificationsEnabled,
+    problemsEnabled: builtinProblemsEnabled,
   })
   return [...uiStatusBarItems.map(ToStatusBarItem.toStatusBarItem), ...extraItems]
 }

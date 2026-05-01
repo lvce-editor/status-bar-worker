@@ -92,3 +92,33 @@ test('builtinProblemsEnabled should default to true when preference is undefined
   expect(value).toBe(true)
   expect(mockRpc.invocations).toEqual([['Preferences.get', 'statusBar.builtinProblemsEnabled']])
 })
+
+test('loadStatusBarPreferences should load all preferences', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Preferences.get': async (key: string) => {
+      if (key === 'statusBar.itemsVisible') {
+        return false
+      }
+      if (key === 'statusBar.builtinNotificationsEnabled') {
+        return true
+      }
+      if (key === 'statusBar.builtinProblemsEnabled') {
+        return false
+      }
+      return undefined
+    },
+  })
+
+  const value = await StatusBarPreferences.loadStatusBarPreferences()
+
+  expect(value).toEqual({
+    builtinNotificationsEnabled: true,
+    builtinProblemsEnabled: false,
+    itemsVisible: false,
+  })
+  expect(mockRpc.invocations).toEqual([
+    ['Preferences.get', 'statusBar.itemsVisible'],
+    ['Preferences.get', 'statusBar.builtinNotificationsEnabled'],
+    ['Preferences.get', 'statusBar.builtinProblemsEnabled'],
+  ])
+})
