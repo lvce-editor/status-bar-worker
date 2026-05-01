@@ -1,8 +1,10 @@
 import { expect, test } from '@jest/globals'
 import * as GetBuiltinStatusBarItems from '../src/parts/GetBuiltinStatusBarItems/GetBuiltinStatusBarItems.ts'
+import * as GetNotificationsStatusBarItem from '../src/parts/GetNotificationsStatusBarItem/GetNotificationsStatusBarItem.ts'
+import * as GetProblemsStatusBarItem from '../src/parts/GetProblemsStatusBarItem/GetProblemsStatusBarItem.ts'
 
 test('getNotificationsStatusBarItem should return the notifications item', () => {
-  const result = GetBuiltinStatusBarItems.getNotificationsStatusBarItem()
+  const result = GetNotificationsStatusBarItem.getNotificationsStatusBarItem()
 
   expect(result).toEqual({
     ariaLabel: 'Notifications',
@@ -14,7 +16,7 @@ test('getNotificationsStatusBarItem should return the notifications item', () =>
 })
 
 test('getProblemsStatusBarItem should return the problems item', () => {
-  const result = GetBuiltinStatusBarItems.getProblemsStatusBarItem(1, 2)
+  const result = GetProblemsStatusBarItem.getProblemsStatusBarItem(1, 2)
 
   expect(result).toEqual({
     ariaLabel: '1 Problem, 2 Warnings',
