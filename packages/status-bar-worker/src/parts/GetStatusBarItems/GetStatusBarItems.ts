@@ -5,13 +5,21 @@ import { getBuiltinStatusBarItems } from '../GetBuiltinStatusBarItems/GetBuiltin
 import * as ToStatusBarItem from '../ToStatusBarItem/ToStatusBarItem.ts'
 import * as ToUiStatusBarItems from '../ToUiStatusBarItems/ToUiStatusBarItems.ts'
 
-export const getStatusBarItems = async (
-  showItems: boolean,
-  assetDir: string,
-  platform: number,
-  errorCount: number,
-  warningCount: number,
-): Promise<readonly StatusBarItem[]> => {
+export interface GetStatusBarItemsOptions {
+  readonly assetDir: string
+  readonly errorCount: number
+  readonly platform: number
+  readonly showItems: boolean
+  readonly warningCount: number
+}
+
+export const getStatusBarItems = async ({
+  assetDir,
+  errorCount,
+  platform,
+  showItems,
+  warningCount,
+}: GetStatusBarItemsOptions): Promise<readonly StatusBarItem[]> => {
   if (!showItems) {
     return []
   }

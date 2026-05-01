@@ -5,7 +5,13 @@ import * as StatusBarPreferences from '../StatusBarPreferences/StatusBarPreferen
 export const loadContent = async (state: StatusBarState): Promise<StatusBarState> => {
   const { assetDir, errorCount, platform, warningCount } = state
   const statusBarItemsPreference = await StatusBarPreferences.itemsVisible()
-  const statusBarItems = await GetStatusBarItems.getStatusBarItems(statusBarItemsPreference, assetDir, platform, errorCount, warningCount)
+  const statusBarItems = await GetStatusBarItems.getStatusBarItems({
+    assetDir,
+    errorCount,
+    platform,
+    showItems: statusBarItemsPreference,
+    warningCount,
+  })
   return {
     ...state,
     errorCount: 0,
