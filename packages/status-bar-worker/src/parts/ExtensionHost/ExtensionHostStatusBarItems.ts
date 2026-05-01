@@ -26,7 +26,6 @@ export const getStatusBarItems = (assetDir: string, platform: number): Promise<a
   })
 }
 
- 
 type ListenerFunction = (...args: any[]) => any
 
 // TODO add function to dispose listener
