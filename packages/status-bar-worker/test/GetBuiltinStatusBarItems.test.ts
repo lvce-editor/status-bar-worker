@@ -1,6 +1,35 @@
 import { expect, test } from '@jest/globals'
 import * as GetBuiltinStatusBarItems from '../src/parts/GetBuiltinStatusBarItems/GetBuiltinStatusBarItems.ts'
 
+test('getNotificationsStatusBarItem should return the notifications item', () => {
+  const result = GetBuiltinStatusBarItems.getNotificationsStatusBarItem()
+
+  expect(result).toEqual({
+    ariaLabel: 'Notifications',
+    command: '',
+    elements: [{ type: 'text', value: 'Notifications' }],
+    name: 'Notifications',
+    tooltip: 'Notifications',
+  })
+})
+
+test('getProblemsStatusBarItem should return the problems item', () => {
+  const result = GetBuiltinStatusBarItems.getProblemsStatusBarItem(1, 2)
+
+  expect(result).toEqual({
+    ariaLabel: '1 Problem, 2 Warnings',
+    command: '',
+    elements: [
+      { type: 'icon', value: 'ProblemsErrorIcon' },
+      { type: 'text', value: '1' },
+      { type: 'icon', value: 'ProblemsWarningIcon' },
+      { type: 'text', value: '2' },
+    ],
+    name: 'Problems',
+    tooltip: 'Problems',
+  })
+})
+
 test('getBuiltinStatusBarItems should return all builtin items by default', async () => {
   const result = await GetBuiltinStatusBarItems.getBuiltinStatusBarItems(0, 0)
 
