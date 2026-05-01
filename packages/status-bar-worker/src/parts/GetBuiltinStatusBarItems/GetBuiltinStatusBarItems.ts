@@ -1,20 +1,7 @@
 import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
+import { getProblemsAriaLabel } from '../GetProblemsAriaLabel/GetProblemsAriaLabel.ts'
 import * as InputName from '../InputName/InputName.ts'
-
-const getProblemsAriaLabel = (errorCount: number, warningCount: number): string => {
-  const parts: string[] = []
-  if (errorCount > 0) {
-    parts.push(`${errorCount} ${errorCount === 1 ? 'Problem' : 'Problems'}`)
-  }
-  if (warningCount > 0) {
-    parts.push(`${warningCount} ${warningCount === 1 ? 'Warning' : 'Warnings'}`)
-  }
-  if (parts.length === 0) {
-    return 'No Problems'
-  }
-  return parts.join(', ')
-}
 
 export const getBuiltinStatusBarItems = async (errorCount: number, warningCount: number): Promise<readonly StatusBarItem[]> => {
   const extraItems: readonly StatusBarItem[] = [
