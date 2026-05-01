@@ -4,6 +4,18 @@ import * as ExtensionHostActivationEvent from '../src/parts/ExtensionHostActivat
 import * as ExtensionHostCommandType from '../src/parts/ExtensionHostCommandType/ExtensionHostCommandType.ts'
 import * as GetStatusBarItems from '../src/parts/GetStatusBarItems/GetStatusBarItems.ts'
 
+const createBuiltinPreferenceMock = (overrides: Partial<Record<string, boolean>> = {}) => {
+  return async (key: string) => {
+    if (key === 'statusBar.builtinNotificationsEnabled') {
+      return overrides[key] ?? true
+    }
+    if (key === 'statusBar.builtinProblemsEnabled') {
+      return overrides[key] ?? true
+    }
+    return undefined
+  }
+}
+
 const defaultOptions = {
   assetDir: '',
   errorCount: 0,
@@ -20,6 +32,7 @@ test('getStatusBarItems should return empty array when showItems is false', asyn
 test('getStatusBarItems should return transformed items when showItems is true', async () => {
   using mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
+    'Preferences.get': createBuiltinPreferenceMock(),
   })
 
   const mockExtensionHostRpc = ExtensionHost.registerMockRpc({
@@ -37,6 +50,8 @@ test('getStatusBarItems should return transformed items when showItems is true',
   const result = await GetStatusBarItems.getStatusBarItems(defaultOptions)
 
   expect(mockRendererRpc.invocations).toEqual([
+    ['Preferences.get', 'statusBar.builtinNotificationsEnabled'],
+    ['Preferences.get', 'statusBar.builtinProblemsEnabled'],
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl, '', 0],
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem, '', 0],
   ])
@@ -77,6 +92,7 @@ test('getStatusBarItems should return transformed items when showItems is true',
 test('getStatusBarItems should return empty array when no items are returned', async () => {
   using mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
+    'Preferences.get': createBuiltinPreferenceMock(),
   })
 
   const mockExtensionHostRpc = ExtensionHost.registerMockRpc({
@@ -86,6 +102,8 @@ test('getStatusBarItems should return empty array when no items are returned', a
   const result = await GetStatusBarItems.getStatusBarItems(defaultOptions)
 
   expect(mockRendererRpc.invocations).toEqual([
+    ['Preferences.get', 'statusBar.builtinNotificationsEnabled'],
+    ['Preferences.get', 'statusBar.builtinProblemsEnabled'],
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl, '', 0],
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem, '', 0],
   ])
@@ -117,6 +135,7 @@ test('getStatusBarItems should return empty array when no items are returned', a
 test('getStatusBarItems should handle null items', async () => {
   using mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
+    'Preferences.get': createBuiltinPreferenceMock(),
   })
 
   const mockExtensionHostRpc = ExtensionHost.registerMockRpc({
@@ -126,6 +145,8 @@ test('getStatusBarItems should handle null items', async () => {
   const result = await GetStatusBarItems.getStatusBarItems(defaultOptions)
 
   expect(mockRendererRpc.invocations).toEqual([
+    ['Preferences.get', 'statusBar.builtinNotificationsEnabled'],
+    ['Preferences.get', 'statusBar.builtinProblemsEnabled'],
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl, '', 0],
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem, '', 0],
   ])
@@ -157,6 +178,7 @@ test('getStatusBarItems should handle null items', async () => {
 test('getStatusBarItems should handle undefined items', async () => {
   using mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
+    'Preferences.get': createBuiltinPreferenceMock(),
   })
 
   const mockExtensionHostRpc = ExtensionHost.registerMockRpc({
@@ -166,6 +188,8 @@ test('getStatusBarItems should handle undefined items', async () => {
   const result = await GetStatusBarItems.getStatusBarItems(defaultOptions)
 
   expect(mockRendererRpc.invocations).toEqual([
+    ['Preferences.get', 'statusBar.builtinNotificationsEnabled'],
+    ['Preferences.get', 'statusBar.builtinProblemsEnabled'],
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl, '', 0],
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem, '', 0],
   ])
@@ -197,6 +221,7 @@ test('getStatusBarItems should handle undefined items', async () => {
 test('getStatusBarItems should default missing fields to empty strings', async () => {
   using mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
+    'Preferences.get': createBuiltinPreferenceMock(),
   })
 
   const mockExtensionHostRpc = ExtensionHost.registerMockRpc({
@@ -213,6 +238,8 @@ test('getStatusBarItems should default missing fields to empty strings', async (
   const result = await GetStatusBarItems.getStatusBarItems(defaultOptions)
 
   expect(mockRendererRpc.invocations).toEqual([
+    ['Preferences.get', 'statusBar.builtinNotificationsEnabled'],
+    ['Preferences.get', 'statusBar.builtinProblemsEnabled'],
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl, '', 0],
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem, '', 0],
   ])
@@ -258,6 +285,7 @@ test('getStatusBarItems should default missing fields to empty strings', async (
 test('getStatusBarItems should handle multiple items', async () => {
   using mockRendererRpc = RendererWorker.registerMockRpc({
     'ExtensionHostManagement.activateByEvent': async () => {},
+    'Preferences.get': createBuiltinPreferenceMock(),
   })
 
   const mockExtensionHostRpc = ExtensionHost.registerMockRpc({
@@ -282,6 +310,8 @@ test('getStatusBarItems should handle multiple items', async () => {
   const result = await GetStatusBarItems.getStatusBarItems(defaultOptions)
 
   expect(mockRendererRpc.invocations).toEqual([
+    ['Preferences.get', 'statusBar.builtinNotificationsEnabled'],
+    ['Preferences.get', 'statusBar.builtinProblemsEnabled'],
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl, '', 0],
     ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem, '', 0],
   ])
@@ -315,6 +345,43 @@ test('getStatusBarItems should handle multiple items', async () => {
       name: 'Notifications',
       tooltip: 'Notifications',
     },
+    {
+      ariaLabel: 'No Problems',
+      command: '',
+      elements: [
+        { type: 'icon', value: 'ProblemsErrorIcon' },
+        { type: 'text', value: '0' },
+        { type: 'icon', value: 'ProblemsWarningIcon' },
+        { type: 'text', value: '0' },
+      ],
+      name: 'Problems',
+      tooltip: 'Problems',
+    },
+  ])
+})
+
+test('getStatusBarItems should omit disabled builtin items', async () => {
+  using mockRendererRpc = RendererWorker.registerMockRpc({
+    'ExtensionHostManagement.activateByEvent': async () => {},
+    'Preferences.get': createBuiltinPreferenceMock({
+      'statusBar.builtinNotificationsEnabled': false,
+    }),
+  })
+
+  const mockExtensionHostRpc = ExtensionHost.registerMockRpc({
+    [ExtensionHostCommandType.GetStatusBarItems]: async () => [],
+  })
+
+  const result = await GetStatusBarItems.getStatusBarItems(defaultOptions)
+
+  expect(mockRendererRpc.invocations).toEqual([
+    ['Preferences.get', 'statusBar.builtinNotificationsEnabled'],
+    ['Preferences.get', 'statusBar.builtinProblemsEnabled'],
+    ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnSourceControl, '', 0],
+    ['ExtensionHostManagement.activateByEvent', ExtensionHostActivationEvent.OnStatusBarItem, '', 0],
+  ])
+  expect(mockExtensionHostRpc.invocations).toEqual([[ExtensionHostCommandType.GetStatusBarItems]])
+  expect(result).toEqual([
     {
       ariaLabel: 'No Problems',
       command: '',
