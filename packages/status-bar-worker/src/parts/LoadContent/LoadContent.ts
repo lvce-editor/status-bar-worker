@@ -4,14 +4,14 @@ import * as StatusBarPreferences from '../StatusBarPreferences/StatusBarPreferen
 
 export const loadContent = async (state: StatusBarState): Promise<StatusBarState> => {
   const { assetDir, errorCount, platform, warningCount } = state
-  const statusBarPreferences = await StatusBarPreferences.loadStatusBarPreferences()
+  const { builtinNotificationsEnabled, builtinProblemsEnabled, itemsVisible } = await StatusBarPreferences.loadStatusBarPreferences()
   const statusBarItems = await GetStatusBarItems.getStatusBarItems({
     assetDir,
-    builtinNotificationsEnabled: statusBarPreferences.builtinNotificationsEnabled,
-    builtinProblemsEnabled: statusBarPreferences.builtinProblemsEnabled,
+    builtinNotificationsEnabled: builtinNotificationsEnabled,
+    builtinProblemsEnabled: builtinProblemsEnabled,
     errorCount,
     platform,
-    showItems: statusBarPreferences.itemsVisible,
+    showItems: itemsVisible,
     warningCount,
   })
   return {
