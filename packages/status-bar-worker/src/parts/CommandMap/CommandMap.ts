@@ -4,6 +4,7 @@ import { diff2 } from '../Diff2/Diff2.ts'
 import * as HandleClick from '../HandleClick/HandleClick.ts'
 import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
 import { handleExtensionsChanged } from '../HandleExtensionsChanged/HandleExtensionsChanged.ts'
+import { handleItemsChanged } from '../HandleItemsChanged/HandleItemsChanged.ts'
 import { initialize } from '../Initialize/Initialize.ts'
 import * as ItemLeftUpdate from '../ItemLeftUpdate/ItemLeftUpdate.ts'
 import * as ItemRightCreate from '../ItemRightCreate/ItemRightCreate.ts'
@@ -19,9 +20,11 @@ export const commandMap = {
   'StatusBar.create': StatusBar.create,
   'StatusBar.diff2': diff2,
   'StatusBar.getCommandIds': getCommandIds,
+  'StatusBar.handleChange': wrapCommand(handleItemsChanged),
   'StatusBar.handleClick': wrapCommand(HandleClick.handleClick),
   'StatusBar.handleContextMenu': wrapCommand(HandleContextMenu.handleContextMenu),
   'StatusBar.handleExtensionsChanged': wrapCommand(handleExtensionsChanged),
+  'StatusBar.handleItemsChanged': wrapCommand(handleItemsChanged),
   'StatusBar.initialize': initialize,
   'StatusBar.itemLeftUpdate': wrapCommand(ItemLeftUpdate.itemLeftUpdate),
   'StatusBar.itemRightCreate': wrapCommand(ItemRightCreate.itemRightCreate),
