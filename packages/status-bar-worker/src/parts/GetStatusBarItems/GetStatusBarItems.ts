@@ -7,6 +7,8 @@ import * as ToUiStatusBarItems from '../ToUiStatusBarItems/ToUiStatusBarItems.ts
 
 export interface GetStatusBarItemsOptions {
   readonly assetDir: string
+  readonly builtinNotificationsEnabled?: boolean
+  readonly builtinProblemsEnabled?: boolean
   readonly errorCount: number
   readonly platform: number
   readonly showItems: boolean
@@ -15,6 +17,8 @@ export interface GetStatusBarItemsOptions {
 
 export const getStatusBarItems = async ({
   assetDir,
+  builtinNotificationsEnabled = true,
+  builtinProblemsEnabled = true,
   errorCount,
   platform,
   showItems,
@@ -23,9 +27,13 @@ export const getStatusBarItems = async ({
   if (!showItems) {
     return []
   }
+  await ExtensionHostManagement.activateByEvent('onStatusBarItem', assetDir, platform)
   await ExtensionHostManagement.activateByEvent('onSourceControl', assetDir, platform)
   const extensionStatusBarItems = await ExtensionHostStatusBarItems.getStatusBarItems(assetDir, platform)
   const uiStatusBarItems = ToUiStatusBarItems.toUiStatusBarItems(extensionStatusBarItems)
-  const extraItems = await getBuiltinStatusBarItems(errorCount, warningCount)
+  const extraItems = await getBuiltinStatusBarItems(errorCount, warningCount, {
+    notificationsEnabled: builtinNotificationsEnabled,
+    problemsEnabled: builtinProblemsEnabled,
+  })
   return [...uiStatusBarItems.map(ToStatusBarItem.toStatusBarItem), ...extraItems]
 }
