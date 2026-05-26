@@ -3,6 +3,7 @@ interface StatusBarItemBase {
 }
 
 export interface StatusBarItemText extends StatusBarItemBase {
+  // TODO maybe use numeric type property
   readonly type: 'text'
   readonly value: string
 }
