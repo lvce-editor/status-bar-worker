@@ -3,6 +3,7 @@ import type { StatusBarItemElement } from '../StatusBarItemElement/StatusBarItem
 export type StatusBarItem = {
   readonly ariaLabel: string
   readonly command?: string
+  readonly enabled?: boolean
   readonly elements: readonly StatusBarItemElement[]
   readonly name: string
   readonly tooltip: string
