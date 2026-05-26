@@ -3,6 +3,7 @@ import * as StatusBar from '../Create/Create.ts'
 import { diff2 } from '../Diff2/Diff2.ts'
 import * as HandleClick from '../HandleClick/HandleClick.ts'
 import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
+import { handleExtensionsChanged } from '../HandleExtensionsChanged/HandleExtensionsChanged.ts'
 import { initialize } from '../Initialize/Initialize.ts'
 import * as ItemLeftUpdate from '../ItemLeftUpdate/ItemLeftUpdate.ts'
 import * as ItemRightCreate from '../ItemRightCreate/ItemRightCreate.ts'
@@ -20,6 +21,7 @@ export const commandMap = {
   'StatusBar.getCommandIds': getCommandIds,
   'StatusBar.handleClick': wrapCommand(HandleClick.handleClick),
   'StatusBar.handleContextMenu': wrapCommand(HandleContextMenu.handleContextMenu),
+  'StatusBar.handleExtensionsChanged': wrapCommand(handleExtensionsChanged),
   'StatusBar.initialize': initialize,
   'StatusBar.itemLeftUpdate': wrapCommand(ItemLeftUpdate.itemLeftUpdate),
   'StatusBar.itemRightCreate': wrapCommand(ItemRightCreate.itemRightCreate),
