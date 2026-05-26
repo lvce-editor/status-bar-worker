@@ -6,4 +6,5 @@ export type StatusBarItem = {
   readonly elements: readonly StatusBarItemElement[]
   readonly name: string
   readonly tooltip: string
+  readonly isError?: boolean
 }
