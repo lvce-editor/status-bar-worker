@@ -20,6 +20,7 @@ export const commandMap = {
   'StatusBar.create': StatusBar.create,
   'StatusBar.diff2': diff2,
   'StatusBar.getCommandIds': getCommandIds,
+  'StatusBar.handleChange': wrapCommand(handleItemsChanged),
   'StatusBar.handleClick': wrapCommand(HandleClick.handleClick),
   'StatusBar.handleContextMenu': wrapCommand(HandleContextMenu.handleContextMenu),
   'StatusBar.handleExtensionsChanged': wrapCommand(handleExtensionsChanged),
