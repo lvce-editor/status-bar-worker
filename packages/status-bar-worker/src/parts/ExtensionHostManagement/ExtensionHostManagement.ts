@@ -4,3 +4,8 @@ export const activateByEvent = (event: string, assetDir: string, platform: numbe
   // @ts-ignore
   return RendererWorker.activateByEvent(event, assetDir, platform)
 }
+
+export const getStatusBarItems = (): Promise<readonly any[]> => {
+  // @ts-ignore
+  return RendererWorker.invoke('ExtensionHostManagement.getStatusBarItems')
+}
