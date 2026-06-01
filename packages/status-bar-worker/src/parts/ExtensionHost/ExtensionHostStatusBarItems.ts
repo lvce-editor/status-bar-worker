@@ -1,5 +1,6 @@
 import * as ExtensionHostActivationEvent from '../ExtensionHostActivationEvent/ExtensionHostActivationEvent.ts'
 import * as ExtensionHostCommandType from '../ExtensionHostCommandType/ExtensionHostCommandType.ts'
+import * as ExtensionHostManagement from '../ExtensionHostManagement/ExtensionHostManagement.ts'
 import * as Listener from '../Listener/Listener.ts'
 import * as ExtensionHostShared from './ExtensionHostShared.ts'
 
@@ -14,7 +15,7 @@ const combineResults = (results: readonly any[]): any[] => {
 }
 
 export const getStatusBarItems = (assetDir: string, platform: number): Promise<any[]> => {
-  return ExtensionHostShared.executeProviders({
+  const legacyItems = ExtensionHostShared.executeProviders({
     assetDir,
     combineResults,
     event: ExtensionHostActivationEvent.OnStatusBarItem,
@@ -24,6 +25,8 @@ export const getStatusBarItems = (assetDir: string, platform: number): Promise<a
     params: [],
     platform,
   })
+  const isolatedItems = ExtensionHostManagement.getStatusBarItems()
+  return Promise.all([legacyItems, isolatedItems]).then(combineResults)
 }
 
 type ListenerFunction = (...args: any[]) => any
