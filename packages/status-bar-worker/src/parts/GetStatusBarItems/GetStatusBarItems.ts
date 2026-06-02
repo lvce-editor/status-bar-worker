@@ -19,7 +19,6 @@ export const getStatusBarItems = async ({
     return []
   }
   await ExtensionHostManagement.activateByEvent('onStatusBarItem', assetDir, platform)
-  await ExtensionHostManagement.activateByEvent('onSourceControl', assetDir, platform)
   const extensionStatusBarItems = await ExtensionHostStatusBarItems.getStatusBarItems(assetDir, platform)
   const uiStatusBarItems = ToUiStatusBarItems.toUiStatusBarItems(extensionStatusBarItems)
   const extraItems = await getBuiltinStatusBarItems(errorCount, warningCount, {
