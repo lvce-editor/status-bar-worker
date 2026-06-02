@@ -1,6 +1,6 @@
 import { PlainMessagePortRpc } from '@lvce-editor/rpc'
+import { ExtensionManagementWorker } from '@lvce-editor/rpc-registry'
 import * as ExtensionManagementCommandMap from '../ExtensionManagementCommandMap/ExtensionManagementCommandMap.ts'
-import * as ExtensionManagementWorker from '../ExtensionManagementWorker/ExtensionManagementWorker.ts'
 
 export const handleExtensionManagementMessagePort = async (port: MessagePort): Promise<void> => {
   const rpc = await PlainMessagePortRpc.create({

@@ -1,7 +1,6 @@
 import { expect, test } from '@jest/globals'
-import { ExtensionHost } from '@lvce-editor/rpc-registry'
+import { ExtensionHost, ExtensionManagementWorker } from '@lvce-editor/rpc-registry'
 import * as ExtensionHostShared from '../src/parts/ExtensionHost/ExtensionHostShared.ts'
-import * as ExtensionManagementWorker from '../src/parts/ExtensionManagementWorker/ExtensionManagementWorker.ts'
 
 const combineResults = (results: readonly any[]): any => {
   return results

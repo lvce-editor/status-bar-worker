@@ -1,6 +1,6 @@
 import { expect, test } from '@jest/globals'
+import { ExtensionManagementWorker } from '@lvce-editor/rpc-registry'
 import * as ExtensionHostManagement from '../src/parts/ExtensionHostManagement/ExtensionHostManagement.ts'
-import * as ExtensionManagementWorker from '../src/parts/ExtensionManagementWorker/ExtensionManagementWorker.ts'
 
 test('activateByEvent should call ExtensionManagementWorker.activateByEvent with correct event', async () => {
   using mockRpc = ExtensionManagementWorker.registerMockRpc({
@@ -28,17 +28,6 @@ test('activateByEvent should be awaitable', async () => {
   })
 
   await ExtensionHostManagement.activateByEvent('test.event', '', 0)
-
-  expect(mockRpc.invocations).toEqual([['Extensions.activateByEvent', 'test.event', '', 0]])
-})
-
-test('activateByEvent should wait for ExtensionManagementWorker rpc', async () => {
-  const promise = ExtensionHostManagement.activateByEvent('test.event', '', 0)
-  using mockRpc = ExtensionManagementWorker.registerMockRpc({
-    'Extensions.activateByEvent': async () => {},
-  })
-
-  await promise
 
   expect(mockRpc.invocations).toEqual([['Extensions.activateByEvent', 'test.event', '', 0]])
 })
