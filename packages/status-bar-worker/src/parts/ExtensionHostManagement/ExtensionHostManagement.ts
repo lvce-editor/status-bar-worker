@@ -1,11 +1,9 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { ExtensionManagementWorker } from '@lvce-editor/rpc-registry'
 
 export const activateByEvent = (event: string, assetDir: string, platform: number): Promise<void> => {
-  // @ts-ignore
-  return RendererWorker.activateByEvent(event, assetDir, platform)
+  return ExtensionManagementWorker.invoke('Extensions.activateByEvent', event, assetDir, platform)
 }
 
 export const getStatusBarItems = (): Promise<readonly any[]> => {
-  // @ts-ignore
-  return RendererWorker.invoke('ExtensionHostManagement.getStatusBarItems')
+  return ExtensionManagementWorker.invoke('Extensions.getStatusBarItems')
 }
