@@ -1,14 +1,15 @@
 import { expect, test } from '@jest/globals'
-import { ExtensionHost, RendererWorker } from '@lvce-editor/rpc-registry'
+import { ExtensionHost } from '@lvce-editor/rpc-registry'
 import * as ExtensionHostShared from '../src/parts/ExtensionHost/ExtensionHostShared.ts'
+import * as ExtensionManagementWorker from '../src/parts/ExtensionManagementWorker/ExtensionManagementWorker.ts'
 
 const combineResults = (results: readonly any[]): any => {
   return results
 }
 
 test('executeProviders should activate by event and invoke method with params', async () => {
-  using mockRendererRpc = RendererWorker.registerMockRpc({
-    'ExtensionHostManagement.activateByEvent': async () => {},
+  using mockExtensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.activateByEvent': async () => {},
   })
 
   const mockExtensionHostRpc = ExtensionHost.registerMockRpc({
@@ -26,14 +27,14 @@ test('executeProviders should activate by event and invoke method with params', 
     platform: 0,
   })
 
-  expect(mockRendererRpc.invocations).toEqual([['ExtensionHostManagement.activateByEvent', 'test.event', '', 0]])
+  expect(mockExtensionManagementRpc.invocations).toEqual([['Extensions.activateByEvent', 'test.event', '', 0]])
   expect(mockExtensionHostRpc.invocations).toEqual([['test.method', 'param1', 'param2']])
   expect(result).toBe('test-result')
 })
 
 test('executeProviders should use default noProviderFoundMessage', async () => {
-  using mockRendererRpc = RendererWorker.registerMockRpc({
-    'ExtensionHostManagement.activateByEvent': async () => {},
+  using mockExtensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.activateByEvent': async () => {},
   })
 
   const mockExtensionHostRpc = ExtensionHost.registerMockRpc({
@@ -50,14 +51,14 @@ test('executeProviders should use default noProviderFoundMessage', async () => {
     platform: 0,
   })
 
-  expect(mockRendererRpc.invocations).toEqual([['ExtensionHostManagement.activateByEvent', 'test.event', '', 0]])
+  expect(mockExtensionManagementRpc.invocations).toEqual([['Extensions.activateByEvent', 'test.event', '', 0]])
   expect(mockExtensionHostRpc.invocations).toEqual([['test.method']])
   expect(result).toBe('result')
 })
 
 test('executeProvider should activate by event and invoke method with params', async () => {
-  using mockRendererRpc = RendererWorker.registerMockRpc({
-    'ExtensionHostManagement.activateByEvent': async () => {},
+  using mockExtensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.activateByEvent': async () => {},
   })
 
   const mockExtensionHostRpc = ExtensionHost.registerMockRpc({
@@ -73,7 +74,7 @@ test('executeProvider should activate by event and invoke method with params', a
     platform: 0,
   })
 
-  expect(mockRendererRpc.invocations).toEqual([['ExtensionHostManagement.activateByEvent', 'test.event', '', 0]])
+  expect(mockExtensionManagementRpc.invocations).toEqual([['Extensions.activateByEvent', 'test.event', '', 0]])
   expect(mockExtensionHostRpc.invocations).toEqual([['test.method', 'param1', 'param2']])
   expect(result).toBe('test-result')
 })

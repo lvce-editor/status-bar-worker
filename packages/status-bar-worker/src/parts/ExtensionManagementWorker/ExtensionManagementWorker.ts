@@ -1,5 +1,9 @@
 import { createMockRpc, type Rpc } from '@lvce-editor/rpc'
 
+type DisposableMockRpc = ReturnType<typeof createMockRpc> & {
+  [Symbol.dispose]?: () => void
+}
+
 let rpc: Rpc | undefined
 let resolveReady: (value: Rpc) => void
 let ready = new Promise<Rpc>((resolve) => {
@@ -24,7 +28,7 @@ export const invoke = async (method: string, ...params: readonly any[]): Promise
 }
 
 export const registerMockRpc = (commandMap: any): any => {
-  const mockRpc = createMockRpc({ commandMap })
+  const mockRpc: DisposableMockRpc = createMockRpc({ commandMap })
   set(mockRpc)
   mockRpc[Symbol.dispose] = (): void => {
     rpc = undefined

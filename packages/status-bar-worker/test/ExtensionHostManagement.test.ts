@@ -31,3 +31,14 @@ test('activateByEvent should be awaitable', async () => {
 
   expect(mockRpc.invocations).toEqual([['Extensions.activateByEvent', 'test.event', '', 0]])
 })
+
+test('activateByEvent should wait for ExtensionManagementWorker rpc', async () => {
+  const promise = ExtensionHostManagement.activateByEvent('test.event', '', 0)
+  using mockRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.activateByEvent': async () => {},
+  })
+
+  await promise
+
+  expect(mockRpc.invocations).toEqual([['Extensions.activateByEvent', 'test.event', '', 0]])
+})
