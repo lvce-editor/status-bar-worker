@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals'
-import { ExtensionHost, RendererWorker } from '@lvce-editor/rpc-registry'
+import { ExtensionManagementWorker, RendererWorker } from '@lvce-editor/rpc-registry'
 import type { StatusBarState } from '../src/parts/StatusBarState/StatusBarState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as HandleClick from '../src/parts/HandleClick/HandleClick.ts'
@@ -73,8 +73,8 @@ test('handleClick should call handleClickProblems when item is Problems', async 
 })
 
 test('handleClick should call handleClickExtensionStatusBarItem for extension items', async () => {
-  using mockExtensionHostRpc = ExtensionHost.registerMockRpc({
-    'ExtensionHostStatusBar.executeCommand': async () => {},
+  using mockExtensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.executeCommand': async () => {},
   })
 
   const state: StatusBarState = {
@@ -93,12 +93,12 @@ test('handleClick should call handleClickExtensionStatusBarItem for extension it
 
   await HandleClick.handleClick(state, 'my-extension-item')
 
-  expect(mockExtensionHostRpc.invocations).toContainEqual(['ExtensionHostStatusBar.executeCommand', 'my-extension-item'])
+  expect(mockExtensionManagementRpc.invocations).toContainEqual(['Extensions.executeCommand', 'my-extension-item'])
 })
 
 test('handleClick should find item in statusBarItemsLeft', async () => {
-  using mockExtensionHostRpc = ExtensionHost.registerMockRpc({
-    'ExtensionHostStatusBar.executeCommand': async () => {},
+  using mockExtensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.executeCommand': async () => {},
   })
 
   const state: StatusBarState = {
@@ -116,12 +116,12 @@ test('handleClick should find item in statusBarItemsLeft', async () => {
 
   await HandleClick.handleClick(state, 'left-item')
 
-  expect(mockExtensionHostRpc.invocations).toContainEqual(['ExtensionHostStatusBar.executeCommand', 'left-item'])
+  expect(mockExtensionManagementRpc.invocations).toContainEqual(['Extensions.executeCommand', 'left-item'])
 })
 
 test('handleClick should find item in statusBarItemsRight', async () => {
-  using mockExtensionHostRpc = ExtensionHost.registerMockRpc({
-    'ExtensionHostStatusBar.executeCommand': async () => {},
+  using mockExtensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.executeCommand': async () => {},
   })
 
   const state: StatusBarState = {
@@ -139,12 +139,12 @@ test('handleClick should find item in statusBarItemsRight', async () => {
 
   await HandleClick.handleClick(state, 'right-item')
 
-  expect(mockExtensionHostRpc.invocations).toContainEqual(['ExtensionHostStatusBar.executeCommand', 'right-item'])
+  expect(mockExtensionManagementRpc.invocations).toContainEqual(['Extensions.executeCommand', 'right-item'])
 })
 
 test('handleClick should prioritize left items over right items with same name', async () => {
-  using mockExtensionHostRpc = ExtensionHost.registerMockRpc({
-    'ExtensionHostStatusBar.executeCommand': async () => {},
+  using mockExtensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.executeCommand': async () => {},
   })
 
   const state: StatusBarState = {
@@ -171,12 +171,12 @@ test('handleClick should prioritize left items over right items with same name',
 
   await HandleClick.handleClick(state, 'duplicate-item')
 
-  expect(mockExtensionHostRpc.invocations).toEqual([['ExtensionHostStatusBar.executeCommand', 'duplicate-item']])
+  expect(mockExtensionManagementRpc.invocations).toEqual([['Extensions.executeCommand', 'duplicate-item']])
 })
 
 test('handleClick should handle extension item with command property', async () => {
-  using mockExtensionHostRpc = ExtensionHost.registerMockRpc({
-    'ExtensionHostStatusBar.executeCommand': async () => {},
+  using mockExtensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.executeCommand': async () => {},
   })
 
   const state: StatusBarState = {
@@ -195,12 +195,12 @@ test('handleClick should handle extension item with command property', async () 
 
   await HandleClick.handleClick(state, 'extension-with-command')
 
-  expect(mockExtensionHostRpc.invocations).toContainEqual(['ExtensionHostStatusBar.executeCommand', 'extension-with-command'])
+  expect(mockExtensionManagementRpc.invocations).toContainEqual(['Extensions.executeCommand', 'extension-with-command'])
 })
 
 test('handleClick should handle multiple items in left array', async () => {
-  using mockExtensionHostRpc = ExtensionHost.registerMockRpc({
-    'ExtensionHostStatusBar.executeCommand': async () => {},
+  using mockExtensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.executeCommand': async () => {},
   })
 
   const state: StatusBarState = {
@@ -230,12 +230,12 @@ test('handleClick should handle multiple items in left array', async () => {
 
   await HandleClick.handleClick(state, 'item-2')
 
-  expect(mockExtensionHostRpc.invocations).toContainEqual(['ExtensionHostStatusBar.executeCommand', 'item-2'])
+  expect(mockExtensionManagementRpc.invocations).toContainEqual(['Extensions.executeCommand', 'item-2'])
 })
 
 test('handleClick should handle multiple items in right array', async () => {
-  using mockExtensionHostRpc = ExtensionHost.registerMockRpc({
-    'ExtensionHostStatusBar.executeCommand': async () => {},
+  using mockExtensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.executeCommand': async () => {},
   })
 
   const state: StatusBarState = {
@@ -265,7 +265,7 @@ test('handleClick should handle multiple items in right array', async () => {
 
   await HandleClick.handleClick(state, 'right-2')
 
-  expect(mockExtensionHostRpc.invocations).toContainEqual(['ExtensionHostStatusBar.executeCommand', 'right-2'])
+  expect(mockExtensionManagementRpc.invocations).toContainEqual(['Extensions.executeCommand', 'right-2'])
 })
 
 test('handleClick should not call RPC methods for empty name', async () => {
@@ -273,8 +273,8 @@ test('handleClick should not call RPC methods for empty name', async () => {
     'Layout.showPanel': async () => {},
     'Panel.toggleView': async () => {},
   })
-  using mockExtensionHostRpc = ExtensionHost.registerMockRpc({
-    'ExtensionHostStatusBar.executeCommand': async () => {},
+  using mockExtensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.executeCommand': async () => {},
   })
 
   const state: StatusBarState = createDefaultState()
@@ -282,7 +282,7 @@ test('handleClick should not call RPC methods for empty name', async () => {
   await HandleClick.handleClick(state, '')
 
   expect(mockRendererRpc.invocations).toEqual([])
-  expect(mockExtensionHostRpc.invocations).toEqual([])
+  expect(mockExtensionManagementRpc.invocations).toEqual([])
 })
 
 test('handleClick should not call RPC methods for item not found', async () => {
@@ -290,8 +290,8 @@ test('handleClick should not call RPC methods for item not found', async () => {
     'Layout.showPanel': async () => {},
     'Panel.toggleView': async () => {},
   })
-  using mockExtensionHostRpc = ExtensionHost.registerMockRpc({
-    'ExtensionHostStatusBar.executeCommand': async () => {},
+  using mockExtensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.executeCommand': async () => {},
   })
 
   const state: StatusBarState = {
@@ -310,5 +310,5 @@ test('handleClick should not call RPC methods for item not found', async () => {
   await HandleClick.handleClick(state, 'non-existent-item')
 
   expect(mockRendererRpc.invocations).toEqual([])
-  expect(mockExtensionHostRpc.invocations).toEqual([])
+  expect(mockExtensionManagementRpc.invocations).toEqual([])
 })
