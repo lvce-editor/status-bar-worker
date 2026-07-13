@@ -14,7 +14,7 @@ const combineResults = (results: readonly any[]): any[] => {
   return results.flat()
 }
 
-export const getStatusBarItems = (assetDir: string, platform: number): Promise<any[]> => {
+export const getStatusBarItems = async (assetDir: string, platform: number): Promise<any[]> => {
   const legacyItems = ExtensionHostShared.executeProviders({
     assetDir,
     combineResults,
@@ -26,7 +26,8 @@ export const getStatusBarItems = (assetDir: string, platform: number): Promise<a
     platform,
   })
   const isolatedItems = ExtensionHostManagement.getStatusBarItems()
-  return Promise.all([legacyItems, isolatedItems]).then(combineResults)
+  const results = await Promise.all([legacyItems, isolatedItems])
+  return combineResults(results)
 }
 
 type ListenerFunction = (...args: any[]) => any
