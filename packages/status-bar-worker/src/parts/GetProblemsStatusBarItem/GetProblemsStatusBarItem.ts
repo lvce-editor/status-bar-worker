@@ -13,9 +13,9 @@ export const getProblemsStatusBarItem = (errorCount: number, warningCount: numbe
       command: '', // TODO should show problems view
       elements: [
         { type: 'icon', value: ClassNames.ProblemsErrorIcon },
-        { type: 'text', value: `${errorCount}` },
+        { type: 'text', value: String(errorCount) },
         { type: 'icon', value: ClassNames.ProblemsWarningIcon },
-        { type: 'text', value: `${warningCount}` },
+        { type: 'text', value: String(warningCount) },
       ],
       name: InputName.Problems,
       tooltip: 'Problems',
