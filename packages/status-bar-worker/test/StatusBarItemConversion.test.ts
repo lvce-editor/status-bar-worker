@@ -47,6 +47,34 @@ test('toStatusBarItem should use fallback text element and aria label', () => {
   })
 })
 
+test('toStatusBarItem should use text as tooltip when tooltip is empty', () => {
+  const uiStatusBarItem: UiStatusBarItem = {
+    command: '',
+    icon: '',
+    name: 'test',
+    text: 'Test',
+    tooltip: '',
+  }
+
+  const result = ToStatusBarItem.toStatusBarItem(uiStatusBarItem)
+
+  expect(result.tooltip).toBe('Test')
+})
+
+test('toStatusBarItem should use name as tooltip when tooltip and text are empty', () => {
+  const uiStatusBarItem: UiStatusBarItem = {
+    command: '',
+    icon: '',
+    name: 'test',
+    text: '',
+    tooltip: '',
+  }
+
+  const result = ToStatusBarItem.toStatusBarItem(uiStatusBarItem)
+
+  expect(result.tooltip).toBe('test')
+})
+
 test('toUiStatusBarItem should normalize branch icon', () => {
   const result = ToUiStatusBarItem.toUiStatusBarItem({
     command: 'test.command',
