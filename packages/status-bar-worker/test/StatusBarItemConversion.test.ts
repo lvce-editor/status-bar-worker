@@ -86,11 +86,26 @@ test('toUiStatusBarItem should normalize branch icon', () => {
 
   expect(result).toEqual({
     command: 'test.command',
-    icon: 'Branch',
+    icon: 'MaskIconSourceControl',
     name: 'test',
     text: 'Test',
     tooltip: 'Test tooltip',
   })
+})
+
+test('toStatusBarItem should render the normalized branch mask icon class', () => {
+  const uiStatusBarItem = ToUiStatusBarItem.toUiStatusBarItem({
+    icon: 'branch',
+    id: 'git.checkout',
+    text: 'main',
+  })
+
+  const result = ToStatusBarItem.toStatusBarItem(uiStatusBarItem)
+
+  expect(result.elements).toEqual([
+    { type: 'icon', value: 'MaskIconSourceControl' },
+    { type: 'text', value: 'main' },
+  ])
 })
 
 test('toUiStatusBarItems should return empty array for missing items', () => {

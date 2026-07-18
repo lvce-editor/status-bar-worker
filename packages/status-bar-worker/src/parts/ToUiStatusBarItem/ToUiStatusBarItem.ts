@@ -2,7 +2,7 @@ import type { UiStatusBarItem } from '../UiStatusBarItem/UiStatusBarItem.ts'
 
 const getActualIcon = (extensionHostStatusBarItem: any): string => {
   if (extensionHostStatusBarItem.icon === 'branch') {
-    return 'Branch'
+    return 'MaskIconSourceControl'
   }
   return extensionHostStatusBarItem.icon || ''
 }
