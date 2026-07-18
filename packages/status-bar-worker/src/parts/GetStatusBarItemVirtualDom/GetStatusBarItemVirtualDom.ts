@@ -6,7 +6,7 @@ import { getStatusBarItemElementVirtualDom } from '../GetStatusBarItemElementVir
 
 export const getStatusBarItemVirtualDom = (statusBarItem: StatusBarItem): readonly VirtualDomNode[] => {
   const { ariaLabel, elements, name, tooltip } = statusBarItem
-  const elementNodes = elements.flatMap(getStatusBarItemElementVirtualDom)
+  const elementNodes = elements.flatMap((element) => getStatusBarItemElementVirtualDom(element, name))
   const buttonNode: VirtualDomNode = {
     ariaLabel,
     childCount: elements.length,

@@ -29,11 +29,13 @@ test('getStatusBarItemVirtualDom should return button with icon and text element
   expect(result[1]).toEqual({
     childCount: 0,
     className: 'MaskIcon test-icon',
+    name: 'test.item',
     type: VirtualDomElements.Div,
   })
   expect(result[2]).toEqual({
     childCount: 1,
     className: 'StatusBarItemLabel',
+    name: 'test.item',
     type: VirtualDomElements.Span,
   })
   expect(result[3]).toEqual({
@@ -65,6 +67,7 @@ test('getStatusBarItemVirtualDom should return button with text element', () => 
   expect(result[1]).toEqual({
     childCount: 1,
     className: 'StatusBarItemLabel',
+    name: 'test.item',
     type: VirtualDomElements.Span,
   })
   expect(result[2]).toEqual({
@@ -96,6 +99,7 @@ test('getStatusBarItemVirtualDom should handle empty strings', () => {
   expect(result[1]).toEqual({
     childCount: 1,
     className: 'StatusBarItemLabel',
+    name: '',
     type: VirtualDomElements.Span,
   })
   expect(result[2]).toEqual({
