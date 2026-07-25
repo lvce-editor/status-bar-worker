@@ -9,6 +9,7 @@ export interface StatusBarItemText extends StatusBarItemBase {
 }
 
 export interface StatusBarItemIcon extends StatusBarItemBase {
+  readonly spinning?: boolean
   readonly type: 'icon'
   readonly value: string
 }

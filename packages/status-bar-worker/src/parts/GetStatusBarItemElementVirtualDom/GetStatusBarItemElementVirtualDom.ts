@@ -1,8 +1,8 @@
 import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import { ClassNames, mergeClassNames, text, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
-import type { StatusBarItemElement } from '../StatusBarItemElement/StatusBarItemElement.ts'
+import type { StatusBarItemElement, StatusBarItemIcon, StatusBarItemText } from '../StatusBarItemElement/StatusBarItemElement.ts'
 
-const getTextVirtualDom = (element: StatusBarItemElement, name: string): readonly VirtualDomNode[] => {
+const getTextVirtualDom = (element: StatusBarItemText, name: string): readonly VirtualDomNode[] => {
   return [
     {
       childCount: 1,
@@ -14,11 +14,11 @@ const getTextVirtualDom = (element: StatusBarItemElement, name: string): readonl
   ]
 }
 
-const getIconVirtualDom = (element: StatusBarItemElement, name: string): readonly VirtualDomNode[] => {
+const getIconVirtualDom = (element: StatusBarItemIcon, name: string): readonly VirtualDomNode[] => {
   return [
     {
       childCount: 0,
-      className: mergeClassNames(ClassNames.MaskIcon, element.value),
+      className: mergeClassNames(ClassNames.MaskIcon, element.value, element.spinning ? 'Spinning' : ''),
       name,
       type: VirtualDomElements.Div,
     },
