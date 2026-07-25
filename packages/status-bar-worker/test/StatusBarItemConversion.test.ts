@@ -108,6 +108,18 @@ test('toStatusBarItem should render the normalized branch mask icon class', () =
   ])
 })
 
+test('toStatusBarItem should preserve the spinning state on the icon element', () => {
+  const uiStatusBarItem = ToUiStatusBarItem.toUiStatusBarItem({
+    icon: 'MaskIconSync',
+    id: 'git.sync',
+    spinning: true,
+  })
+
+  const result = ToStatusBarItem.toStatusBarItem(uiStatusBarItem)
+
+  expect(result.elements).toEqual([{ spinning: true, type: 'icon', value: 'MaskIconSync' }])
+})
+
 test('toUiStatusBarItems should return empty array for missing items', () => {
   expect(ToUiStatusBarItems.toUiStatusBarItems(null)).toEqual([])
   expect(ToUiStatusBarItems.toUiStatusBarItems(undefined)).toEqual([])

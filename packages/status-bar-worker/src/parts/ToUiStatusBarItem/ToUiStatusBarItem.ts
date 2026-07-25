@@ -12,6 +12,7 @@ export const toUiStatusBarItem = (extensionHostStatusBarItem: any): UiStatusBarI
     command: extensionHostStatusBarItem.command || '',
     icon: getActualIcon(extensionHostStatusBarItem),
     name: extensionHostStatusBarItem.id || extensionHostStatusBarItem.name || '',
+    ...(extensionHostStatusBarItem.spinning === true && { spinning: true }),
     text: extensionHostStatusBarItem.text || '',
     tooltip: extensionHostStatusBarItem.tooltip || '',
   }

@@ -77,6 +77,24 @@ test('getStatusBarItemVirtualDom should return button with text element', () => 
   })
 })
 
+test('getStatusBarItemVirtualDom should add Spinning class to a spinning icon', () => {
+  const statusBarItem = {
+    ariaLabel: 'Synchronizing Changes',
+    elements: [{ spinning: true, type: 'icon' as const, value: 'MaskIconSync' }],
+    name: 'git.sync',
+    tooltip: 'Synchronizing Changes',
+  }
+
+  const result = GetStatusBarItemVirtualDom.getStatusBarItemVirtualDom(statusBarItem)
+
+  expect(result[1]).toEqual({
+    childCount: 0,
+    className: 'MaskIcon MaskIconSync Spinning',
+    name: 'git.sync',
+    type: VirtualDomElements.Div,
+  })
+})
+
 test('getStatusBarItemVirtualDom should handle empty strings', () => {
   const statusBarItem = {
     ariaLabel: '',
