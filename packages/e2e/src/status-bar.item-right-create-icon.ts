@@ -14,5 +14,5 @@ export const test: Test = async ({ Command, expect, Locator }) => {
 
   const icon = Locator('.StatusBarItem[name="test.icon"] .TestIcon')
   await expect(icon).toBeVisible()
-  await expect(icon).toHaveClass('MaskIcon TestIcon')
+  await expect(icon).toHaveClass('MaskIcon StatusBarIcon TestIcon')
 }

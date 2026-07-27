@@ -28,7 +28,7 @@ test('getStatusBarItemVirtualDom should return button with icon and text element
   })
   expect(result[1]).toEqual({
     childCount: 0,
-    className: 'MaskIcon test-icon',
+    className: 'MaskIcon StatusBarIcon test-icon',
     name: 'test.item',
     type: VirtualDomElements.Div,
   })
@@ -89,10 +89,26 @@ test('getStatusBarItemVirtualDom should add Spinning class to a spinning icon', 
 
   expect(result[1]).toEqual({
     childCount: 0,
-    className: 'MaskIcon MaskIconSync Spinning',
+    className: 'MaskIcon StatusBarIcon MaskIconSync Spinning',
     name: 'git.sync',
     type: VirtualDomElements.Div,
   })
+})
+
+test('getStatusBarItemVirtualDom should add the status bar icon class', () => {
+  const statusBarItem = {
+    ariaLabel: 'Synchronize Changes',
+    elements: [
+      { type: 'icon' as const, value: 'MaskIconSync' },
+      { type: 'text' as const, value: '1↓ 0↑' },
+    ],
+    name: 'git.sync',
+    tooltip: 'Synchronize Changes',
+  }
+
+  const result = GetStatusBarItemVirtualDom.getStatusBarItemVirtualDom(statusBarItem)
+
+  expect(result[1].className).toBe('MaskIcon StatusBarIcon MaskIconSync')
 })
 
 test('getStatusBarItemVirtualDom should handle empty strings', () => {
