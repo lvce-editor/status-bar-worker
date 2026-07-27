@@ -18,7 +18,7 @@ const getIconVirtualDom = (element: StatusBarItemIcon, name: string): readonly V
   return [
     {
       childCount: 0,
-      className: mergeClassNames(ClassNames.MaskIcon, element.value, element.spinning ? 'Spinning' : ''),
+      className: mergeClassNames(ClassNames.MaskIcon, 'StatusBarIcon', element.value, element.spinning ? 'Spinning' : ''),
       name,
       type: VirtualDomElements.Div,
     },

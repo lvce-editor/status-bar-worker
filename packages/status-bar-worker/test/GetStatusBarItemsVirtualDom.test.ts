@@ -162,7 +162,7 @@ test('getStatusBarItemsVirtualDom should handle items with all fields', () => {
   })
   expect(result[2]).toEqual({
     childCount: 0,
-    className: 'MaskIcon test-icon',
+    className: 'MaskIcon StatusBarIcon test-icon',
     name: 'test.item',
     type: VirtualDomElements.Div,
   })
