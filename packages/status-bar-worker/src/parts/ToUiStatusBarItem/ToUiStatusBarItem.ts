@@ -9,6 +9,7 @@ const getActualIcon = (extensionHostStatusBarItem: any): string => {
 
 export const toUiStatusBarItem = (extensionHostStatusBarItem: any): UiStatusBarItem => {
   return {
+    ariaLabel: extensionHostStatusBarItem.ariaLabel || '',
     command: extensionHostStatusBarItem.command || '',
     icon: getActualIcon(extensionHostStatusBarItem),
     name: extensionHostStatusBarItem.id || extensionHostStatusBarItem.name || '',

@@ -6,6 +6,7 @@ import * as ToUiStatusBarItems from '../src/parts/ToUiStatusBarItems/ToUiStatusB
 
 test('toStatusBarItem should include icon and text elements', () => {
   const uiStatusBarItem: UiStatusBarItem = {
+    ariaLabel: '',
     command: 'test.command',
     icon: 'TestIcon',
     name: 'test',
@@ -29,6 +30,7 @@ test('toStatusBarItem should include icon and text elements', () => {
 
 test('toStatusBarItem should use fallback text element and aria label', () => {
   const uiStatusBarItem: UiStatusBarItem = {
+    ariaLabel: '',
     command: '',
     icon: '',
     name: 'test',
@@ -49,6 +51,7 @@ test('toStatusBarItem should use fallback text element and aria label', () => {
 
 test('toStatusBarItem should use text as tooltip when tooltip is empty', () => {
   const uiStatusBarItem: UiStatusBarItem = {
+    ariaLabel: '',
     command: '',
     icon: '',
     name: 'test',
@@ -63,6 +66,7 @@ test('toStatusBarItem should use text as tooltip when tooltip is empty', () => {
 
 test('toStatusBarItem should use name as tooltip when tooltip and text are empty', () => {
   const uiStatusBarItem: UiStatusBarItem = {
+    ariaLabel: '',
     command: '',
     icon: '',
     name: 'test',
@@ -77,6 +81,7 @@ test('toStatusBarItem should use name as tooltip when tooltip and text are empty
 
 test('toUiStatusBarItem should normalize branch icon', () => {
   const result = ToUiStatusBarItem.toUiStatusBarItem({
+    ariaLabel: 'Current branch is main',
     command: 'test.command',
     icon: 'branch',
     id: 'test',
@@ -85,12 +90,26 @@ test('toUiStatusBarItem should normalize branch icon', () => {
   })
 
   expect(result).toEqual({
+    ariaLabel: 'Current branch is main',
     command: 'test.command',
     icon: 'MaskIconSourceControl',
     name: 'test',
     text: 'Test',
     tooltip: 'Test tooltip',
   })
+})
+
+test('toStatusBarItem should prefer the extension aria label', () => {
+  const uiStatusBarItem = ToUiStatusBarItem.toUiStatusBarItem({
+    ariaLabel: 'workspace (Git) - Pull 2 commits from origin/main',
+    icon: 'MaskIconSync',
+    id: 'git.sync',
+    text: '2↓ 0↑',
+  })
+
+  const result = ToStatusBarItem.toStatusBarItem(uiStatusBarItem)
+
+  expect(result.ariaLabel).toBe('workspace (Git) - Pull 2 commits from origin/main')
 })
 
 test('toStatusBarItem should render the normalized branch mask icon class', () => {
