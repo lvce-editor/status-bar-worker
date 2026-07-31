@@ -1,20 +1,20 @@
 import type { UiStatusBarItem } from '../UiStatusBarItem/UiStatusBarItem.ts'
 
-const getActualIcon = (extensionHostStatusBarItem: any): string => {
-  if (extensionHostStatusBarItem.icon === 'branch') {
+const getActualIcon = (extensionStatusBarItem: any): string => {
+  if (extensionStatusBarItem.icon === 'branch') {
     return 'MaskIconSourceControl'
   }
-  return extensionHostStatusBarItem.icon || ''
+  return extensionStatusBarItem.icon || ''
 }
 
-export const toUiStatusBarItem = (extensionHostStatusBarItem: any): UiStatusBarItem => {
+export const toUiStatusBarItem = (extensionStatusBarItem: any): UiStatusBarItem => {
   return {
-    ariaLabel: extensionHostStatusBarItem.ariaLabel || '',
-    command: extensionHostStatusBarItem.command || '',
-    icon: getActualIcon(extensionHostStatusBarItem),
-    name: extensionHostStatusBarItem.id || extensionHostStatusBarItem.name || '',
-    ...(extensionHostStatusBarItem.spinning === true && { spinning: true }),
-    text: extensionHostStatusBarItem.text || '',
-    tooltip: extensionHostStatusBarItem.tooltip || '',
+    ariaLabel: extensionStatusBarItem.ariaLabel || '',
+    command: extensionStatusBarItem.command || '',
+    icon: getActualIcon(extensionStatusBarItem),
+    name: extensionStatusBarItem.id || extensionStatusBarItem.name || '',
+    ...(extensionStatusBarItem.spinning === true && { spinning: true }),
+    text: extensionStatusBarItem.text || '',
+    tooltip: extensionStatusBarItem.tooltip || '',
   }
 }
