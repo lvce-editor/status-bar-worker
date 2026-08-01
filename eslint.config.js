@@ -1,10 +1,10 @@
+import { defineConfig } from 'eslint/config'
 import * as config from '@lvce-editor/eslint-config'
-import * as actions from '@lvce-editor/eslint-plugin-github-actions'
 
-export default [
+export default defineConfig([
   ...config.default,
   ...config.recommendedVirtualDom,
-  ...actions.default,
+  ...config.recommendedActions,
   {
     rules: {
       '@typescript-eslint/prefer-readonly-parameter-types': 'off',
@@ -33,4 +33,4 @@ export default [
       'virtual-dom/prefer-state-destructuring': 'off',
     },
   },
-]
+])
