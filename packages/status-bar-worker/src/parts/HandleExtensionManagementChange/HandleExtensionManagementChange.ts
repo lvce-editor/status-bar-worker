@@ -1,17 +1,8 @@
-import { handleItemsChanged } from '../HandleItemsChanged/HandleItemsChanged.ts'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as StatusBarStates from '../StatusBarStates/StatusBarStates.ts'
 
 export const handleExtensionManagementChange = async (): Promise<void> => {
-  const uids = StatusBarStates.getKeys()
-  for (const uid of uids) {
-    const { newState, oldState } = StatusBarStates.get(uid)
-    const newerState = await handleItemsChanged(newState)
-    if (newState === newerState || oldState === newerState) {
-      continue
-    }
-    StatusBarStates.set(uid, oldState, {
-      ...newState,
-      ...newerState,
-    })
+  for (const uid of StatusBarStates.getKeys()) {
+    await RendererWorker.invoke('Viewlet.executeViewletCommand', uid, 'handleItemsChanged')
   }
 }
