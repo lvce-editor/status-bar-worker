@@ -1,8 +1,9 @@
-import { expect, jest, test } from '@jest/globals'
+import { afterEach, expect, jest, test } from '@jest/globals'
 import { createMockRpc } from '@lvce-editor/rpc'
 import type { StatusBarItem } from '../src/parts/StatusBarItem/StatusBarItem.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleNotificationCountChangedAll } from '../src/parts/HandleNotificationCountChangedAll/HandleNotificationCountChangedAll.ts'
+import * as NotificationCount from '../src/parts/NotificationCount/NotificationCount.ts'
 import * as RendererProcess from '../src/parts/RendererProcess/RendererProcess.ts'
 import * as StatusBarStates from '../src/parts/StatusBarStates/StatusBarStates.ts'
 
@@ -13,6 +14,16 @@ const notificationItem: StatusBarItem = {
   name: 'Notifications',
   tooltip: 'No Notifications',
 }
+
+afterEach(() => {
+  NotificationCount.reset()
+})
+
+test('retains notification count changes before a status bar instance exists', async () => {
+  await handleNotificationCountChangedAll(3)
+
+  expect(NotificationCount.get()).toBe(3)
+})
 
 test('renders notification count changes through the direct renderer connection', async () => {
   const queueCommands = jest.fn((_uid: number, _commands: readonly unknown[]) => 17)
