@@ -121,13 +121,15 @@ test('renderItems should use uid from newState', () => {
   expect(result[1]).toBe(20)
 })
 
-test('renderItems should defer rendering while content is initial', () => {
+test('renderItems should render an empty status bar root while content is initial', () => {
   const oldState: StatusBarState = createDefaultState()
   const newState: StatusBarState = { ...createDefaultState(), initial: true, uid: 20 }
 
   const result = RenderItems.renderItems(oldState, newState)
 
-  expect(result).toEqual([])
+  expect(result[0]).toBe(ViewletCommand.SetDom2)
+  expect(result[1]).toBe(20)
+  expect(result[2].length).toBeGreaterThan(0)
 })
 
 test('renderItems should ignore oldState and only use newState', () => {
