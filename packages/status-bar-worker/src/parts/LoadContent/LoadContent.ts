@@ -1,5 +1,6 @@
 import type { StatusBarState } from '../StatusBarState/StatusBarState.ts'
 import * as GetStatusBarItems from '../GetStatusBarItems/GetStatusBarItems.ts'
+import * as InputName from '../InputName/InputName.ts'
 import * as StatusBarPreferences from '../StatusBarPreferences/StatusBarPreferences.ts'
 
 export const loadContent = async (state: StatusBarState): Promise<StatusBarState> => {
@@ -18,8 +19,8 @@ export const loadContent = async (state: StatusBarState): Promise<StatusBarState
     ...state,
     errorCount: 0,
     initial: false,
-    statusBarItemsLeft: [...statusBarItems],
-    statusBarItemsRight: [],
+    statusBarItemsLeft: statusBarItems.filter((item) => item.name !== InputName.Notifications),
+    statusBarItemsRight: statusBarItems.filter((item) => item.name === InputName.Notifications),
     warningCount: 0,
   }
 }

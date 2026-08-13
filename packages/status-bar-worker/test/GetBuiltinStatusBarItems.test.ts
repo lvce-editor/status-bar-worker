@@ -8,11 +8,11 @@ test('getNotificationsStatusBarItem should return the notifications item', () =>
 
   expect(result).toEqual([
     {
-      ariaLabel: 'Notifications',
+      ariaLabel: 'No Notifications',
       command: '',
-      elements: [{ type: 'text', value: 'Notifications' }],
+      elements: [{ type: 'icon', value: 'NotificationBellIcon' }],
       name: 'Notifications',
-      tooltip: 'Notifications',
+      tooltip: 'No Notifications',
     },
   ])
 })
@@ -53,11 +53,11 @@ test('getBuiltinStatusBarItems should return all builtin items by default', asyn
 
   expect(result).toEqual([
     {
-      ariaLabel: 'Notifications',
+      ariaLabel: 'No Notifications',
       command: '',
-      elements: [{ type: 'text', value: 'Notifications' }],
+      elements: [{ type: 'icon', value: 'NotificationBellIcon' }],
       name: 'Notifications',
-      tooltip: 'Notifications',
+      tooltip: 'No Notifications',
     },
     {
       ariaLabel: 'No Problems',
@@ -102,11 +102,11 @@ test('getBuiltinStatusBarItems should omit problems when disabled', async () => 
 
   expect(result).toEqual([
     {
-      ariaLabel: 'Notifications',
+      ariaLabel: 'No Notifications',
       command: '',
-      elements: [{ type: 'text', value: 'Notifications' }],
+      elements: [{ type: 'icon', value: 'NotificationBellIcon' }],
       name: 'Notifications',
-      tooltip: 'Notifications',
+      tooltip: 'No Notifications',
     },
   ])
 })
