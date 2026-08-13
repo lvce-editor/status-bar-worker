@@ -26,6 +26,7 @@ test('handleClick should call handleClickNotification when item is Notifications
   using mockRendererRpc = RendererWorker.registerMockRpc({
     'Layout.showPanel': async () => {},
     'Panel.toggleView': async () => {},
+    'Viewlet.openWidget': async () => {},
   })
 
   const state: StatusBarState = {
@@ -43,8 +44,7 @@ test('handleClick should call handleClickNotification when item is Notifications
 
   await HandleClick.handleClick(state, 'Notifications')
 
-  // HandleClickNotification is a TODO, so it doesn't call any RPC methods yet
-  expect(mockRendererRpc.invocations).toEqual([])
+  expect(mockRendererRpc.invocations).toEqual([['Viewlet.openWidget', 'NotificationCenter']])
 })
 
 test('handleClick should call handleClickProblems when item is Problems', async () => {

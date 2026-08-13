@@ -5,6 +5,14 @@ import { getExtensionStatusBarItems } from '../GetExtensionStatusBarItems/GetExt
 import * as ToStatusBarItem from '../ToStatusBarItem/ToStatusBarItem.ts'
 import * as ToUiStatusBarItems from '../ToUiStatusBarItems/ToUiStatusBarItems.ts'
 
+const getNotificationCount = async (): Promise<number> => {
+  try {
+    return await ExtensionManagementWorker.invoke('Extensions.getNotificationCount')
+  } catch {
+    return 0
+  }
+}
+
 export const getStatusBarItems = async ({
   assetDir,
   builtinNotificationsEnabled = true,
@@ -18,10 +26,13 @@ export const getStatusBarItems = async ({
     return []
   }
   const extensionStatusBarItems = await getExtensionStatusBarItems(assetDir, platform)
+  const notificationCount = await getNotificationCount()
   const uiStatusBarItems = ToUiStatusBarItems.toUiStatusBarItems(extensionStatusBarItems)
   const extraItems = await getBuiltinStatusBarItems(errorCount, warningCount, {
+    notificationCount,
     notificationsEnabled: builtinNotificationsEnabled,
     problemsEnabled: builtinProblemsEnabled,
   })
   return [...uiStatusBarItems.map(ToStatusBarItem.toStatusBarItem), ...extraItems]
 }
+import { ExtensionManagementWorker } from '@lvce-editor/rpc-registry'

@@ -3,6 +3,7 @@ import { getNotificationsStatusBarItem } from '../GetNotificationsStatusBarItem/
 import { getProblemsStatusBarItem } from '../GetProblemsStatusBarItem/GetProblemsStatusBarItem.ts'
 
 interface GetBuiltinStatusBarItemsOptions {
+  readonly notificationCount?: number
   readonly notificationsEnabled?: boolean
   readonly problemsEnabled?: boolean
 }
@@ -10,7 +11,10 @@ interface GetBuiltinStatusBarItemsOptions {
 export const getBuiltinStatusBarItems = async (
   errorCount: number,
   warningCount: number,
-  { notificationsEnabled = true, problemsEnabled = true }: GetBuiltinStatusBarItemsOptions = {},
+  { notificationCount = 0, notificationsEnabled = true, problemsEnabled = true }: GetBuiltinStatusBarItemsOptions = {},
 ): Promise<readonly StatusBarItem[]> => {
-  return [...getNotificationsStatusBarItem(notificationsEnabled), ...getProblemsStatusBarItem(errorCount, warningCount, problemsEnabled)]
+  return [
+    ...getNotificationsStatusBarItem(notificationsEnabled, notificationCount),
+    ...getProblemsStatusBarItem(errorCount, warningCount, problemsEnabled),
+  ]
 }

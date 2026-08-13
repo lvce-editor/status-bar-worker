@@ -6,6 +6,7 @@ import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
 import { handleExtensionManagementMessagePort } from '../HandleExtensionManagementMessagePort/HandleExtensionManagementMessagePort.ts'
 import { handleExtensionsChanged } from '../HandleExtensionsChanged/HandleExtensionsChanged.ts'
 import { handleItemsChanged } from '../HandleItemsChanged/HandleItemsChanged.ts'
+import { handleNotificationCountChanged } from '../HandleNotificationCountChanged/HandleNotificationCountChanged.ts'
 import { handleProblemsSummaryChange } from '../HandleProblemsSummaryChange/HandleProblemsSummaryChange.ts'
 import { initialize } from '../Initialize/Initialize.ts'
 import * as ItemLeftUpdate from '../ItemLeftUpdate/ItemLeftUpdate.ts'
@@ -28,6 +29,7 @@ export const commandMap = {
   'StatusBar.handleExtensionManagementMessagePort': handleExtensionManagementMessagePort,
   'StatusBar.handleExtensionsChanged': wrapCommand(handleExtensionsChanged),
   'StatusBar.handleItemsChanged': wrapCommand(handleItemsChanged),
+  'StatusBar.handleNotificationCountChanged': wrapCommand(handleNotificationCountChanged),
   'StatusBar.handleProblemsSummaryChange': wrapCommand(handleProblemsSummaryChange),
   'StatusBar.initialize': initialize,
   'StatusBar.itemLeftUpdate': wrapCommand(ItemLeftUpdate.itemLeftUpdate),
