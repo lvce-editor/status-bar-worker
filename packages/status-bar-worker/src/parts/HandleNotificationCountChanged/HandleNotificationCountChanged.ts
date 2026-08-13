@@ -8,8 +8,12 @@ export const handleNotificationCountChanged = (state: StatusBarState, count: num
   if (!notificationsEnabled) {
     return state
   }
+  const [notificationItem] = getNotificationsStatusBarItem(true, count)
+  if (!notificationItem) {
+    return state
+  }
   return {
     ...state,
-    statusBarItemsRight: getNotificationsStatusBarItem(true, count),
+    statusBarItemsRight: statusBarItemsRight.map((item) => (item.name === InputName.Notifications ? notificationItem : item)),
   }
 }
