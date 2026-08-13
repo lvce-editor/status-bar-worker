@@ -5,7 +5,7 @@ import { getStatusBarVirtualDom } from '../GetStatusBarVirtualDom/GetStatusBarVi
 export const renderItems = (oldState: StatusBarState, newState: StatusBarState): any => {
   const { initial, statusBarItemsLeft, statusBarItemsRight, uid } = newState
   if (initial) {
-    return [ViewletCommand.SetDom2, uid, []]
+    return []
   }
   const dom = getStatusBarVirtualDom(statusBarItemsLeft, statusBarItemsRight)
   return [ViewletCommand.SetDom2, uid, dom]

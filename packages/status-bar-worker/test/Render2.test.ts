@@ -9,10 +9,12 @@ import * as StatusBarStates from '../src/parts/StatusBarStates/StatusBarStates.t
 test('render2 returns renderer commands when no direct renderer is connected', () => {
   const uid = 1
   const oldState = createDefaultState()
-  const newState = { ...oldState, uid }
+  const newState = { ...oldState, initial: false, uid }
   StatusBarStates.set(uid, oldState, newState)
 
-  expect(Render2.render2(uid, [DiffType.RenderItems])).toEqual([['Viewlet.setDom2', uid, []]])
+  const result = Render2.render2(uid, [DiffType.RenderItems]) as readonly unknown[][]
+  expect(result[0][0]).toBe('Viewlet.setDom2')
+  expect(result[0][1]).toBe(uid)
 })
 
 test('render2 queues renderer commands and returns a lightweight commit marker', async () => {
@@ -20,11 +22,11 @@ test('render2 queues renderer commands and returns a lightweight commit marker',
   RendererProcess.set(createMockRpc({ commandMap: { 'Viewlet.queueCommands': queueCommands } }))
   const uid = 2
   const oldState = createDefaultState()
-  const newState = { ...oldState, uid }
+  const newState = { ...oldState, initial: false, uid }
   StatusBarStates.set(uid, oldState, newState)
 
   const result = await Render2.render2(uid, [DiffType.RenderItems])
 
-  expect(queueCommands).toHaveBeenCalledWith(uid, [['Viewlet.setDom2', uid, []]])
+  expect(queueCommands).toHaveBeenCalledWith(uid, [expect.arrayContaining(['Viewlet.setDom2', uid])])
   expect(result).toEqual([['Viewlet.commitPending', uid, 17]])
 })

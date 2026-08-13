@@ -114,11 +114,20 @@ test('renderItems should return SetDom2 command with items in both sides', () =>
 
 test('renderItems should use uid from newState', () => {
   const oldState: StatusBarState = { ...createDefaultState(), uid: 10 }
-  const newState: StatusBarState = { ...createDefaultState(), uid: 20 }
+  const newState: StatusBarState = { ...createDefaultState(), initial: false, uid: 20 }
 
   const result = RenderItems.renderItems(oldState, newState)
 
   expect(result[1]).toBe(20)
+})
+
+test('renderItems should defer rendering while content is initial', () => {
+  const oldState: StatusBarState = createDefaultState()
+  const newState: StatusBarState = { ...createDefaultState(), initial: true, uid: 20 }
+
+  const result = RenderItems.renderItems(oldState, newState)
+
+  expect(result).toEqual([])
 })
 
 test('renderItems should ignore oldState and only use newState', () => {

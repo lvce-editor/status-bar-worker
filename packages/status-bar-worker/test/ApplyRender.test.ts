@@ -18,6 +18,7 @@ test('applyRender should return commands when diffResult contains RenderItems', 
   const oldState: StatusBarState = createDefaultState()
   const newState: StatusBarState = {
     ...createDefaultState(),
+    initial: false,
     statusBarItemsLeft: [
       {
         ariaLabel: 'Item 1',
@@ -45,6 +46,7 @@ test('applyRender should return multiple commands when diffResult contains multi
   const oldState: StatusBarState = createDefaultState()
   const newState: StatusBarState = {
     ...createDefaultState(),
+    initial: false,
     statusBarItemsLeft: [
       {
         ariaLabel: 'Item 1',
