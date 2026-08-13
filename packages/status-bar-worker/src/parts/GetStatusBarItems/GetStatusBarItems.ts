@@ -1,3 +1,4 @@
+import { ExtensionManagementWorker } from '@lvce-editor/rpc-registry'
 import type { GetStatusBarItemsOptions } from '../GetStatusBarItemsOptions/GetStatusBarItemsOptions.ts'
 import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
 import { getBuiltinStatusBarItems } from '../GetBuiltinStatusBarItems/GetBuiltinStatusBarItems.ts'
@@ -35,4 +36,3 @@ export const getStatusBarItems = async ({
   })
   return [...uiStatusBarItems.map(ToStatusBarItem.toStatusBarItem), ...extraItems]
 }
-import { ExtensionManagementWorker } from '@lvce-editor/rpc-registry'
