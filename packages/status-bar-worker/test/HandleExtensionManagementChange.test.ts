@@ -1,17 +1,30 @@
-import { expect, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { expect, jest, test } from '@jest/globals'
+import { createMockRpc } from '@lvce-editor/rpc'
+import { ExtensionManagementWorker } from '@lvce-editor/rpc-registry'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleExtensionManagementChange } from '../src/parts/HandleExtensionManagementChange/HandleExtensionManagementChange.ts'
+import * as RendererProcess from '../src/parts/RendererProcess/RendererProcess.ts'
 import * as StatusBarStates from '../src/parts/StatusBarStates/StatusBarStates.ts'
 
-test('renders extension item changes through the viewlet command pipeline', async () => {
-  const state = createDefaultState()
-  StatusBarStates.set(42, state, state)
-  using mockRendererRpc = RendererWorker.registerMockRpc({
-    'Viewlet.executeViewletCommand': async () => {},
+test('renders extension item changes through the direct renderer connection', async () => {
+  using mockExtensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.activateByEvent': async () => {},
+    'Extensions.getNotificationCount': async () => 0,
+    'Extensions.getStatusBarItems': async () => [{ id: 'sample.status', text: 'Ready' }],
   })
+  const queueCommands = jest.fn((_uid: number, _commands: readonly unknown[]) => 17)
+  const sendMultiple = jest.fn()
+  RendererProcess.set(createMockRpc({ commandMap: { 'Viewlet.queueCommands': queueCommands, 'Viewlet.sendMultiple': sendMultiple } }))
+  const state = { ...createDefaultState(), initial: false, uid: 42 }
+  StatusBarStates.set(42, state, state)
 
   await handleExtensionManagementChange()
 
-  expect(mockRendererRpc.invocations).toEqual([['Viewlet.executeViewletCommand', 42, 'handleItemsChanged']])
+  expect(mockExtensionManagementRpc.invocations).toEqual([
+    ['Extensions.activateByEvent', 'onStatusBarItem', '', 0],
+    ['Extensions.getStatusBarItems'],
+    ['Extensions.getNotificationCount'],
+  ])
+  expect(queueCommands).toHaveBeenCalledTimes(1)
+  expect(sendMultiple).toHaveBeenCalledWith([['Viewlet.commitPending', 42, 17]])
 })
