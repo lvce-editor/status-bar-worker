@@ -20,6 +20,8 @@ import { resize } from '../Resize/Resize.ts'
 import { saveState } from '../SaveState/SaveState.ts'
 import { getCommandIds, wrapCommand, wrapGetter } from '../StatusBarStates/StatusBarStates.ts'
 
+const handleDirectMessagePort = (port: MessagePort): Promise<void> => HandleMessagePort.handleMessagePort(port, commandMap)
+
 export const commandMap = {
   'StatusBar.create': StatusBar.create,
   'StatusBar.diff2': diff2,
@@ -30,7 +32,7 @@ export const commandMap = {
   'StatusBar.handleExtensionManagementMessagePort': handleExtensionManagementMessagePort,
   'StatusBar.handleExtensionsChanged': wrapCommand(handleExtensionsChanged),
   'StatusBar.handleItemsChanged': wrapCommand(handleItemsChanged),
-  'StatusBar.handleMessagePort': HandleMessagePort.handleMessagePort,
+  'StatusBar.handleMessagePort': handleDirectMessagePort,
   'StatusBar.handleNotificationCountChanged': wrapCommand(handleNotificationCountChanged),
   'StatusBar.handleProblemsSummaryChange': wrapCommand(handleProblemsSummaryChange),
   'StatusBar.initialize': initialize,
