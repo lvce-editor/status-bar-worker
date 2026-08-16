@@ -44,3 +44,5 @@ export const commandMap = {
   'StatusBar.saveState': wrapGetter(saveState),
   'StatusBar.terminate': terminate,
 }
+
+HandleMessagePort.setCommandMap(commandMap)
