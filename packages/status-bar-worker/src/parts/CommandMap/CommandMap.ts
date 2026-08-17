@@ -20,7 +20,8 @@ import { resize } from '../Resize/Resize.ts'
 import { saveState } from '../SaveState/SaveState.ts'
 import { getCommandIds, wrapCommand, wrapGetter } from '../StatusBarStates/StatusBarStates.ts'
 
-const handleDirectMessagePort = (port: MessagePort): Promise<void> => HandleMessagePort.handleMessagePort(port, commandMap)
+const handleDirectMessagePort = (port: MessagePort, setAsRendererProcess = true): Promise<void> =>
+  HandleMessagePort.handleMessagePort(port, commandMap, setAsRendererProcess)
 
 export const commandMap = {
   'StatusBar.create': StatusBar.create,
