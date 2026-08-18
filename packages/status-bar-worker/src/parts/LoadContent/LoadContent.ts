@@ -1,4 +1,5 @@
 import type { StatusBarState } from '../StatusBarState/StatusBarState.ts'
+import * as EditorStatusState from '../EditorStatusState/EditorStatusState.ts'
 import * as GetStatusBarItems from '../GetStatusBarItems/GetStatusBarItems.ts'
 import { handleNotificationCountChanged } from '../HandleNotificationCountChanged/HandleNotificationCountChanged.ts'
 import * as InputName from '../InputName/InputName.ts'
@@ -7,11 +8,13 @@ import * as StatusBarPreferences from '../StatusBarPreferences/StatusBarPreferen
 
 export const loadContent = async (state: StatusBarState): Promise<StatusBarState> => {
   const { assetDir, errorCount, platform, warningCount } = state
+  const editorStatus = EditorStatusState.get()
   const { builtinNotificationsEnabled, builtinProblemsEnabled, itemsVisible } = await StatusBarPreferences.loadStatusBarPreferences()
   const statusBarItems = await GetStatusBarItems.getStatusBarItems({
     assetDir,
     builtinNotificationsEnabled: builtinNotificationsEnabled,
     builtinProblemsEnabled: builtinProblemsEnabled,
+    editorStatus,
     errorCount,
     platform,
     showItems: itemsVisible,
@@ -19,10 +22,11 @@ export const loadContent = async (state: StatusBarState): Promise<StatusBarState
   })
   const loadedState: StatusBarState = {
     ...state,
+    editorStatus,
     errorCount: 0,
     initial: false,
-    statusBarItemsLeft: statusBarItems.filter((item) => item.name !== InputName.Notifications),
-    statusBarItemsRight: statusBarItems.filter((item) => item.name === InputName.Notifications),
+    statusBarItemsLeft: statusBarItems.filter((item) => !InputName.isRight(item.name)),
+    statusBarItemsRight: statusBarItems.filter((item) => InputName.isRight(item.name)),
     warningCount: 0,
   }
   const latestNotificationCount = NotificationCount.get()
