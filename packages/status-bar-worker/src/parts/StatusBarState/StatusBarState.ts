@@ -1,8 +1,10 @@
+import type { EditorStatus } from '../EditorStatus/EditorStatus.ts'
 import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
 
 export interface StatusBarState {
   readonly assetDir: string
   readonly disposed?: boolean
+  readonly editorStatus?: EditorStatus
   readonly errorCount: number
   readonly initial: boolean
   readonly platform: number
