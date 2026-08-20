@@ -10,7 +10,7 @@ const getActualIcon = (extensionStatusBarItem: any): string => {
 export const toUiStatusBarItem = (extensionStatusBarItem: any): UiStatusBarItem => {
   return {
     ariaLabel: extensionStatusBarItem.ariaLabel || '',
-    command: extensionStatusBarItem.command || '',
+    command: extensionStatusBarItem.onClick || extensionStatusBarItem.command || '',
     icon: getActualIcon(extensionStatusBarItem),
     name: extensionStatusBarItem.id || extensionStatusBarItem.name || '',
     ...(extensionStatusBarItem.spinning === true && { spinning: true }),
