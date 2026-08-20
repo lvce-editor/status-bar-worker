@@ -96,7 +96,7 @@ test('handleClick should call handleClickExtensionStatusBarItem for extension it
   expect(mockExtensionManagementRpc.invocations).toContainEqual(['Extensions.executeCommand', 'my.extension.command'])
 })
 
-test('handleClick should do nothing for a commandless extension item in statusBarItemsLeft', async () => {
+test('handleClick should do nothing for an extension item without a command in statusBarItemsLeft', async () => {
   using mockExtensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
     'Extensions.executeCommand': async () => {},
   })
@@ -119,7 +119,7 @@ test('handleClick should do nothing for a commandless extension item in statusBa
   expect(mockExtensionManagementRpc.invocations).toEqual([])
 })
 
-test('handleClick should do nothing for a commandless extension item in statusBarItemsRight', async () => {
+test('handleClick should do nothing for an extension item without a command in statusBarItemsRight', async () => {
   using mockExtensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
     'Extensions.executeCommand': async () => {},
   })
