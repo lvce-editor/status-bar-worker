@@ -5,13 +5,18 @@ import * as ClassNames from '../src/parts/ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as GetStatusBarVirtualDom from '../src/parts/GetStatusBarVirtualDom/GetStatusBarVirtualDom.ts'
 
-test('getStatusBarVirtualDom should return empty array when both arrays are empty', () => {
+test('getStatusBarVirtualDom should render an empty left container when both arrays are empty', () => {
   const result = GetStatusBarVirtualDom.getStatusBarVirtualDom([], [])
-  expect(result.length).toBeGreaterThan(0)
   expect(result[0]).toMatchObject({
+    childCount: 1,
     className: 'StatusBar',
     onContextMenu: DomEventListenerFunctions.HandleContextMenu,
     type: 4,
+  })
+  expect(result[1]).toEqual({
+    childCount: 0,
+    className: ClassNames.StatusBarItemsLeft,
+    type: VirtualDomElements.Div,
   })
 })
 
@@ -44,8 +49,14 @@ test('getStatusBarVirtualDom should return items for right when only right has i
     },
   ]
   const result = GetStatusBarVirtualDom.getStatusBarVirtualDom([], rightItems)
-  expect(result.length).toBeGreaterThan(0)
+  expect(result[0].childCount).toBe(2)
+  const leftDiv = result.find((node) => node.className === ClassNames.StatusBarItemsLeft)
   const rightDiv = result.find((node) => node.className === ClassNames.StatusBarItemsRight)
+  expect(leftDiv).toEqual({
+    childCount: 0,
+    className: ClassNames.StatusBarItemsLeft,
+    type: VirtualDomElements.Div,
+  })
   expect(rightDiv).toBeDefined()
   expect(rightDiv).toMatchObject({
     className: ClassNames.StatusBarItemsRight,

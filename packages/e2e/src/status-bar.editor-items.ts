@@ -8,6 +8,13 @@ export const test: Test = async ({ Editor, expect, FileSystem, Locator, Main, Wo
   await Workspace.setPath(tmpDir)
   await Main.openUri(`${tmpDir}/status-bar.ts`)
 
+  const itemsLeft = Locator('.StatusBarItemsLeft')
+  await expect(itemsLeft).toBeVisible()
+  await expect(itemsLeft.locator('.StatusBarItem')).toHaveCount(0)
+
+  const itemsRight = Locator('.StatusBarItemsRight')
+  await expect(itemsRight).toBeVisible()
+
   const position = Locator('.StatusBarItem[name="EditorPosition"]')
   const indentation = Locator('.StatusBarItem[name="EditorIndentation"]')
   const encoding = Locator('.StatusBarItem[name="EditorEncoding"]')

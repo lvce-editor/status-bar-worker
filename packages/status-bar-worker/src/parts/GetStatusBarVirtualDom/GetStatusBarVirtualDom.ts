@@ -4,15 +4,8 @@ import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEven
 import * as GetStatusBarItemsLeftDom from '../GetStatusBarItemsLeftDom/GetStatusBarItemsLeftDom.ts'
 import * as GetStatusBarItemsRightDom from '../GetStatusBarItemsRightDom/GetStatusBarItemsRightDom.ts'
 
-const getChildCount = (leftCount: number, rightCount: number): number => {
-  let count = 0
-  if (leftCount > 0) {
-    count++
-  }
-  if (rightCount > 0) {
-    count++
-  }
-  return count
+const getChildCount = (rightCount: number): number => {
+  return rightCount > 0 ? 2 : 1
 }
 
 export const getStatusBarVirtualDom = (
@@ -21,7 +14,7 @@ export const getStatusBarVirtualDom = (
 ): readonly VirtualDomNode[] => {
   const dom: VirtualDomNode[] = [
     {
-      childCount: getChildCount(statusBarItemsLeft.length, statusBarItemsRight.length),
+      childCount: getChildCount(statusBarItemsRight.length),
       className: 'StatusBar',
       onClick: DomEventListenerFunctions.HandleClick,
       onContextMenu: DomEventListenerFunctions.HandleContextMenu,
