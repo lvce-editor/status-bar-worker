@@ -2,11 +2,19 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'status-bar.editor-items'
 
-export const test: Test = async ({ Editor, expect, FileSystem, Locator, Main, Workspace }) => {
+export const test: Test = async ({ Command, Editor, expect, FileSystem, Locator, Main, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/status-bar.ts`, 'first\nsecond line')
   await Workspace.setPath(tmpDir)
   await Main.openUri(`${tmpDir}/status-bar.ts`)
+  await Command.execute('StatusBar.handleExtensionsChanged')
+
+  const itemsLeft = Locator('.StatusBarItemsLeft')
+  await expect(itemsLeft).toBeVisible()
+  await expect(itemsLeft.locator('.StatusBarItem')).toHaveCount(0)
+
+  const itemsRight = Locator('.StatusBarItemsRight')
+  await expect(itemsRight).toBeVisible()
 
   const position = Locator('.StatusBarItem[name="EditorPosition"]')
   const indentation = Locator('.StatusBarItem[name="EditorIndentation"]')
