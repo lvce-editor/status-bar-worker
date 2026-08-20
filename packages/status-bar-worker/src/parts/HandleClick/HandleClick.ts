@@ -19,8 +19,8 @@ export const handleClick = async (state: StatusBarState, name: string): Promise<
     await handleClickNotification()
   } else if (item.name === InputName.Problems) {
     await handleClickProblems()
-  } else if (!InputName.isEditorStatus(item.name)) {
-    await handleClickExtensionStatusBarItem(name)
+  } else if (item.command && !InputName.isEditorStatus(item.name)) {
+    await handleClickExtensionStatusBarItem(item.command)
   }
   // TODO
   // sendExtensionWorker([/* statusBarItemHandleClick */ 7657, /* name */ name])

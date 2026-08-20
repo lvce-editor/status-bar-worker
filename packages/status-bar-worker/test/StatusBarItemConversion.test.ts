@@ -99,6 +99,25 @@ test('toUiStatusBarItem should normalize branch icon', () => {
   })
 })
 
+test('toUiStatusBarItem should use onClick as the command', () => {
+  const result = ToUiStatusBarItem.toUiStatusBarItem({
+    id: 'test-item',
+    onClick: 'test.command',
+    text: 'Test',
+  })
+
+  expect(result.command).toBe('test.command')
+})
+
+test('toUiStatusBarItem should allow the command to be omitted', () => {
+  const result = ToUiStatusBarItem.toUiStatusBarItem({
+    id: 'test-item',
+    text: 'Test',
+  })
+
+  expect(result.command).toBe('')
+})
+
 test('toStatusBarItem should prefer the extension aria label', () => {
   const uiStatusBarItem = ToUiStatusBarItem.toUiStatusBarItem({
     ariaLabel: 'workspace (Git) - Pull 2 commits from origin/main',
