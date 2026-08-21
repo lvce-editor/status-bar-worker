@@ -5,6 +5,8 @@ import { handleEditorStatusChanged } from '../src/parts/HandleEditorStatusChange
 const editorStatus = {
   column: 1,
   encoding: 'utf8',
+  endOfLine: 'lf',
+  insertSpaces: true,
   languageId: 'plaintext',
   line: 1,
   tabSize: 4,
@@ -20,6 +22,7 @@ test('adds editor items before notifications', () => {
     'EditorPosition',
     'EditorIndentation',
     'EditorEncoding',
+    'EditorEndOfLine',
     'EditorLanguage',
     'Notifications',
   ])
@@ -35,12 +38,13 @@ test('updates editor values and preserves other right items', () => {
     'EditorPosition',
     'EditorIndentation',
     'EditorEncoding',
+    'EditorEndOfLine',
     'EditorLanguage',
     'Notifications',
   ])
   expect(result.statusBarItemsRight[0].elements).toEqual([{ type: 'text', value: 'Ln 3, Col 8' }])
   expect(result.statusBarItemsRight[1].elements).toEqual([{ type: 'text', value: 'Spaces: 2' }])
-  expect(result.statusBarItemsRight[3].elements).toEqual([{ type: 'text', value: 'typescript' }])
+  expect(result.statusBarItemsRight[4].elements).toEqual([{ type: 'text', value: 'typescript' }])
 })
 
 test('removes editor items when the last editor closes', () => {

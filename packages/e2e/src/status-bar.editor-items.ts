@@ -19,11 +19,13 @@ export const test: Test = async ({ Command, Editor, expect, FileSystem, Locator,
   const position = Locator('.StatusBarItem[name="EditorPosition"]')
   const indentation = Locator('.StatusBarItem[name="EditorIndentation"]')
   const encoding = Locator('.StatusBarItem[name="EditorEncoding"]')
+  const endOfLine = Locator('.StatusBarItem[name="EditorEndOfLine"]')
   const language = Locator('.StatusBarItem[name="EditorLanguage"]')
   const utf8Display = ['UTF', '8'].join('-')
   await expect(position).toHaveText('Ln 1, Col 1')
   await expect(indentation).toHaveText('Spaces: 2')
   await expect(encoding).toHaveText(utf8Display)
+  await expect(endOfLine).toHaveText('LF')
   await expect(language).toHaveText('typescript')
 
   await Editor.setCursor(1, 6)

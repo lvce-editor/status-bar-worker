@@ -6,7 +6,7 @@ import { handleEditorStatusChangedAll } from '../src/parts/HandleEditorStatusCha
 import * as RendererProcess from '../src/parts/RendererProcess/RendererProcess.ts'
 import * as StatusBarStates from '../src/parts/StatusBarStates/StatusBarStates.ts'
 
-const editorStatus = { column: 7, encoding: 'utf8', languageId: 'javascript', line: 2, tabSize: 4 }
+const editorStatus = { column: 7, encoding: 'utf8', endOfLine: 'lf', insertSpaces: true, languageId: 'javascript', line: 2, tabSize: 4 }
 
 afterEach(() => {
   EditorStatusState.reset()
