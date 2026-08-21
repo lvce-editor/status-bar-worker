@@ -318,3 +318,60 @@ test('handleClick should not call RPC methods for item not found', async () => {
   expect(mockRendererRpc.invocations).toEqual([])
   expect(mockExtensionManagementRpc.invocations).toEqual([])
 })
+
+const editorStatus = {
+  column: 5,
+  encoding: 'utf8',
+  endOfLine: 'lf',
+  insertSpaces: true,
+  languageId: 'typescript',
+  line: 3,
+  tabSize: 2,
+}
+
+const createEditorStatusState = (name: string): StatusBarState => ({
+  ...createDefaultState(),
+  editorStatus,
+  statusBarItemsLeft: [],
+  statusBarItemsRight: [{ ariaLabel: name, elements: [], name, tooltip: name }],
+})
+
+test('handleClick should open go to line with the current position', async () => {
+  using mockRendererRpc = RendererWorker.registerMockRpc({
+    'Viewlet.openWidget': async () => {},
+  })
+
+  await HandleClick.handleClick(createEditorStatusState('EditorPosition'), 'EditorPosition')
+
+  expect(mockRendererRpc.invocations).toEqual([['Viewlet.openWidget', 'QuickPick', 'go-to-line', 3, 5]])
+})
+
+test('handleClick should open the indentation picker', async () => {
+  using mockRendererRpc = RendererWorker.registerMockRpc({
+    'Viewlet.openWidget': async () => {},
+  })
+
+  await HandleClick.handleClick(createEditorStatusState('EditorIndentation'), 'EditorIndentation')
+
+  expect(mockRendererRpc.invocations).toEqual([['Viewlet.openWidget', 'QuickPick', 'indentation']])
+})
+
+test('handleClick should open the end of line picker', async () => {
+  using mockRendererRpc = RendererWorker.registerMockRpc({
+    'Viewlet.openWidget': async () => {},
+  })
+
+  await HandleClick.handleClick(createEditorStatusState('EditorEndOfLine'), 'EditorEndOfLine')
+
+  expect(mockRendererRpc.invocations).toEqual([['Viewlet.openWidget', 'QuickPick', 'end-of-line']])
+})
+
+test('handleClick should open the language mode picker', async () => {
+  using mockRendererRpc = RendererWorker.registerMockRpc({
+    'Viewlet.openWidget': async () => {},
+  })
+
+  await HandleClick.handleClick(createEditorStatusState('EditorLanguage'), 'EditorLanguage')
+
+  expect(mockRendererRpc.invocations).toEqual([['Viewlet.openWidget', 'QuickPick', 'language-mode']])
+})

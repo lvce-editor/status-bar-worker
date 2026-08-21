@@ -42,7 +42,7 @@ test('uses editor status received before content is loading', async () => {
     'Extensions.getNotificationCount': async () => 0,
     'Extensions.getStatusBarItems': async () => [],
   })
-  EditorStatusState.set({ column: 7, encoding: 'utf8', languageId: 'javascript', line: 2, tabSize: 4 })
+  EditorStatusState.set({ column: 7, encoding: 'utf8', endOfLine: 'lf', insertSpaces: true, languageId: 'javascript', line: 2, tabSize: 4 })
 
   const result = await loadContent(createDefaultState())
 
@@ -50,6 +50,7 @@ test('uses editor status received before content is loading', async () => {
     'EditorPosition',
     'EditorIndentation',
     'EditorEncoding',
+    'EditorEndOfLine',
     'EditorLanguage',
     'Notifications',
   ])

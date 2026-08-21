@@ -10,7 +10,9 @@ const equals = (oldStatus: EditorStatus | undefined, newStatus: EditorStatus | u
   }
   return (
     oldStatus.column === newStatus.column &&
+    oldStatus.endOfLine === newStatus.endOfLine &&
     oldStatus.encoding === newStatus.encoding &&
+    oldStatus.insertSpaces === newStatus.insertSpaces &&
     oldStatus.languageId === newStatus.languageId &&
     oldStatus.line === newStatus.line &&
     oldStatus.tabSize === newStatus.tabSize
