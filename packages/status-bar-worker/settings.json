@@ -1,0 +1,26 @@
+[
+  {
+    "category": "workbench",
+    "description": "Controls whether status bar items are visible.",
+    "heading": "Show Status Bar Items",
+    "id": "statusBar.itemsVisible",
+    "type": 3,
+    "value": "true"
+  },
+  {
+    "category": "workbench",
+    "description": "Controls whether the built-in notifications item is shown in the status bar.",
+    "heading": "Show Notifications Status",
+    "id": "statusBar.builtinNotificationsEnabled",
+    "type": 3,
+    "value": "true"
+  },
+  {
+    "category": "workbench",
+    "description": "Controls whether the built-in problems item is shown in the status bar.",
+    "heading": "Show Problems Status",
+    "id": "statusBar.builtinProblemsEnabled",
+    "type": 3,
+    "value": "true"
+  }
+]
