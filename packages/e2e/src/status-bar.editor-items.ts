@@ -21,7 +21,9 @@ export const test: Test = async ({ Command, Editor, expect, FileSystem, Locator,
   const encoding = Locator('.StatusBarItem[name="EditorEncoding"]')
   const endOfLine = Locator('.StatusBarItem[name="EditorEndOfLine"]')
   const language = Locator('.StatusBarItem[name="EditorLanguage"]')
+  const editorStatusItems = Locator('.StatusBarItemsRight .StatusBarItem[name^="Editor"]')
   const utf8Display = ['UTF', '8'].join('-')
+  await expect(editorStatusItems).toHaveCount(5)
   await expect(position).toHaveText('Ln 1, Col 1')
   await expect(indentation).toHaveText('Spaces: 2')
   await expect(encoding).toHaveText(utf8Display)
@@ -31,4 +33,8 @@ export const test: Test = async ({ Command, Editor, expect, FileSystem, Locator,
   await Editor.setCursor(1, 6)
 
   await expect(position).toHaveText('Ln 2, Col 7')
+
+  await Main.closeAllEditors()
+
+  await expect(editorStatusItems).toHaveCount(0)
 }
