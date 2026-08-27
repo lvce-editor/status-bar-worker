@@ -21,7 +21,6 @@ test('getStatusBarItemVirtualDom should return button with icon and text element
     childCount: 2,
     className: ClassNames.StatusBarItem,
     name: 'test.item',
-    role: 'button',
     tabIndex: -1,
     title: 'Test Tooltip',
     type: VirtualDomElements.Button,
@@ -59,7 +58,6 @@ test('getStatusBarItemVirtualDom should return button with text element', () => 
     childCount: 1,
     className: ClassNames.StatusBarItem,
     name: 'test.item',
-    role: 'button',
     tabIndex: -1,
     title: 'Test Tooltip',
     type: VirtualDomElements.Button,
@@ -125,7 +123,6 @@ test('getStatusBarItemVirtualDom should handle empty strings', () => {
     childCount: 1,
     className: ClassNames.StatusBarItem,
     name: '',
-    role: 'button',
     tabIndex: -1,
     title: '',
     type: VirtualDomElements.Button,
@@ -175,7 +172,7 @@ test('getStatusBarItemVirtualDom should have correct structure properties', () =
   const result = GetStatusBarItemVirtualDom.getStatusBarItemVirtualDom(statusBarItem)
   expect(result[0].childCount).toBe(1)
   expect(result[0].className).toBe(ClassNames.StatusBarItem)
-  expect(result[0].role).toBe('button')
+  expect(result[0].role).toBeUndefined()
   expect(result[0].tabIndex).toBe(-1)
   expect(result[0].type).toBe(VirtualDomElements.Button)
   expect(result[1].type).toBe(VirtualDomElements.Span)

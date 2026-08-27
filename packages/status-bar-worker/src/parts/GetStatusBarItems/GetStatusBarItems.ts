@@ -18,6 +18,7 @@ export const getStatusBarItems = async ({
   assetDir,
   builtinNotificationsEnabled = true,
   builtinProblemsEnabled = true,
+  editorStatus,
   errorCount,
   platform,
   showItems,
@@ -30,6 +31,7 @@ export const getStatusBarItems = async ({
   const notificationCount = await getNotificationCount()
   const uiStatusBarItems = ToUiStatusBarItems.toUiStatusBarItems(extensionStatusBarItems)
   const extraItems = await getBuiltinStatusBarItems(errorCount, warningCount, {
+    editorStatus,
     notificationCount,
     notificationsEnabled: builtinNotificationsEnabled,
     problemsEnabled: builtinProblemsEnabled,

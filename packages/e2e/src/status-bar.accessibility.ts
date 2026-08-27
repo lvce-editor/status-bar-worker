@@ -9,15 +9,17 @@ export const test: Test = async ({ expect, Locator }) => {
   await expect(statusBar).toBeVisible()
   await expect(statusBar).toHaveAttribute('role', 'status')
 
-  const problems = Locator('.StatusBarItem[name="Problems"]')
+  const problems = Locator('button.StatusBarItem[name="Problems"]')
   await expect(problems).toHaveAttribute('aria-label', 'No Problems')
-  await expect(problems).toHaveAttribute('role', 'button')
+  await expect(problems).toHaveAttribute('role', null)
+  await expect(problems).toHaveAttribute('type', null)
   await expect(problems).toHaveAttribute('tabindex', '-1')
   await expect(problems).toHaveAttribute('title', 'Problems')
 
-  const notifications = Locator('.StatusBarItem[name="Notifications"]')
+  const notifications = Locator('button.StatusBarItem[name="Notifications"]')
   await expect(notifications).toHaveAttribute('aria-label', 'Notifications')
-  await expect(notifications).toHaveAttribute('role', 'button')
+  await expect(notifications).toHaveAttribute('role', null)
+  await expect(notifications).toHaveAttribute('type', null)
   await expect(notifications).toHaveAttribute('tabindex', '-1')
   await expect(notifications).toHaveAttribute('title', 'Notifications')
 }

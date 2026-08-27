@@ -93,10 +93,10 @@ test('handleClick should call handleClickExtensionStatusBarItem for extension it
 
   await HandleClick.handleClick(state, 'my-extension-item')
 
-  expect(mockExtensionManagementRpc.invocations).toContainEqual(['Extensions.executeCommand', 'my-extension-item'])
+  expect(mockExtensionManagementRpc.invocations).toContainEqual(['Extensions.executeCommand', 'my.extension.command'])
 })
 
-test('handleClick should find item in statusBarItemsLeft', async () => {
+test('handleClick should do nothing for an extension item without a command in statusBarItemsLeft', async () => {
   using mockExtensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
     'Extensions.executeCommand': async () => {},
   })
@@ -116,10 +116,10 @@ test('handleClick should find item in statusBarItemsLeft', async () => {
 
   await HandleClick.handleClick(state, 'left-item')
 
-  expect(mockExtensionManagementRpc.invocations).toContainEqual(['Extensions.executeCommand', 'left-item'])
+  expect(mockExtensionManagementRpc.invocations).toEqual([])
 })
 
-test('handleClick should find item in statusBarItemsRight', async () => {
+test('handleClick should do nothing for an extension item without a command in statusBarItemsRight', async () => {
   using mockExtensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
     'Extensions.executeCommand': async () => {},
   })
@@ -139,7 +139,7 @@ test('handleClick should find item in statusBarItemsRight', async () => {
 
   await HandleClick.handleClick(state, 'right-item')
 
-  expect(mockExtensionManagementRpc.invocations).toContainEqual(['Extensions.executeCommand', 'right-item'])
+  expect(mockExtensionManagementRpc.invocations).toEqual([])
 })
 
 test('handleClick should prioritize left items over right items with same name', async () => {
@@ -171,7 +171,7 @@ test('handleClick should prioritize left items over right items with same name',
 
   await HandleClick.handleClick(state, 'duplicate-item')
 
-  expect(mockExtensionManagementRpc.invocations).toEqual([['Extensions.executeCommand', 'duplicate-item']])
+  expect(mockExtensionManagementRpc.invocations).toEqual([['Extensions.executeCommand', 'left.command']])
 })
 
 test('handleClick should handle extension item with command property', async () => {
@@ -195,7 +195,7 @@ test('handleClick should handle extension item with command property', async () 
 
   await HandleClick.handleClick(state, 'extension-with-command')
 
-  expect(mockExtensionManagementRpc.invocations).toContainEqual(['Extensions.executeCommand', 'extension-with-command'])
+  expect(mockExtensionManagementRpc.invocations).toContainEqual(['Extensions.executeCommand', 'my.extension.command'])
 })
 
 test('handleClick should handle multiple items in left array', async () => {
@@ -208,18 +208,21 @@ test('handleClick should handle multiple items in left array', async () => {
     statusBarItemsLeft: [
       {
         ariaLabel: 'Item 1',
+        command: 'command-1',
         elements: [],
         name: 'item-1',
         tooltip: 'Item 1',
       },
       {
         ariaLabel: 'Item 2',
+        command: 'command-2',
         elements: [],
         name: 'item-2',
         tooltip: 'Item 2',
       },
       {
         ariaLabel: 'Item 3',
+        command: 'command-3',
         elements: [],
         name: 'item-3',
         tooltip: 'Item 3',
@@ -230,7 +233,7 @@ test('handleClick should handle multiple items in left array', async () => {
 
   await HandleClick.handleClick(state, 'item-2')
 
-  expect(mockExtensionManagementRpc.invocations).toContainEqual(['Extensions.executeCommand', 'item-2'])
+  expect(mockExtensionManagementRpc.invocations).toContainEqual(['Extensions.executeCommand', 'command-2'])
 })
 
 test('handleClick should handle multiple items in right array', async () => {
@@ -244,18 +247,21 @@ test('handleClick should handle multiple items in right array', async () => {
     statusBarItemsRight: [
       {
         ariaLabel: 'Right 1',
+        command: 'right-command-1',
         elements: [],
         name: 'right-1',
         tooltip: 'Right 1',
       },
       {
         ariaLabel: 'Right 2',
+        command: 'right-command-2',
         elements: [],
         name: 'right-2',
         tooltip: 'Right 2',
       },
       {
         ariaLabel: 'Right 3',
+        command: 'right-command-3',
         elements: [],
         name: 'right-3',
         tooltip: 'Right 3',
@@ -265,7 +271,7 @@ test('handleClick should handle multiple items in right array', async () => {
 
   await HandleClick.handleClick(state, 'right-2')
 
-  expect(mockExtensionManagementRpc.invocations).toContainEqual(['Extensions.executeCommand', 'right-2'])
+  expect(mockExtensionManagementRpc.invocations).toContainEqual(['Extensions.executeCommand', 'right-command-2'])
 })
 
 test('handleClick should not call RPC methods for empty name', async () => {
@@ -311,4 +317,61 @@ test('handleClick should not call RPC methods for item not found', async () => {
 
   expect(mockRendererRpc.invocations).toEqual([])
   expect(mockExtensionManagementRpc.invocations).toEqual([])
+})
+
+const editorStatus = {
+  column: 5,
+  encoding: 'utf8',
+  endOfLine: 'lf',
+  insertSpaces: true,
+  languageId: 'typescript',
+  line: 3,
+  tabSize: 2,
+}
+
+const createEditorStatusState = (name: string): StatusBarState => ({
+  ...createDefaultState(),
+  editorStatus,
+  statusBarItemsLeft: [],
+  statusBarItemsRight: [{ ariaLabel: name, elements: [], name, tooltip: name }],
+})
+
+test('handleClick should open go to line with the current position', async () => {
+  using mockRendererRpc = RendererWorker.registerMockRpc({
+    'Viewlet.openWidget': async () => {},
+  })
+
+  await HandleClick.handleClick(createEditorStatusState('EditorPosition'), 'EditorPosition')
+
+  expect(mockRendererRpc.invocations).toEqual([['Viewlet.openWidget', 'QuickPick', 'go-to-line', 3, 5]])
+})
+
+test('handleClick should open the indentation picker', async () => {
+  using mockRendererRpc = RendererWorker.registerMockRpc({
+    'Viewlet.openWidget': async () => {},
+  })
+
+  await HandleClick.handleClick(createEditorStatusState('EditorIndentation'), 'EditorIndentation')
+
+  expect(mockRendererRpc.invocations).toEqual([['Viewlet.openWidget', 'QuickPick', 'indentation']])
+})
+
+test('handleClick should open the end of line picker', async () => {
+  using mockRendererRpc = RendererWorker.registerMockRpc({
+    'Viewlet.openWidget': async () => {},
+  })
+
+  await HandleClick.handleClick(createEditorStatusState('EditorEndOfLine'), 'EditorEndOfLine')
+
+  expect(mockRendererRpc.invocations).toEqual([['Viewlet.openWidget', 'QuickPick', 'end-of-line']])
+})
+
+test('handleClick should open the language mode picker', async () => {
+  using mockRendererRpc = RendererWorker.registerMockRpc({
+    'Viewlet.openWidget': async () => {},
+  })
+
+  await HandleClick.handleClick(createEditorStatusState('EditorLanguage'), 'EditorLanguage')
+
+  expect(mockRendererRpc.invocations).toEqual([['Viewlet.openWidget', 'QuickPick', 'language-mode']])
 })
