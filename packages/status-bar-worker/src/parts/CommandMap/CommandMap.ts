@@ -36,6 +36,7 @@ export const commandMap = {
   'StatusBar.handleMessagePort': handleDirectMessagePort,
   'StatusBar.handleNotificationCountChanged': wrapCommand(handleNotificationCountChanged),
   'StatusBar.handleProblemsSummaryChange': wrapCommand(handleProblemsSummaryChange),
+  'StatusBar.handleWorkspaceChange': wrapCommand(handleExtensionsChanged),
   'StatusBar.initialize': initialize,
   'StatusBar.itemLeftUpdate': wrapCommand(ItemLeftUpdate.itemLeftUpdate),
   'StatusBar.itemRightCreate': wrapCommand(ItemRightCreate.itemRightCreate),
