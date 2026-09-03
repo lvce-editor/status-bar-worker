@@ -9,6 +9,7 @@ import { handleItemsChanged } from '../HandleItemsChanged/HandleItemsChanged.ts'
 import * as HandleMessagePort from '../HandleMessagePort/HandleMessagePort.ts'
 import { handleNotificationCountChanged } from '../HandleNotificationCountChanged/HandleNotificationCountChanged.ts'
 import { handleProblemsSummaryChange } from '../HandleProblemsSummaryChange/HandleProblemsSummaryChange.ts'
+import { handleWorkspaceChange } from '../HandleWorkspaceChange/HandleWorkspaceChange.ts'
 import { initialize } from '../Initialize/Initialize.ts'
 import * as ItemLeftUpdate from '../ItemLeftUpdate/ItemLeftUpdate.ts'
 import * as ItemRightCreate from '../ItemRightCreate/ItemRightCreate.ts'
@@ -18,25 +19,33 @@ import { render2 } from '../Render2/Render2.ts'
 import { renderEventListeners } from '../RenderEventListeners/RenderEventListeners.ts'
 import { resize } from '../Resize/Resize.ts'
 import { saveState } from '../SaveState/SaveState.ts'
-import { getCommandIds, wrapCommand, wrapGetter } from '../StatusBarStates/StatusBarStates.ts'
+import { getCommandIds, wrapCommand, wrapGetter, wrapSerialCommand } from '../StatusBarStates/StatusBarStates.ts'
 
 const handleDirectMessagePort = (port: MessagePort, setAsRendererProcess = true): Promise<void> =>
   HandleMessagePort.handleMessagePort(port, commandMap, setAsRendererProcess)
+
+const activateOnWorkspaceChange = wrapCommand(handleWorkspaceChange)
+const refreshExtensionItems = wrapSerialCommand(handleItemsChanged)
+
+const handleWorkspaceChangeAndRefresh = async (uid: number, workspacePath: string): Promise<void> => {
+  await activateOnWorkspaceChange(uid, workspacePath)
+  await refreshExtensionItems(uid)
+}
 
 export const commandMap = {
   'StatusBar.create': StatusBar.create,
   'StatusBar.diff2': diff2,
   'StatusBar.getCommandIds': getCommandIds,
-  'StatusBar.handleChange': wrapCommand(handleItemsChanged),
+  'StatusBar.handleChange': wrapSerialCommand(handleItemsChanged),
   'StatusBar.handleClick': wrapCommand(HandleClick.handleClick),
   'StatusBar.handleContextMenu': wrapCommand(HandleContextMenu.handleContextMenu),
   'StatusBar.handleExtensionManagementMessagePort': handleExtensionManagementMessagePort,
   'StatusBar.handleExtensionsChanged': wrapCommand(handleExtensionsChanged),
-  'StatusBar.handleItemsChanged': wrapCommand(handleItemsChanged),
+  'StatusBar.handleItemsChanged': wrapSerialCommand(handleItemsChanged),
   'StatusBar.handleMessagePort': handleDirectMessagePort,
   'StatusBar.handleNotificationCountChanged': wrapCommand(handleNotificationCountChanged),
   'StatusBar.handleProblemsSummaryChange': wrapCommand(handleProblemsSummaryChange),
-  'StatusBar.handleWorkspaceChange': wrapCommand(handleExtensionsChanged),
+  'StatusBar.handleWorkspaceChange': handleWorkspaceChangeAndRefresh,
   'StatusBar.initialize': initialize,
   'StatusBar.itemLeftUpdate': wrapCommand(ItemLeftUpdate.itemLeftUpdate),
   'StatusBar.itemRightCreate': wrapCommand(ItemRightCreate.itemRightCreate),

@@ -4,23 +4,27 @@ import { commandMap } from '../src/parts/CommandMap/CommandMap.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as StatusBarStates from '../src/parts/StatusBarStates/StatusBarStates.ts'
 
-test('workspace changes reactivate status bar extensions and refresh their items', async () => {
+test('keeps the newest status bar items when refreshes overlap', async () => {
+  let statusBarItemsCallCount = 0
   using extensionManagementWorkerRpc = ExtensionManagementWorker.registerMockRpc({
     'Extensions.activateByEvent': async () => {},
     'Extensions.getNotificationCount': async () => 0,
-    'Extensions.getStatusBarItems': async () => [{ id: 'git.sync', text: '2↓ 0↑' }],
+    'Extensions.getStatusBarItems': async () => {
+      statusBarItemsCallCount++
+      if (statusBarItemsCallCount === 1) {
+        await new Promise((resolve) => setTimeout(resolve, 20))
+        return []
+      }
+      return [{ id: 'git.sync', text: '2↓ 0↑' }]
+    },
   })
   const state = { ...createDefaultState(), initial: false, uid: 42 }
   StatusBarStates.set(42, state, state)
 
-  await commandMap['StatusBar.handleWorkspaceChange'](42, '/workspace')
+  await Promise.all([commandMap['StatusBar.handleExtensionsChanged'](42), commandMap['StatusBar.handleChange'](42, 'git.sync')])
 
-  expect(extensionManagementWorkerRpc.invocations).toEqual([
-    ['Extensions.activateByEvent', 'onStatusBarItem', '', 0],
-    ['Extensions.activateByEvent', 'onStatusBarItem', '', 0],
-    ['Extensions.getStatusBarItems'],
-    ['Extensions.getNotificationCount'],
-  ])
+  expect(statusBarItemsCallCount).toBe(2)
+  expect(extensionManagementWorkerRpc.invocations.filter(([command]) => command === 'Extensions.getStatusBarItems')).toHaveLength(2)
   expect(StatusBarStates.get(42).newState.statusBarItemsLeft[0].name).toBe('git.sync')
   expect(StatusBarStates.get(42).newState.statusBarItemsLeft[0].elements).toEqual([{ type: 'text', value: '2↓ 0↑' }])
 })
