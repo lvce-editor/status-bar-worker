@@ -1,6 +1,7 @@
 import { terminate } from '@lvce-editor/viewlet-registry'
 import * as StatusBar from '../Create/Create.ts'
 import { diff2 } from '../Diff2/Diff2.ts'
+import { getComponentState } from '../GetComponentState/GetComponentState.ts'
 import * as HandleClick from '../HandleClick/HandleClick.ts'
 import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
 import { handleExtensionManagementMessagePort } from '../HandleExtensionManagementMessagePort/HandleExtensionManagementMessagePort.ts'
@@ -19,6 +20,7 @@ import { render2 } from '../Render2/Render2.ts'
 import { renderEventListeners } from '../RenderEventListeners/RenderEventListeners.ts'
 import { resize } from '../Resize/Resize.ts'
 import { saveState } from '../SaveState/SaveState.ts'
+import { setComponentState } from '../SetComponentState/SetComponentState.ts'
 import { getCommandIds, wrapCommand, wrapGetter, wrapSerialCommand } from '../StatusBarStates/StatusBarStates.ts'
 
 const handleDirectMessagePort = (port: MessagePort, setAsRendererProcess = true): Promise<void> =>
@@ -36,6 +38,7 @@ export const commandMap = {
   'StatusBar.create': StatusBar.create,
   'StatusBar.diff2': diff2,
   'StatusBar.getCommandIds': getCommandIds,
+  'StatusBar.getComponentState': getComponentState,
   'StatusBar.handleChange': wrapSerialCommand(handleItemsChanged),
   'StatusBar.handleClick': wrapCommand(HandleClick.handleClick),
   'StatusBar.handleContextMenu': wrapCommand(HandleContextMenu.handleContextMenu),
@@ -55,5 +58,6 @@ export const commandMap = {
   'StatusBar.renderEventListeners': renderEventListeners,
   'StatusBar.resize': wrapCommand(resize),
   'StatusBar.saveState': wrapGetter(saveState),
+  'StatusBar.setComponentState': setComponentState,
   'StatusBar.terminate': terminate,
 }
