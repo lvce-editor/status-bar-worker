@@ -5,8 +5,10 @@ const applyComponentState = (currentState: StatusBarState, state: StatusBarState
   if (!state || typeof state !== 'object' || Array.isArray(state)) {
     throw new TypeError('Status Bar state must be an object')
   }
-  if (state.uid !== currentState.uid) {
-    throw new Error(`Status Bar state uid must remain ${currentState.uid}`)
+  const { uid } = state
+  const { uid: currentUid } = currentState
+  if (uid !== currentUid) {
+    throw new Error(`Status Bar state uid must remain ${currentUid}`)
   }
   return state
 }

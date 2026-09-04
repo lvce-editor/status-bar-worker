@@ -2,7 +2,6 @@ import { expect, test } from '@jest/globals'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { getComponentState } from '../src/parts/GetComponentState/GetComponentState.ts'
 import { setComponentState } from '../src/parts/SetComponentState/SetComponentState.ts'
-import type { StatusBarState } from '../src/parts/StatusBarState/StatusBarState.ts'
 import * as StatusBarStates from '../src/parts/StatusBarStates/StatusBarStates.ts'
 
 test('gets and sets the live component state', async () => {
@@ -23,5 +22,5 @@ test('rejects an invalid live component state', async () => {
   StatusBarStates.set(uid, state, state)
 
   await expect(setComponentState(uid, { ...state, uid: 103 })).rejects.toThrow('Status Bar state uid must remain 102')
-  await expect(setComponentState(uid, [] as unknown as StatusBarState)).rejects.toThrow('Status Bar state must be an object')
+  await expect(setComponentState(uid, [] as unknown)).rejects.toThrow('Status Bar state must be an object')
 })
