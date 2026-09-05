@@ -2,6 +2,7 @@ import { PlainMessagePortRpc } from '@lvce-editor/rpc'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { handleEditorStatusChangedAll } from '../HandleEditorStatusChangedAll/HandleEditorStatusChangedAll.ts'
 import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
+import { supportsEditorStatusDeltas } from '../SupportsEditorStatusDeltas/SupportsEditorStatusDeltas.ts'
 
 export const handleMessagePort = async (
   port: MessagePort,
@@ -20,6 +21,7 @@ export const handleMessagePort = async (
   const rpc = await PlainMessagePortRpc.create({
     commandMap: {
       'StatusBar.handleEditorStatusChanged': handleEditorStatusChangedAll,
+      'StatusBar.supportsEditorStatusDeltas': supportsEditorStatusDeltas,
       'Viewlet.executeViewletCommand': executeViewletCommand,
     },
     messagePort: port,

@@ -4,15 +4,18 @@ import { handleEditorStatusChanged } from '../HandleEditorStatusChanged/HandleEd
 import { renderOutOfBand } from '../RenderOutOfBand/RenderOutOfBand.ts'
 import * as StatusBarStates from '../StatusBarStates/StatusBarStates.ts'
 
-export const handleEditorStatusChangedAll = async (editorStatus: EditorStatus | undefined): Promise<void> => {
-  EditorStatusState.set(editorStatus)
+export const handleEditorStatusChangedAll = async (update: Partial<EditorStatus> | undefined): Promise<void> => {
+  const previous = { editorStatus: EditorStatusState.get() }
+  const editorStatus = EditorStatusState.applyUpdate(update)
+  const changedUids: number[] = []
   for (const uid of StatusBarStates.getKeys()) {
     const { newState, oldState } = StatusBarStates.get(uid)
-    const newerState = handleEditorStatusChanged(newState, editorStatus)
+    const newerState = handleEditorStatusChanged(newState, editorStatus, previous)
     if (newState === newerState || oldState === newerState) {
       continue
     }
     StatusBarStates.set(uid, oldState, newerState)
-    await renderOutOfBand(uid)
+    changedUids.push(uid)
   }
+  await Promise.all(changedUids.map(renderOutOfBand))
 }

@@ -30,9 +30,22 @@ export const test: Test = async ({ Command, Editor, expect, FileSystem, Locator,
   await expect(endOfLine).toHaveText('LF')
   await expect(language).toHaveText('typescript')
 
+  for (const name of ['EditorEncoding', 'EditorIndentation']) {
+    await Command.execute('StatusBar.itemRightUpdate', {
+      ariaLabel: name,
+      elements: [{ type: 'text', value: `Custom ${name}` }],
+      name,
+      tooltip: name,
+    })
+  }
+  await expect(encoding).toHaveText('Custom EditorEncoding')
+  await expect(indentation).toHaveText('Custom EditorIndentation')
+
   await Editor.setCursor(1, 6)
 
   await expect(position).toHaveText('Ln 2, Col 7')
+  await expect(encoding).toHaveText('Custom EditorEncoding')
+  await expect(indentation).toHaveText('Custom EditorIndentation')
 
   await Main.closeAllEditors()
 

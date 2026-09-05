@@ -17,6 +17,7 @@ test('connects the view directly to the renderer process', async () => {
     'StatusBar.handleInput': handleInput,
   })
   expect(RendererProcess.isConnected()).toBe(true)
+  await expect(rendererProcessRpc.invoke('StatusBar.supportsEditorStatusDeltas')).resolves.toBe(true)
   await expect(RendererProcess.invoke('Viewlet.queueCommands', 7, [['Viewlet.setDom2', 7, []]])).resolves.toBe(31)
   expect(queueCommands).toHaveBeenCalledWith(7, [['Viewlet.setDom2', 7, []]])
 

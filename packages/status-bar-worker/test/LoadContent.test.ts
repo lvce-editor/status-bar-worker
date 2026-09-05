@@ -55,3 +55,24 @@ test('uses editor status received before content is loading', async () => {
     'Notifications',
   ])
 })
+
+test('uses the latest editor status when loading finishes', async () => {
+  const initial = { column: 1, encoding: 'utf8', endOfLine: 'lf', insertSpaces: true, languageId: 'javascript', line: 1, tabSize: 4 }
+  using _rendererWorkerRpc = RendererWorker.registerMockRpc({
+    'Preferences.get': async () => undefined,
+  })
+  using _extensionManagementWorkerRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.activateByEvent': async () => {},
+    'Extensions.getNotificationCount': async () => {
+      EditorStatusState.applyUpdate({ column: 9 })
+      return 0
+    },
+    'Extensions.getStatusBarItems': async () => [],
+  })
+  EditorStatusState.set(initial)
+
+  const result = await loadContent(createDefaultState())
+
+  expect(result.editorStatus).toEqual({ ...initial, column: 9 })
+  expect(result.statusBarItemsRight[0].elements).toEqual([{ type: 'text', value: 'Ln 1, Col 9' }])
+})

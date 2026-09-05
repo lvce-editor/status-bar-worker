@@ -55,3 +55,57 @@ test('removes editor items when the last editor closes', () => {
 
   expect(result.statusBarItemsRight).toEqual([notification])
 })
+
+test('cursor changes preserve live edits to unrelated editor items', () => {
+  const initial = handleEditorStatusChanged(createDefaultState(), editorStatus)
+  const edited = {
+    ...initial,
+    statusBarItemsRight: initial.statusBarItemsRight.map((item) => ({
+      ...item,
+      elements: [{ type: 'text' as const, value: `custom ${item.name}` }],
+    })),
+  }
+  const result = handleEditorStatusChanged(edited, { ...editorStatus, column: 2 })
+  expect(result.statusBarItemsRight[0].elements).toEqual([{ type: 'text', value: 'Ln 1, Col 2' }])
+  for (let index = 1; index < 5; index++) {
+    expect(result.statusBarItemsRight[index]).toBe(edited.statusBarItemsRight[index])
+  }
+})
+
+test.each([
+  ['column', 7, 'EditorPosition'],
+  ['line', 3, 'EditorPosition'],
+  ['insertSpaces', false, 'EditorIndentation'],
+  ['tabSize', 8, 'EditorIndentation'],
+  ['encoding', 'utf16le', 'EditorEncoding'],
+  ['endOfLine', 'crlf', 'EditorEndOfLine'],
+  ['languageId', 'typescript', 'EditorLanguage'],
+])('changing %s replaces only %s dependent item', (key, value, changedName) => {
+  const initial = handleEditorStatusChanged(createDefaultState(), editorStatus)
+  const edited = {
+    ...initial,
+    statusBarItemsRight: initial.statusBarItemsRight.map((item) => ({ ...item, elements: [{ type: 'text' as const, value: 'custom' }] })),
+  }
+  const result = handleEditorStatusChanged(edited, { ...editorStatus, [key]: value })
+  const changedItem = result.statusBarItemsRight.find((item) => item.name === changedName)
+  expect(changedItem).not.toBe(edited.statusBarItemsRight.find((item) => item.name === changedName))
+  expect(changedItem?.elements).not.toEqual([{ type: 'text', value: 'custom' }])
+  const unchangedItems = result.statusBarItemsRight.filter((item) => item.name !== changedName)
+  for (const item of unchangedItems) {
+    expect(item).toBe(edited.statusBarItemsRight.find((previous) => previous.name === item.name))
+  }
+})
+
+test('equal values from another editor preserve the entire state', () => {
+  const state = handleEditorStatusChanged(createDefaultState(), editorStatus)
+  expect(handleEditorStatusChanged(state, { ...editorStatus })).toBe(state)
+})
+
+test('preserves reordered items and unrelated items', () => {
+  const initial = handleEditorStatusChanged(createDefaultState(), editorStatus)
+  const custom = { ariaLabel: '', elements: [], name: 'custom', tooltip: '' }
+  const state = { ...initial, statusBarItemsRight: [custom, ...initial.statusBarItemsRight.toReversed()] }
+  const next = handleEditorStatusChanged(state, { ...editorStatus, tabSize: 8 })
+  expect(next.statusBarItemsRight.map((item) => item.name)).toEqual(state.statusBarItemsRight.map((item) => item.name))
+  expect(next.statusBarItemsRight[0]).toBe(custom)
+})
