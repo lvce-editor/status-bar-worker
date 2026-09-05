@@ -17,7 +17,8 @@ export const applyUpdate = (update: Partial<EditorStatus> | undefined): EditorSt
     editorStatus = undefined
     return editorStatus
   }
-  const next = { ...editorStatus, ...update }
+  // Older editor workers omit these fields; retain their original display defaults.
+  const next = { endOfLine: 'lf', insertSpaces: true, ...editorStatus, ...update }
   if (
     typeof next.column !== 'number' ||
     typeof next.encoding !== 'string' ||

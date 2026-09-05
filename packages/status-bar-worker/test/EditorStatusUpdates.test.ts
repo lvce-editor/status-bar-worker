@@ -68,3 +68,8 @@ test('all instances update before rendering awaits and delayed rendering cannot 
   await pending
   expect(StatusBarStates.get(603).newState.statusBarItemsRight).toBe(items)
 })
+
+test('accepts legacy snapshots without line ending and indentation mode', async () => {
+  await handleEditorStatusChangedAll({ column: 1, encoding: 'utf8', languageId: 'json', line: 1, tabSize: 2 })
+  expect(EditorStatusState.get()).toEqual(status)
+})
