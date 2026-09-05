@@ -1,6 +1,7 @@
 import { terminate } from '@lvce-editor/viewlet-registry'
 import * as StatusBar from '../Create/Create.ts'
 import { diff2 } from '../Diff2/Diff2.ts'
+import { getComponentDom } from '../GetComponentDom/GetComponentDom.ts'
 import { getComponentState } from '../GetComponentState/GetComponentState.ts'
 import * as HandleClick from '../HandleClick/HandleClick.ts'
 import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
@@ -38,6 +39,7 @@ export const commandMap = {
   'StatusBar.create': StatusBar.create,
   'StatusBar.diff2': diff2,
   'StatusBar.getCommandIds': getCommandIds,
+  'StatusBar.getComponentDom': getComponentDom,
   'StatusBar.getComponentState': getComponentState,
   'StatusBar.handleChange': wrapSerialCommand(handleItemsChanged),
   'StatusBar.handleClick': wrapCommand(HandleClick.handleClick),
