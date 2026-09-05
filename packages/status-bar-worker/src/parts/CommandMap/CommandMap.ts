@@ -4,6 +4,7 @@ import { diff2 } from '../Diff2/Diff2.ts'
 import { getComponentState } from '../GetComponentState/GetComponentState.ts'
 import * as HandleClick from '../HandleClick/HandleClick.ts'
 import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
+import { handleEditorStatusChangedAll } from '../HandleEditorStatusChangedAll/HandleEditorStatusChangedAll.ts'
 import { handleExtensionManagementMessagePort } from '../HandleExtensionManagementMessagePort/HandleExtensionManagementMessagePort.ts'
 import { handleExtensionsChanged } from '../HandleExtensionsChanged/HandleExtensionsChanged.ts'
 import { handleItemsChanged } from '../HandleItemsChanged/HandleItemsChanged.ts'
@@ -22,6 +23,7 @@ import { resize } from '../Resize/Resize.ts'
 import { saveState } from '../SaveState/SaveState.ts'
 import { setComponentState } from '../SetComponentState/SetComponentState.ts'
 import { getCommandIds, wrapCommand, wrapGetter, wrapSerialCommand } from '../StatusBarStates/StatusBarStates.ts'
+import { supportsEditorStatusDeltas } from '../SupportsEditorStatusDeltas/SupportsEditorStatusDeltas.ts'
 
 const handleDirectMessagePort = (port: MessagePort, setAsRendererProcess = true): Promise<void> =>
   HandleMessagePort.handleMessagePort(port, commandMap, setAsRendererProcess)
@@ -42,6 +44,7 @@ export const commandMap = {
   'StatusBar.handleChange': wrapSerialCommand(handleItemsChanged),
   'StatusBar.handleClick': wrapCommand(HandleClick.handleClick),
   'StatusBar.handleContextMenu': wrapCommand(HandleContextMenu.handleContextMenu),
+  'StatusBar.handleEditorStatusChanged': handleEditorStatusChangedAll,
   'StatusBar.handleExtensionManagementMessagePort': handleExtensionManagementMessagePort,
   'StatusBar.handleExtensionsChanged': wrapCommand(handleExtensionsChanged),
   'StatusBar.handleItemsChanged': wrapSerialCommand(handleItemsChanged),
@@ -59,5 +62,6 @@ export const commandMap = {
   'StatusBar.resize': wrapCommand(resize),
   'StatusBar.saveState': wrapGetter(saveState),
   'StatusBar.setComponentState': setComponentState,
+  'StatusBar.supportsEditorStatusDeltas': supportsEditorStatusDeltas,
   'StatusBar.terminate': terminate,
 }
