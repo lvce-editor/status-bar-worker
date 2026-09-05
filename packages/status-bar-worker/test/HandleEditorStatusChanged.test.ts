@@ -87,13 +87,12 @@ test.each([
     statusBarItemsRight: initial.statusBarItemsRight.map((item) => ({ ...item, elements: [{ type: 'text' as const, value: 'custom' }] })),
   }
   const result = handleEditorStatusChanged(edited, { ...editorStatus, [key]: value })
-  for (const [index, item] of result.statusBarItemsRight.entries()) {
-    if (item.name === changedName) {
-      expect(item).not.toBe(edited.statusBarItemsRight[index])
-      expect(item.elements).not.toEqual([{ type: 'text', value: 'custom' }])
-    } else {
-      expect(item).toBe(edited.statusBarItemsRight[index])
-    }
+  const changedItem = result.statusBarItemsRight.find((item) => item.name === changedName)
+  expect(changedItem).not.toBe(edited.statusBarItemsRight.find((item) => item.name === changedName))
+  expect(changedItem?.elements).not.toEqual([{ type: 'text', value: 'custom' }])
+  const unchangedItems = result.statusBarItemsRight.filter((item) => item.name !== changedName)
+  for (const item of unchangedItems) {
+    expect(item).toBe(edited.statusBarItemsRight.find((previous) => previous.name === item.name))
   }
 })
 

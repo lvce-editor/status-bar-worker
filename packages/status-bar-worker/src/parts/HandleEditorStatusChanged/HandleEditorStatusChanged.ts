@@ -15,7 +15,7 @@ const dependencies: Readonly<Record<string, readonly (keyof EditorStatus)[]>> = 
 export const handleEditorStatusChanged = (
   state: StatusBarState,
   editorStatus: EditorStatus | undefined,
-  previous: { readonly editorStatus: EditorStatus | undefined } = state,
+  previous: { readonly editorStatus?: EditorStatus } = state,
 ): StatusBarState => {
   const { statusBarItemsRight } = state
   const oldStatus = previous.editorStatus
