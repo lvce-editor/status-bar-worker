@@ -39,3 +39,10 @@ test('shows tab indentation', () => {
 test('returns no items without an active editor', () => {
   expect(getEditorStatusBarItems(undefined)).toEqual([])
 })
+
+test('legacy editor snapshots default to spaces and LF', () => {
+  const legacyStatus = JSON.parse('{"column":1,"encoding":"utf8","languageId":"plaintext","line":1,"tabSize":2}')
+  const items = getEditorStatusBarItems(legacyStatus)
+  expect(items[1].elements).toEqual([{ type: 'text', value: 'Spaces: 2' }])
+  expect(items[3].elements).toEqual([{ type: 'text', value: 'LF' }])
+})
