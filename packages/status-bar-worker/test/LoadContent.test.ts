@@ -76,3 +76,16 @@ test('uses the latest editor status when loading finishes', async () => {
   expect(result.editorStatus).toEqual({ ...initial, column: 9 })
   expect(result.statusBarItemsRight[0].elements).toEqual([{ type: 'text', value: 'Ln 1, Col 9' }])
 })
+
+test('uses the fetched notification count when no count event has arrived', async () => {
+  using _rendererWorkerRpc = RendererWorker.registerMockRpc({
+    'Preferences.get': async () => undefined,
+  })
+  using _extensionManagementWorkerRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.activateByEvent': async () => {},
+    'Extensions.getNotificationCount': async () => 2,
+    'Extensions.getStatusBarItems': async () => [],
+  })
+  const result = await loadContent(createDefaultState())
+  expect(result.statusBarItemsRight[0].ariaLabel).toBe('2 Notifications')
+})
