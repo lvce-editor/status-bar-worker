@@ -5,8 +5,8 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import { handleExtensionsChanged } from '../src/parts/HandleExtensionsChanged/HandleExtensionsChanged.ts'
 import { handleNotificationCountChangedAll } from '../src/parts/HandleNotificationCountChangedAll/HandleNotificationCountChangedAll.ts'
 import * as NotificationCount from '../src/parts/NotificationCount/NotificationCount.ts'
-import { renderOutOfBand } from '../src/parts/RenderOutOfBand/RenderOutOfBand.ts'
 import * as RendererProcess from '../src/parts/RendererProcess/RendererProcess.ts'
+import { renderOutOfBand } from '../src/parts/RenderOutOfBand/RenderOutOfBand.ts'
 import * as StatusBarStates from '../src/parts/StatusBarStates/StatusBarStates.ts'
 
 afterEach(async () => {

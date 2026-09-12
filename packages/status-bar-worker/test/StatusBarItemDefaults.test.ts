@@ -68,7 +68,7 @@ test('problem updates preserve unrelated extension items', () => {
 })
 
 test('spinning extension icons retain their animation class and target name', () => {
-  const [node] = getStatusBarItemElementVirtualDom({ type: 'icon', value: 'LoadingIcon', spinning: true }, 'extension')
+  const [node] = getStatusBarItemElementVirtualDom({ spinning: true, type: 'icon', value: 'LoadingIcon' }, 'extension')
   expect(node.name).toBe('extension')
   expect(node.className).toBe('MaskIcon StatusBarIcon LoadingIcon Spinning')
 })
