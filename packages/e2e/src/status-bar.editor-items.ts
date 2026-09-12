@@ -5,7 +5,7 @@ export const name = 'status-bar.editor-items'
 export const test: Test = async ({ Command, Editor, expect, FileSystem, Locator, Main, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   await FileSystem.writeFile(`${tmpDir}/status-bar.ts`, 'first\nsecond line')
-  await Workspace.setPath(tmpDir)
+  await Workspace.setUri(tmpDir)
   await Main.openUri(`${tmpDir}/status-bar.ts`)
   await Command.execute('StatusBar.handleExtensionsChanged')
 
