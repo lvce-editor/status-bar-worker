@@ -4,7 +4,7 @@ export const name = 'status-bar.problems-click-opens-panel'
 
 export const skip = 1
 
-export const test: Test = async ({ expect, Locator, StatusBar }) => {
+export const test: Test = async ({ expect, Locator, StatusBar: { click: clickStatusBarItem } }) => {
   await clickStatusBarItem('Problems')
 
   const problemsTab = Locator('.PanelTab[name="Problems"]')
