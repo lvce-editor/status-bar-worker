@@ -14,6 +14,6 @@ export const test: Test = async ({ Command, expect, Locator }) => {
   })
 
   const item = Locator('.StatusBarItem[name="git.sync"]')
-  await expect(item.locator('.MaskIconSync')).toHaveCSS('width', '30px')
+  await expect(item.locator('.MaskIconSync')).toHaveCSS('width', '16px')
   await expect(item.locator('.StatusBarItemLabel')).toHaveText('1↓ 0↑')
 }
