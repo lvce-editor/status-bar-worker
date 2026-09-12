@@ -1,6 +1,6 @@
 import { execa } from 'execa'
 import { fileURLToPath } from 'node:url'
-import { root } from './root.js'
+import { root } from './root.ts'
 
 const main = async () => {
   await execa('npm', ['run', 'build'], { cwd: root, stdio: 'inherit' })

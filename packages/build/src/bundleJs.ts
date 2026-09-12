@@ -2,12 +2,9 @@ import pluginTypeScript from '@babel/preset-typescript'
 import { babel } from '@rollup/plugin-babel'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import { join } from 'path'
-import { rollup } from 'rollup'
-import { root } from './root.js'
+import { rollup, type RollupOptions } from 'rollup'
+import { root } from './root.ts'
 
-/**
- * @type {import('rollup').RollupOptions}
- */
 const options = {
   input: join(root, 'packages/status-bar-worker/src/statusBarWorkerMain.ts'),
   preserveEntrySignatures: 'strict',
@@ -32,10 +29,9 @@ const options = {
     }),
     nodeResolve(),
   ],
-}
+} satisfies RollupOptions
 
 export const bundleJs = async () => {
   const input = await rollup(options)
-  // @ts-ignore
   await input.write(options.output)
 }
