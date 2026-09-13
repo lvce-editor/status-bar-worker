@@ -47,6 +47,15 @@ export const test: Test = async ({ Command, Editor, expect, FileSystem, Locator,
   await expect(encoding).toHaveText('Custom EditorEncoding')
   await expect(indentation).toHaveText('Custom EditorIndentation')
 
+  await Editor.setSelections(new Uint32Array([1, 0, 1, 6]))
+  await expect(position).toHaveText('Ln 2, Col 7 (6 selected)')
+
+  await Editor.setSelections(new Uint32Array([1, 1, 1, 6]))
+  await expect(position).toHaveText('Ln 2, Col 7 (5 selected)')
+
+  await Editor.setSelections(new Uint32Array([1, 6, 1, 6]))
+  await expect(position).toHaveText('Ln 2, Col 7')
+
   await Main.closeAllEditors()
 
   await expect(editorStatusItems).toHaveCount(0)

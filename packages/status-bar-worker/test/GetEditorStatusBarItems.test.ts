@@ -36,6 +36,21 @@ test('shows tab indentation', () => {
   expect(result[3].elements).toEqual([{ type: 'text', value: 'CRLF' }])
 })
 
+test('shows selected character count in the position item', () => {
+  const result = getEditorStatusBarItems({
+    column: 1,
+    encoding: 'utf8',
+    endOfLine: 'lf',
+    insertSpaces: true,
+    languageId: 'plaintext',
+    line: 1,
+    selectedChars: 12,
+    tabSize: 4,
+  })
+
+  expect(result[0].elements).toEqual([{ type: 'text', value: 'Ln 1, Col 1 (12 selected)' }])
+})
+
 test('returns no items without an active editor', () => {
   expect(getEditorStatusBarItems(undefined)).toEqual([])
 })
