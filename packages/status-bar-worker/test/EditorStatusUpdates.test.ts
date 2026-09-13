@@ -73,3 +73,7 @@ test('accepts legacy snapshots without line ending and indentation mode', async 
   await handleEditorStatusChangedAll({ column: 1, encoding: 'utf8', languageId: 'json', line: 1, tabSize: 2 })
   expect(EditorStatusState.get()).toEqual(status)
 })
+
+test('rejects an invalid selected character count', async () => {
+  await expect(handleEditorStatusChangedAll({ selectedChars: 'invalid' as any })).rejects.toThrow('complete status')
+})

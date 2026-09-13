@@ -9,7 +9,7 @@ const dependencies: Readonly<Record<string, readonly (keyof EditorStatus)[]>> = 
   [InputName.EditorEndOfLine]: ['endOfLine'],
   [InputName.EditorIndentation]: ['insertSpaces', 'tabSize'],
   [InputName.EditorLanguage]: ['languageId'],
-  [InputName.EditorPosition]: ['line', 'column'],
+  [InputName.EditorPosition]: ['line', 'column', 'selectedChars'],
 }
 
 export const handleEditorStatusChanged = (

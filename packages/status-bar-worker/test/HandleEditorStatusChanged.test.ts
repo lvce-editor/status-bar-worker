@@ -75,6 +75,7 @@ test('cursor changes preserve live edits to unrelated editor items', () => {
 test.each([
   ['column', 7, 'EditorPosition'],
   ['line', 3, 'EditorPosition'],
+  ['selectedChars', 7, 'EditorPosition'],
   ['insertSpaces', false, 'EditorIndentation'],
   ['tabSize', 8, 'EditorIndentation'],
   ['encoding', 'utf16le', 'EditorEncoding'],

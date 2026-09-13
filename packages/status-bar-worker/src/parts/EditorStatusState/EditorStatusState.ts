@@ -26,6 +26,7 @@ export const applyUpdate = (update: Partial<EditorStatus> | undefined): EditorSt
     typeof next.insertSpaces !== 'boolean' ||
     typeof next.languageId !== 'string' ||
     typeof next.line !== 'number' ||
+    (next.selectedChars !== undefined && typeof next.selectedChars !== 'number') ||
     typeof next.tabSize !== 'number'
   ) {
     throw new TypeError('The first editor status update must contain a complete status')

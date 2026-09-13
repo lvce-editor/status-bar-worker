@@ -14,12 +14,14 @@ export const getEditorStatusBarItems = (status: EditorStatus | undefined): reado
   if (!status) {
     return []
   }
-  const { column, encoding, endOfLine = 'lf', insertSpaces = true, languageId, line, tabSize } = status
+  const { column, encoding, endOfLine = 'lf', insertSpaces = true, languageId, line, selectedChars = 0, tabSize } = status
   const encodingLabel = encoding === 'utf8' ? ['UTF', '8'].join('-') : encoding
   const indentationLabel = insertSpaces ? `Spaces: ${tabSize}` : `Tab Size: ${tabSize}`
   const endOfLineLabel = endOfLine.toUpperCase()
+  const positionLabel = selectedChars > 0 ? `Ln ${line}, Col ${column} (${selectedChars} selected)` : `Ln ${line}, Col ${column}`
+  const positionAriaLabel = selectedChars > 0 ? `Line ${line}, Column ${column}, ${selectedChars} selected` : `Line ${line}, Column ${column}`
   return [
-    textItem(InputName.EditorPosition, `Ln ${line}, Col ${column}`, `Line ${line}, Column ${column}`, 'Go to Line/Column'),
+    textItem(InputName.EditorPosition, positionLabel, positionAriaLabel, 'Go to Line/Column'),
     textItem(InputName.EditorIndentation, indentationLabel, indentationLabel, 'Select Indentation'),
     textItem(InputName.EditorEncoding, encodingLabel, `Encoding: ${encodingLabel}`, 'Select Encoding'),
     textItem(InputName.EditorEndOfLine, endOfLineLabel, `End of Line: ${endOfLineLabel}`, 'Select End of Line Sequence'),
