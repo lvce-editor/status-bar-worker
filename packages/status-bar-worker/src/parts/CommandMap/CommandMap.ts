@@ -6,6 +6,7 @@ import { getComponentState } from '../GetComponentState/GetComponentState.ts'
 import * as HandleClick from '../HandleClick/HandleClick.ts'
 import * as HandleContextMenu from '../HandleContextMenu/HandleContextMenu.ts'
 import { handleEditorStatusChangedAll } from '../HandleEditorStatusChangedAll/HandleEditorStatusChangedAll.ts'
+import { handleEditorStatusVisibilityChangedAll } from '../HandleEditorStatusVisibilityChangedAll/HandleEditorStatusVisibilityChangedAll.ts'
 import { handleExtensionManagementMessagePort } from '../HandleExtensionManagementMessagePort/HandleExtensionManagementMessagePort.ts'
 import * as HandleMessagePort from '../HandleMessagePort/HandleMessagePort.ts'
 import { handleNotificationCountChanged } from '../HandleNotificationCountChanged/HandleNotificationCountChanged.ts'
@@ -45,6 +46,7 @@ export const commandMap = {
   'StatusBar.handleClick': wrapCommand(HandleClick.handleClick),
   'StatusBar.handleContextMenu': wrapCommand(HandleContextMenu.handleContextMenu),
   'StatusBar.handleEditorStatusChanged': handleEditorStatusChangedAll,
+  'StatusBar.handleEditorStatusVisibilityChanged': handleEditorStatusVisibilityChangedAll,
   'StatusBar.handleExtensionManagementMessagePort': handleExtensionManagementMessagePort,
   'StatusBar.handleExtensionsChanged': refreshExtensionItems,
   'StatusBar.handleItemsChanged': refreshExtensionItems,
