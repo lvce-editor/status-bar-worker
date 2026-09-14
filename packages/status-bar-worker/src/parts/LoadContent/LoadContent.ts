@@ -1,7 +1,9 @@
 import type { StatusBarState } from '../StatusBarState/StatusBarState.ts'
 import * as EditorStatusState from '../EditorStatusState/EditorStatusState.ts'
+import * as EditorStatusVisibilityState from '../EditorStatusVisibilityState/EditorStatusVisibilityState.ts'
 import * as GetStatusBarItems from '../GetStatusBarItems/GetStatusBarItems.ts'
 import { handleEditorStatusChanged } from '../HandleEditorStatusChanged/HandleEditorStatusChanged.ts'
+import { handleEditorStatusVisibilityChanged } from '../HandleEditorStatusVisibilityChanged/HandleEditorStatusVisibilityChanged.ts'
 import { handleNotificationCountChanged } from '../HandleNotificationCountChanged/HandleNotificationCountChanged.ts'
 import * as InputName from '../InputName/InputName.ts'
 import * as NotificationCount from '../NotificationCount/NotificationCount.ts'
@@ -30,7 +32,14 @@ export const loadContent = async (state: StatusBarState): Promise<StatusBarState
     statusBarItemsRight: statusBarItems.filter((item) => InputName.isRight(item.name)),
     warningCount: 0,
   }
-  const currentState = itemsVisible ? handleEditorStatusChanged(loadedState, EditorStatusState.get()) : loadedState
+  let currentState = loadedState
+  if (itemsVisible) {
+    if (EditorStatusVisibilityState.isVisible()) {
+      currentState = handleEditorStatusChanged(loadedState, EditorStatusState.get())
+    } else {
+      currentState = handleEditorStatusVisibilityChanged(loadedState, false)
+    }
+  }
   const latestNotificationCount = NotificationCount.get()
   if (latestNotificationCount === undefined) {
     return currentState

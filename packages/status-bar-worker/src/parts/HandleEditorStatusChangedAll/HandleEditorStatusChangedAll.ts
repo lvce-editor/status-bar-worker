@@ -1,5 +1,6 @@
 import type { EditorStatus } from '../EditorStatus/EditorStatus.ts'
 import * as EditorStatusState from '../EditorStatusState/EditorStatusState.ts'
+import * as EditorStatusVisibilityState from '../EditorStatusVisibilityState/EditorStatusVisibilityState.ts'
 import { handleEditorStatusChanged } from '../HandleEditorStatusChanged/HandleEditorStatusChanged.ts'
 import { renderOutOfBand } from '../RenderOutOfBand/RenderOutOfBand.ts'
 import * as StatusBarStates from '../StatusBarStates/StatusBarStates.ts'
@@ -10,7 +11,9 @@ export const handleEditorStatusChangedAll = async (update: Partial<EditorStatus>
   const changedUids: number[] = []
   for (const uid of StatusBarStates.getKeys()) {
     const { newState, oldState } = StatusBarStates.get(uid)
-    const newerState = handleEditorStatusChanged(newState, editorStatus, previous)
+    const newerState = EditorStatusVisibilityState.isVisible()
+      ? handleEditorStatusChanged(newState, editorStatus, previous)
+      : { ...newState, editorStatus }
     if (newState === newerState || oldState === newerState) {
       continue
     }

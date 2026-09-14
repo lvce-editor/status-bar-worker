@@ -2,11 +2,13 @@ import { afterEach, expect, test } from '@jest/globals'
 import { ExtensionManagementWorker, RendererWorker } from '@lvce-editor/rpc-registry'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as EditorStatusState from '../src/parts/EditorStatusState/EditorStatusState.ts'
+import * as EditorStatusVisibilityState from '../src/parts/EditorStatusVisibilityState/EditorStatusVisibilityState.ts'
 import { loadContent } from '../src/parts/LoadContent/LoadContent.ts'
 import * as NotificationCount from '../src/parts/NotificationCount/NotificationCount.ts'
 
 afterEach(() => {
   EditorStatusState.reset()
+  EditorStatusVisibilityState.reset()
   NotificationCount.reset()
 })
 
@@ -75,6 +77,23 @@ test('uses the latest editor status when loading finishes', async () => {
 
   expect(result.editorStatus).toEqual({ ...initial, column: 9 })
   expect(result.statusBarItemsRight[0].elements).toEqual([{ type: 'text', value: 'Ln 1, Col 9' }])
+})
+
+test('hides cached editor status when loading a non-text active editor', async () => {
+  using _rendererWorkerRpc = RendererWorker.registerMockRpc({
+    'Preferences.get': async () => undefined,
+  })
+  using _extensionManagementWorkerRpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.activateByEvent': async () => {},
+    'Extensions.getNotificationCount': async () => 0,
+    'Extensions.getStatusBarItems': async () => [],
+  })
+  EditorStatusState.set({ column: 7, encoding: 'utf8', endOfLine: 'lf', insertSpaces: true, languageId: 'javascript', line: 2, tabSize: 4 })
+  EditorStatusVisibilityState.setVisible(false)
+
+  const result = await loadContent(createDefaultState())
+
+  expect(result.statusBarItemsRight.map((item) => item.name)).toEqual(['Notifications'])
 })
 
 test('uses the fetched notification count when no count event has arrived', async () => {
