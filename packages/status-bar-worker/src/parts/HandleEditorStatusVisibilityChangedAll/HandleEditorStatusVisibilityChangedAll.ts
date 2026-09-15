@@ -4,6 +4,9 @@ import { renderOutOfBand } from '../RenderOutOfBand/RenderOutOfBand.ts'
 import * as StatusBarStates from '../StatusBarStates/StatusBarStates.ts'
 
 export const handleEditorStatusVisibilityChangedAll = async (visible: boolean): Promise<void> => {
+  if (EditorStatusVisibilityState.isVisible() === visible) {
+    return
+  }
   EditorStatusVisibilityState.setVisible(visible)
   const changedUids: number[] = []
   for (const uid of StatusBarStates.getKeys()) {

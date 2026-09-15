@@ -88,3 +88,24 @@ test('updates all loaded status bars and keeps late status updates hidden', asyn
     expect.objectContaining({ elements: [{ type: 'text', value: 'Ln 2, Col 8' }] }),
   )
 })
+
+
+test('preserves live labels when switching between visible text editors', async () => {
+  const uid = 905
+  await handleEditorStatusChangedAll(editorStatus)
+  const state = {
+    ...createDefaultState(),
+    editorStatus,
+    initial: false,
+    statusBarItemsRight: getEditorStatusBarItems(editorStatus).map((item) =>
+      item.name === 'EditorEncoding' ? { ...item, elements: [{ type: 'text', value: 'Live encoding' }] } : item,
+    ),
+    uid,
+  }
+  StatusBarStates.set(uid, state, state)
+
+  await handleEditorStatusVisibilityChangedAll(true)
+  await handleEditorStatusVisibilityChangedAll(true)
+
+  expect(StatusBarStates.get(uid).newState).toBe(state)
+})
