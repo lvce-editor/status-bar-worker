@@ -89,7 +89,6 @@ test('updates all loaded status bars and keeps late status updates hidden', asyn
   )
 })
 
-
 test('preserves live labels when switching between visible text editors', async () => {
   const uid = 905
   await handleEditorStatusChangedAll(editorStatus)
@@ -98,7 +97,7 @@ test('preserves live labels when switching between visible text editors', async 
     editorStatus,
     initial: false,
     statusBarItemsRight: getEditorStatusBarItems(editorStatus).map((item) =>
-      item.name === 'EditorEncoding' ? { ...item, elements: [{ type: 'text', value: 'Live encoding' }] } : item,
+      item.name === 'EditorEncoding' ? { ...item, elements: [{ type: 'text' as const, value: 'Live encoding' }] } : item,
     ),
     uid,
   }
