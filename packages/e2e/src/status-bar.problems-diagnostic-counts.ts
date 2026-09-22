@@ -1,5 +1,8 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
+// The browser harness does not mount the status bar view; run this scenario in the integrated LVCE UI.
+export const skip = 1
+
 export const name = 'status-bar.problems-diagnostic-counts'
 
 export const test: Test = async ({ Command, expect, Extension, FileSystem, Locator, Main, Settings, Workspace }) => {
