@@ -2,6 +2,7 @@ import { afterEach, expect, jest, test } from '@jest/globals'
 import { createMockRpc } from '@lvce-editor/rpc'
 import { ExtensionManagementWorker, RendererProcess as RendererProcessRegistry } from '@lvce-editor/rpc-registry'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
+import { getProblemsStatusBarItem } from '../src/parts/GetProblemsStatusBarItem/GetProblemsStatusBarItem.ts'
 import { handleExtensionsChanged } from '../src/parts/HandleExtensionsChanged/HandleExtensionsChanged.ts'
 import { handleNotificationCountChangedAll } from '../src/parts/HandleNotificationCountChangedAll/HandleNotificationCountChangedAll.ts'
 import * as NotificationCount from '../src/parts/NotificationCount/NotificationCount.ts'
@@ -53,4 +54,23 @@ test('an older extension refresh cannot replace a newer result', async () => {
   firstItems.resolve([{ id: 'stale', text: 'stale' }])
   expect(await first).toBe(state)
   expect(second.statusBarItemsLeft.map((item) => item.name)).toEqual(['latest'])
+})
+
+test('extension refresh preserves the built-in Problems item', async () => {
+  using _rpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.activateByEvent': async () => {},
+    'Extensions.getNotificationCount': async () => 0,
+    'Extensions.getStatusBarItems': async () => [{ id: 'git.sync', text: '2↓ 0↑' }],
+  })
+  const state = {
+    ...createDefaultState(),
+    initial: false,
+    statusBarItemsLeft: [...getProblemsStatusBarItem(0, 2, true)],
+    uid: 904,
+  }
+
+  const result = await handleExtensionsChanged(state)
+
+  expect(result.statusBarItemsLeft.map((item) => item.name)).toEqual(['git.sync', 'Problems'])
+  expect(result.statusBarItemsLeft.at(-1)).toEqual(getProblemsStatusBarItem(0, 2, true)[0])
 })

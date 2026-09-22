@@ -1,0 +1,20 @@
+{
+  "browser": "dist/main.js",
+  "id": "test.status-bar-problems",
+  "isolated": true,
+  "name": "status-bar-problems",
+  "diagnosticProviders": [
+    {
+      "id": "status-bar-diagnostics",
+      "languageId": "xyz"
+    }
+  ],
+  "languages": [
+    {
+      "id": "xyz",
+      "extensions": [".xyz"]
+    }
+  ],
+  "activation": ["onDiagnostic:xyz"],
+  "publisher": "test"
+}
