@@ -8,7 +8,7 @@ test('renderEventListeners should return array with click and context menu event
   expect(result).toEqual([
     {
       name: DomEventListenersFunctions.HandleContextMenu,
-      params: ['handleContextMenu', EventExpression.Button, EventExpression.ClientX, EventExpression.ClientY],
+      params: ['handleContextMenu', EventExpression.Button, EventExpression.ClientX, EventExpression.ClientY, EventExpression.TargetName],
       preventDefault: true,
     },
     {

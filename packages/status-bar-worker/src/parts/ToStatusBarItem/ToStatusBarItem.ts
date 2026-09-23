@@ -23,6 +23,8 @@ export const toStatusBarItem = (uiStatusBarItem: UiStatusBarItem): StatusBarItem
     command: uiStatusBarItem.command || undefined,
     elements,
     name: uiStatusBarItem.name,
+    ...(uiStatusBarItem.extensionId && { extensionId: uiStatusBarItem.extensionId }),
+    ...(uiStatusBarItem.providerId && { providerId: uiStatusBarItem.providerId }),
     tooltip,
   }
 }
