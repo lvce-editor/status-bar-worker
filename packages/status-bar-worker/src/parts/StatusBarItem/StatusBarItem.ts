@@ -6,6 +6,8 @@ export type StatusBarItem = {
   readonly enabled?: boolean
   readonly elements: readonly StatusBarItemElement[]
   readonly name: string
+  readonly extensionId?: string
+  readonly providerId?: string
   readonly tooltip: string
   readonly isError?: boolean
 }

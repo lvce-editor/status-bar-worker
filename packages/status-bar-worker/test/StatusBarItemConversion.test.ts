@@ -8,8 +8,10 @@ test('toStatusBarItem should include icon and text elements', () => {
   const uiStatusBarItem: UiStatusBarItem = {
     ariaLabel: '',
     command: 'test.command',
+    extensionId: 'extension.git',
     icon: 'TestIcon',
     name: 'test',
+    providerId: 'git.checkout',
     text: 'Test',
     tooltip: 'Test tooltip',
   }
@@ -23,7 +25,9 @@ test('toStatusBarItem should include icon and text elements', () => {
       { type: 'icon', value: 'TestIcon' },
       { type: 'text', value: 'Test' },
     ],
+    extensionId: 'extension.git',
     name: 'test',
+    providerId: 'git.checkout',
     tooltip: 'Test tooltip',
   })
 })
@@ -83,8 +87,10 @@ test('toUiStatusBarItem should normalize branch icon', () => {
   const result = ToUiStatusBarItem.toUiStatusBarItem({
     ariaLabel: 'Current branch is main',
     command: 'test.command',
+    extensionId: 'extension.git',
     icon: 'branch',
     id: 'test',
+    providerId: 'git.checkout',
     text: 'Test',
     tooltip: 'Test tooltip',
   })
@@ -92,8 +98,10 @@ test('toUiStatusBarItem should normalize branch icon', () => {
   expect(result).toEqual({
     ariaLabel: 'Current branch is main',
     command: 'test.command',
+    extensionId: 'extension.git',
     icon: 'MaskIconSourceControl',
     name: 'test',
+    providerId: 'git.checkout',
     text: 'Test',
     tooltip: 'Test tooltip',
   })

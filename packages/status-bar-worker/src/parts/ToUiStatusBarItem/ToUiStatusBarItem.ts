@@ -13,6 +13,8 @@ export const toUiStatusBarItem = (extensionStatusBarItem: any): UiStatusBarItem 
     command: extensionStatusBarItem.onClick || extensionStatusBarItem.command || '',
     icon: getActualIcon(extensionStatusBarItem),
     name: extensionStatusBarItem.id || extensionStatusBarItem.name || '',
+    ...(extensionStatusBarItem.extensionId && { extensionId: extensionStatusBarItem.extensionId }),
+    ...(extensionStatusBarItem.providerId && { providerId: extensionStatusBarItem.providerId }),
     ...(extensionStatusBarItem.spinning === true && { spinning: true }),
     text: extensionStatusBarItem.text || '',
     tooltip: extensionStatusBarItem.tooltip || '',

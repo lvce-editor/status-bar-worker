@@ -6,7 +6,7 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
   return [
     {
       name: DomEventListenersFunctions.HandleContextMenu,
-      params: ['handleContextMenu', EventExpression.Button, EventExpression.ClientX, EventExpression.ClientY],
+      params: ['handleContextMenu', EventExpression.Button, EventExpression.ClientX, EventExpression.ClientY, EventExpression.TargetName],
       preventDefault: true,
     },
     {
