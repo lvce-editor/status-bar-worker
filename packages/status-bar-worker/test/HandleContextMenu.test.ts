@@ -46,7 +46,16 @@ test('handleContextMenu queries the clicked item provider', async () => {
   })
   const state = {
     ...createDefaultState(),
-    statusBarItemsLeft: [{ ariaLabel: 'feature', elements: [], extensionId: 'extension.git', name: 'git.showBranchPicker', providerId: 'git.checkout', tooltip: 'feature' }],
+    statusBarItemsLeft: [
+      {
+        ariaLabel: 'feature',
+        elements: [],
+        extensionId: 'extension.git',
+        name: 'git.showBranchPicker',
+        providerId: 'git.checkout',
+        tooltip: 'feature',
+      },
+    ],
     uid: 1,
   }
 
