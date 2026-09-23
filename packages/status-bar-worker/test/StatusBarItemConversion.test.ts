@@ -8,8 +8,8 @@ test('toStatusBarItem should include icon and text elements', () => {
   const uiStatusBarItem: UiStatusBarItem = {
     ariaLabel: '',
     command: 'test.command',
-    icon: 'TestIcon',
     extensionId: 'extension.git',
+    icon: 'TestIcon',
     name: 'test',
     providerId: 'git.checkout',
     text: 'Test',
@@ -98,8 +98,8 @@ test('toUiStatusBarItem should normalize branch icon', () => {
   expect(result).toEqual({
     ariaLabel: 'Current branch is main',
     command: 'test.command',
-    icon: 'MaskIconSourceControl',
     extensionId: 'extension.git',
+    icon: 'MaskIconSourceControl',
     name: 'test',
     providerId: 'git.checkout',
     text: 'Test',
