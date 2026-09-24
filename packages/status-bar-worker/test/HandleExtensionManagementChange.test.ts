@@ -78,6 +78,7 @@ test('preserves mounted state when an extension refresh started during loading',
   pendingItems.resolve([{ id: 'git.sync', text: '2↓ 0↑' }])
   await refresh
 
+  expect(mockExtensionManagementRpc.invocations).toContainEqual(['Extensions.getStatusBarItems'])
   expect(StatusBarStates.get(42).newState.initial).toBe(false)
   expect(StatusBarStates.get(42).newState.warningCount).toBe(3)
   expect(StatusBarStates.get(42).newState.statusBarItemsLeft[0].elements).toContainEqual({ type: 'text', value: '2↓ 0↑' })
