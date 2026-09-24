@@ -9,7 +9,10 @@ export const handleExtensionManagementChange = async (): Promise<void> => {
     if (newState === newerState || oldState === newerState) {
       continue
     }
-    StatusBarStates.set(uid, oldState, { ...newState, ...newerState })
+    // Loading and other updates can finish while the provider query is pending.
+    // Only replace the extension items; retain the current lifecycle and render baseline.
+    const current = StatusBarStates.get(uid)
+    StatusBarStates.set(uid, current.oldState, { ...current.newState, statusBarItemsLeft: newerState.statusBarItemsLeft })
     await renderOutOfBand(uid)
   }
 }
