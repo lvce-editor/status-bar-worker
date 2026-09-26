@@ -3,7 +3,9 @@ import { getIndex } from '../GetIndex/GetIndex.ts'
 
 export const updateArray = (items: readonly StatusBarItem[], newItem: Readonly<StatusBarItem>): StatusBarItem[] => {
   const index = getIndex(items, newItem)
-  const before = items.slice(0, index)
-  const after = items.slice(index + 1)
-  return [...before, newItem, ...after]
+  if (index < 0) {
+    return [newItem, ...items]
+  }
+  // eslint-disable-next-line unicorn/no-confusing-array-splice -- Keep updates immutable with toSpliced.
+  return items.toSpliced(index, 1, newItem)
 }
