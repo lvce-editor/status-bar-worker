@@ -6,5 +6,6 @@ export const updateArray = (items: readonly StatusBarItem[], newItem: Readonly<S
   if (index < 0) {
     return [newItem, ...items]
   }
+  // eslint-disable-next-line unicorn/no-confusing-array-splice -- Keep updates immutable with toSpliced.
   return items.toSpliced(index, 1, newItem)
 }

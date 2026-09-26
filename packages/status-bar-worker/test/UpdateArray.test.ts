@@ -14,13 +14,13 @@ test.each([0, 1, 2])('should replace item at index %i without changing other ite
   const middle = createItem('middle')
   const last = createItem('last')
   const items = [first, middle, last]
-  const newItem = createItem(items[index]!.name)
+  const newItem = createItem(items[index].name)
   const result = UpdateArray.updateArray(items, newItem)
 
   expect(result).toHaveLength(items.length)
-  result.forEach((item, itemIndex) => {
+  for (const [itemIndex, item] of result.entries()) {
     expect(item).toBe(itemIndex === index ? newItem : items[itemIndex])
-  })
+  }
   expect(items[index]).not.toBe(newItem)
 })
 
