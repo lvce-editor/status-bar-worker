@@ -50,7 +50,6 @@ test('handleClick should call handleClickNotification when item is Notifications
 test('handleClick should call handleClickProblems when item is Problems', async () => {
   using mockRendererRpc = RendererWorker.registerMockRpc({
     'Layout.showPanel': async () => {},
-    'Panel.toggleView': async () => {},
   })
 
   const state: StatusBarState = {
@@ -68,8 +67,7 @@ test('handleClick should call handleClickProblems when item is Problems', async 
 
   await HandleClick.handleClick(state, 'Problems')
 
-  expect(mockRendererRpc.invocations).toContainEqual(['Layout.showPanel'])
-  expect(mockRendererRpc.invocations).toContainEqual(['Panel.toggleView', 'Problems'])
+  expect(mockRendererRpc.invocations).toEqual([['Layout.showPanel', 'Problems']])
 })
 
 test('handleClick should call handleClickExtensionStatusBarItem for extension items', async () => {
