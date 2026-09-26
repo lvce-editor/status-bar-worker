@@ -3,6 +3,7 @@ import { ExtensionManagementWorker, RendererWorker } from '@lvce-editor/rpc-regi
 import type { StatusBarState } from '../src/parts/StatusBarState/StatusBarState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as HandleClick from '../src/parts/HandleClick/HandleClick.ts'
+import * as QuickPickWorker from '../src/parts/QuickPickWorker/QuickPickWorker.ts'
 
 test('handleClick should return state unchanged when name is empty', async () => {
   const state: StatusBarState = createDefaultState()
@@ -335,41 +336,41 @@ const createEditorStatusState = (name: string): StatusBarState => ({
 })
 
 test('handleClick should open go to line with the current position', async () => {
-  using mockRendererRpc = RendererWorker.registerMockRpc({
-    'Viewlet.openWidget': async () => {},
+  using mockQuickPickWorker = QuickPickWorker.registerMockRpc({
+    'QuickPick.openStatusBarPicker': async () => {},
   })
 
   await HandleClick.handleClick(createEditorStatusState('EditorPosition'), 'EditorPosition')
 
-  expect(mockRendererRpc.invocations).toEqual([['Viewlet.openWidget', 'QuickPick', 'go-to-line', 3, 5]])
+  expect(mockQuickPickWorker.invocations).toEqual([['QuickPick.openStatusBarPicker', 'go-to-line', 3, 5]])
 })
 
 test('handleClick should open the indentation picker', async () => {
-  using mockRendererRpc = RendererWorker.registerMockRpc({
-    'Viewlet.openWidget': async () => {},
+  using mockQuickPickWorker = QuickPickWorker.registerMockRpc({
+    'QuickPick.openStatusBarPicker': async () => {},
   })
 
   await HandleClick.handleClick(createEditorStatusState('EditorIndentation'), 'EditorIndentation')
 
-  expect(mockRendererRpc.invocations).toEqual([['Viewlet.openWidget', 'QuickPick', 'indentation']])
+  expect(mockQuickPickWorker.invocations).toEqual([['QuickPick.openStatusBarPicker', 'indentation']])
 })
 
 test('handleClick should open the end of line picker', async () => {
-  using mockRendererRpc = RendererWorker.registerMockRpc({
-    'Viewlet.openWidget': async () => {},
+  using mockQuickPickWorker = QuickPickWorker.registerMockRpc({
+    'QuickPick.openStatusBarPicker': async () => {},
   })
 
   await HandleClick.handleClick(createEditorStatusState('EditorEndOfLine'), 'EditorEndOfLine')
 
-  expect(mockRendererRpc.invocations).toEqual([['Viewlet.openWidget', 'QuickPick', 'end-of-line']])
+  expect(mockQuickPickWorker.invocations).toEqual([['QuickPick.openStatusBarPicker', 'end-of-line']])
 })
 
 test('handleClick should open the language mode picker', async () => {
-  using mockRendererRpc = RendererWorker.registerMockRpc({
-    'Viewlet.openWidget': async () => {},
+  using mockQuickPickWorker = QuickPickWorker.registerMockRpc({
+    'QuickPick.openStatusBarPicker': async () => {},
   })
 
   await HandleClick.handleClick(createEditorStatusState('EditorLanguage'), 'EditorLanguage')
 
-  expect(mockRendererRpc.invocations).toEqual([['Viewlet.openWidget', 'QuickPick', 'language-mode']])
+  expect(mockQuickPickWorker.invocations).toEqual([['QuickPick.openStatusBarPicker', 'language-mode']])
 })

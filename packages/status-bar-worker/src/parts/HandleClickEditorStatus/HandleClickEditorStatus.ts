@@ -1,6 +1,6 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { EditorStatus } from '../EditorStatus/EditorStatus.ts'
 import * as InputName from '../InputName/InputName.ts'
+import * as QuickPickWorker from '../QuickPickWorker/QuickPickWorker.ts'
 
 export const handleClickEditorStatus = async (name: string, status: EditorStatus | undefined): Promise<void> => {
   if (!status) {
@@ -8,16 +8,16 @@ export const handleClickEditorStatus = async (name: string, status: EditorStatus
   }
   switch (name) {
     case InputName.EditorEndOfLine:
-      await RendererWorker.invoke('Viewlet.openWidget', 'QuickPick', 'end-of-line')
+      await QuickPickWorker.invoke('QuickPick.openStatusBarPicker', 'end-of-line')
       return
     case InputName.EditorIndentation:
-      await RendererWorker.invoke('Viewlet.openWidget', 'QuickPick', 'indentation')
+      await QuickPickWorker.invoke('QuickPick.openStatusBarPicker', 'indentation')
       return
     case InputName.EditorLanguage:
-      await RendererWorker.invoke('Viewlet.openWidget', 'QuickPick', 'language-mode')
+      await QuickPickWorker.invoke('QuickPick.openStatusBarPicker', 'language-mode')
       return
     case InputName.EditorPosition:
-      await RendererWorker.invoke('Viewlet.openWidget', 'QuickPick', 'go-to-line', status.line, status.column)
+      await QuickPickWorker.invoke('QuickPick.openStatusBarPicker', 'go-to-line', status.line, status.column)
       return
   }
 }
