@@ -13,11 +13,36 @@ test('returns the five editor status items', () => {
       tabSize: 4,
     }),
   ).toEqual([
-    expect.objectContaining({ elements: [{ type: 'text', value: 'Ln 2, Col 7' }], name: 'EditorPosition' }),
-    expect.objectContaining({ elements: [{ type: 'text', value: 'Spaces: 4' }], name: 'EditorIndentation' }),
-    expect.objectContaining({ elements: [{ type: 'text', value: ['UTF', '8'].join('-') }], name: 'EditorEncoding' }),
-    expect.objectContaining({ elements: [{ type: 'text', value: 'LF' }], name: 'EditorEndOfLine' }),
-    expect.objectContaining({ elements: [{ type: 'text', value: 'javascript' }], name: 'EditorLanguage' }),
+    expect.objectContaining({
+      ariaLabel: 'Line 2, Column 7',
+      elements: [{ type: 'text', value: 'Ln 2, Col 7' }],
+      name: 'EditorPosition',
+      tooltip: 'Go to Line/Column',
+    }),
+    expect.objectContaining({
+      ariaLabel: 'Spaces: 4',
+      elements: [{ type: 'text', value: 'Spaces: 4' }],
+      name: 'EditorIndentation',
+      tooltip: 'Select Indentation',
+    }),
+    expect.objectContaining({
+      ariaLabel: 'Encoding: UTF-8',
+      elements: [{ type: 'text', value: ['UTF', '8'].join('-') }],
+      name: 'EditorEncoding',
+      tooltip: 'Select Encoding',
+    }),
+    expect.objectContaining({
+      ariaLabel: 'End of Line: LF',
+      elements: [{ type: 'text', value: 'LF' }],
+      name: 'EditorEndOfLine',
+      tooltip: 'Select End of Line Sequence',
+    }),
+    expect.objectContaining({
+      ariaLabel: 'Language: javascript',
+      elements: [{ type: 'text', value: 'javascript' }],
+      name: 'EditorLanguage',
+      tooltip: 'Select Language Mode',
+    }),
   ])
 })
 
@@ -33,6 +58,7 @@ test('shows tab indentation', () => {
   })
 
   expect(result[1].elements).toEqual([{ type: 'text', value: 'Tab Size: 4' }])
+  expect(result[1].ariaLabel).toBe('Tab Size: 4')
   expect(result[3].elements).toEqual([{ type: 'text', value: 'CRLF' }])
 })
 
@@ -49,6 +75,7 @@ test('shows selected character count in the position item', () => {
   })
 
   expect(result[0].elements).toEqual([{ type: 'text', value: 'Ln 1, Col 1 (12 selected)' }])
+  expect(result[0].ariaLabel).toBe('Line 1, Column 1, 12 selected')
 })
 
 test('returns no items without an active editor', () => {

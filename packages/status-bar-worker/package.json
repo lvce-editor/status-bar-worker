@@ -52,5 +52,8 @@
     "@lvce-editor/virtual-dom-worker": "^11.13.2",
     "jest": "^30.4.2",
     "ts-jest": "^29.4.12"
+  },
+  "dependencies": {
+    "@lvce-editor/i18n": "^2.10.0"
   }
 }
