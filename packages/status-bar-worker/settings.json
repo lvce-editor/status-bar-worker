@@ -5,7 +5,7 @@
     "heading": "Show Status Bar Items",
     "id": "statusBar.itemsVisible",
     "type": "boolean",
-    "value": "true"
+    "value": true
   },
   {
     "category": "workbench",
@@ -13,7 +13,7 @@
     "heading": "Show Notifications Status",
     "id": "statusBar.builtinNotificationsEnabled",
     "type": "boolean",
-    "value": "true"
+    "value": true
   },
   {
     "category": "workbench",
@@ -21,6 +21,6 @@
     "heading": "Show Problems Status",
     "id": "statusBar.builtinProblemsEnabled",
     "type": "boolean",
-    "value": "true"
+    "value": true
   }
 ]
