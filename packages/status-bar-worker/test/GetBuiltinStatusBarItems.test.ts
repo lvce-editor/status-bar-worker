@@ -23,6 +23,11 @@ test('getNotificationsStatusBarItem should return empty array when disabled', ()
   expect(result).toEqual([])
 })
 
+test('getNotificationsStatusBarItem should localize singular and plural count labels', () => {
+  expect(GetNotificationsStatusBarItem.getNotificationsStatusBarItem(true, 1)[0].ariaLabel).toBe('1 Notification')
+  expect(GetNotificationsStatusBarItem.getNotificationsStatusBarItem(true, 2)[0].ariaLabel).toBe('2 Notifications')
+})
+
 test('getProblemsStatusBarItem should return the problems item', () => {
   const result = GetProblemsStatusBarItem.getProblemsStatusBarItem(1, 2, true)
 
@@ -46,6 +51,10 @@ test('getProblemsStatusBarItem should return empty array when disabled', () => {
   const result = GetProblemsStatusBarItem.getProblemsStatusBarItem(1, 2, false)
 
   expect(result).toEqual([])
+})
+
+test('getProblemsStatusBarItem should localize its tooltip', () => {
+  expect(GetProblemsStatusBarItem.getProblemsStatusBarItem(0, 0, true)[0].tooltip).toBe('Problems')
 })
 
 test('getBuiltinStatusBarItems should return all builtin items by default', async () => {

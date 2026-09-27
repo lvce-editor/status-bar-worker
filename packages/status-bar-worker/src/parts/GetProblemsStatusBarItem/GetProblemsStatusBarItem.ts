@@ -2,6 +2,7 @@ import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
 import { getProblemsAriaLabel } from '../GetProblemsAriaLabel/GetProblemsAriaLabel.ts'
 import * as InputName from '../InputName/InputName.ts'
+import * as StatusBarStrings from '../StatusBarStrings/StatusBarStrings.ts'
 
 export const getProblemsStatusBarItem = (errorCount: number, warningCount: number, enabled: boolean): readonly StatusBarItem[] => {
   if (!enabled) {
@@ -18,7 +19,7 @@ export const getProblemsStatusBarItem = (errorCount: number, warningCount: numbe
         { type: 'text', value: String(warningCount) },
       ],
       name: InputName.Problems,
-      tooltip: 'Problems',
+      tooltip: StatusBarStrings.problemsTooltip(),
     },
   ]
 }
