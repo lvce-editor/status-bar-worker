@@ -1,15 +1,16 @@
 import { expect, test } from '@jest/globals'
-import { ExtensionManagementWorker, RendererWorker } from '@lvce-editor/rpc-registry'
+import { ExtensionManagementWorker } from '@lvce-editor/rpc-registry'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as HandleContextMenu from '../src/parts/HandleContextMenu/HandleContextMenu.ts'
 import * as MenuEntryId from '../src/parts/MenuEntryId/MenuEntryId.ts'
+import * as MenuWorker from '../src/parts/MenuWorker/MenuWorker.ts'
 
 test('handleContextMenu should show status bar context menu', async () => {
   using extensionManagementRpc = ExtensionManagementWorker.registerMockRpc({
     'Extensions.getStatusBarItemContextMenuItems': async () => [],
   })
-  using mockRpc = RendererWorker.registerMockRpc({
-    'ContextMenu.show2': async () => {},
+  using mockRpc = MenuWorker.registerMockRpc({
+    'Menu.show2': async () => {},
   })
   const state = {
     ...createDefaultState(),
@@ -20,7 +21,7 @@ test('handleContextMenu should show status bar context menu', async () => {
   expect(extensionManagementRpc.invocations).toEqual([])
   expect(mockRpc.invocations).toEqual([
     [
-      'ContextMenu.show2',
+      'Menu.show2',
       1,
       MenuEntryId.StatusBar,
       100,
@@ -41,8 +42,8 @@ test('handleContextMenu queries the clicked item provider', async () => {
       return [{ command: 'git.checkout', id: 'switch-main', label: 'Switch to main branch' }]
     },
   })
-  using rendererRpc = RendererWorker.registerMockRpc({
-    'ContextMenu.show2': async () => {},
+  using menuWorkerRpc = MenuWorker.registerMockRpc({
+    'Menu.show2': async () => {},
   })
   const state = {
     ...createDefaultState(),
@@ -62,7 +63,7 @@ test('handleContextMenu queries the clicked item provider', async () => {
   await HandleContextMenu.handleContextMenu(state, 2, 100, 200, 'git.showBranchPicker')
 
   expect(extensionManagementRpc.invocations).toEqual([['Extensions.getStatusBarItemContextMenuItems', 'extension.git', 'git.checkout']])
-  expect(rendererRpc.invocations[0]?.[5]).toEqual({
+  expect(menuWorkerRpc.invocations[0]?.[5]).toEqual({
     contextMenuItems: [{ command: 'git.checkout', id: 'switch-main', label: 'Switch to main branch' }],
     menuId: MenuEntryId.StatusBar,
   })
