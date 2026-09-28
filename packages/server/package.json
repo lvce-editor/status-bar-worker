@@ -11,6 +11,6 @@
   "license": "MIT",
   "dependencies": {
     "@lvce-editor/server": "0.118.3",
-    "@lvce-editor/test-worker": "^17.25.0"
+    "@lvce-editor/test-worker": "^17.26.7"
   }
 }
