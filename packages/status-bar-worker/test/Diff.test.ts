@@ -76,6 +76,12 @@ test('diff should return RenderIncremental when right items differ', () => {
   expect(result).toEqual([DiffType.RenderIncremental])
 })
 
+test('diff should return RenderIncremental when the available width changes', () => {
+  const oldState = { ...createDefaultState(), width: 100 }
+  const newState = { ...oldState, width: 101 }
+  expect(Diff.diff(oldState, newState)).toEqual([DiffType.RenderIncremental])
+})
+
 test('diff should return RenderIncremental when both left and right items differ', () => {
   const item1: StatusBarItem = {
     ariaLabel: 'Test',

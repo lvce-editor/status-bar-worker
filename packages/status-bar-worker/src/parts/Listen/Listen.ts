@@ -2,9 +2,10 @@ import * as CommandMap from '../CommandMap/CommandMap.ts'
 import { initializeMenuWorker } from '../InitializeMenuWorker/InitializeMenuWorker.ts'
 import { initializeQuickPickWorker } from '../InitializeQuickPickWorker/InitializeQuickPickWorker.ts'
 import { initializeRenderWorker } from '../InitializeRenderWorker/InitializeRenderWorker.ts'
+import { initializeTextMeasurementWorkerRpc } from '../InitializeTextMeasurementWorker/InitializeTextMeasurementWorker.ts'
 import { registerCommands } from '../StatusBarStates/StatusBarStates.ts'
 
 export const listen = async (): Promise<void> => {
   registerCommands(CommandMap.commandMap)
-  await Promise.all([initializeRenderWorker(), initializeQuickPickWorker(), initializeMenuWorker()])
+  await Promise.all([initializeRenderWorker(), initializeQuickPickWorker(), initializeMenuWorker(), initializeTextMeasurementWorkerRpc()])
 }

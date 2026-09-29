@@ -10,7 +10,10 @@ export const create = (uid: number, uri: string, x: number, y: number, width: nu
     statusBarItemsLeft: [],
     statusBarItemsRight: [],
     uid,
+    visibleStatusBarItemsLeft: [],
+    visibleStatusBarItemsRight: [],
     warningCount: 0,
+    width,
   }
   set(uid, state, state)
 }

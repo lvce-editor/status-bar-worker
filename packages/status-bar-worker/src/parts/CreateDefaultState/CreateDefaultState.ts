@@ -9,6 +9,9 @@ export const createDefaultState = (): StatusBarState => {
     statusBarItemsLeft: [],
     statusBarItemsRight: [],
     uid: 0,
+    visibleStatusBarItemsLeft: [],
+    visibleStatusBarItemsRight: [],
     warningCount: 0,
+    width: 1024,
   }
 }

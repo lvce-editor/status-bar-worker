@@ -11,5 +11,8 @@ export interface StatusBarState {
   readonly statusBarItemsLeft: readonly StatusBarItem[]
   readonly statusBarItemsRight: readonly StatusBarItem[]
   readonly uid: number
+  readonly visibleStatusBarItemsLeft: readonly StatusBarItem[]
+  readonly visibleStatusBarItemsRight: readonly StatusBarItem[]
   readonly warningCount: number
+  readonly width: number
 }

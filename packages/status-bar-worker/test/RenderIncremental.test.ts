@@ -16,10 +16,26 @@ test('renderIncremental fully renders changed status bar item text', () => {
       },
     ],
     uid: 1,
+    visibleStatusBarItemsLeft: [
+      {
+        ariaLabel: 'main',
+        elements: [{ type: 'text' as const, value: 'main' }],
+        name: 'git.showBranchPicker',
+        tooltip: '',
+      },
+    ],
   }
   const newState = {
     ...oldState,
     statusBarItemsLeft: [
+      {
+        ariaLabel: 'feature',
+        elements: [{ type: 'text' as const, value: 'feature' }],
+        name: 'git.showBranchPicker',
+        tooltip: '',
+      },
+    ],
+    visibleStatusBarItemsLeft: [
       {
         ariaLabel: 'feature',
         elements: [{ type: 'text' as const, value: 'feature' }],

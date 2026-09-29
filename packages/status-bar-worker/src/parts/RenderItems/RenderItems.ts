@@ -3,7 +3,7 @@ import type { StatusBarState } from '../StatusBarState/StatusBarState.ts'
 import { getStatusBarVirtualDom } from '../GetStatusBarVirtualDom/GetStatusBarVirtualDom.ts'
 
 export const renderItems = (oldState: StatusBarState, newState: StatusBarState): any => {
-  const { statusBarItemsLeft, statusBarItemsRight, uid } = newState
-  const dom = getStatusBarVirtualDom(statusBarItemsLeft, statusBarItemsRight)
+  const { uid, visibleStatusBarItemsLeft, visibleStatusBarItemsRight } = newState
+  const dom = getStatusBarVirtualDom(visibleStatusBarItemsLeft, visibleStatusBarItemsRight)
   return [ViewletCommand.SetDom2, uid, dom]
 }
