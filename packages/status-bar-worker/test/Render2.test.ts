@@ -6,13 +6,13 @@ import * as Render2 from '../src/parts/Render2/Render2.ts'
 import * as RendererProcess from '../src/parts/RendererProcess/RendererProcess.ts'
 import * as StatusBarStates from '../src/parts/StatusBarStates/StatusBarStates.ts'
 
-test('render2 returns renderer commands when no direct renderer is connected', () => {
+test('render2 returns renderer commands when no direct renderer is connected', async () => {
   const uid = 1
   const oldState = createDefaultState()
   const newState = { ...oldState, initial: false, uid }
   StatusBarStates.set(uid, oldState, newState)
 
-  const result = Render2.render2(uid, [DiffType.RenderItems]) as readonly unknown[][]
+  const result = await Render2.render2(uid, [DiffType.RenderItems])
   expect(result[0][0]).toBe('Viewlet.setDom2')
   expect(result[0][1]).toBe(uid)
 })
