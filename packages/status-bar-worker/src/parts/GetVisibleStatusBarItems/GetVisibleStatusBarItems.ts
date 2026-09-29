@@ -1,6 +1,5 @@
 import { TextMeasurementWorker } from '@lvce-editor/rpc-registry'
 import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
-import type { StatusBarItemElement } from '../StatusBarItemElement/StatusBarItemElement.ts'
 import type { StatusBarState } from '../StatusBarState/StatusBarState.ts'
 
 const fontSize = 12
@@ -12,36 +11,35 @@ const horizontalGroupPadding = 14
 const measuredWidths = new WeakMap<StatusBarItem, Promise<number>>()
 const fallbackTextWidth = 150
 
-const measureText = async (value: string): Promise<number> => {
+const measureTextWidths = async (values: readonly string[]): Promise<readonly number[]> => {
+  if (values.length === 0) {
+    return []
+  }
   try {
-    return await TextMeasurementWorker.invoke('TextMeasurement.measureTextWidth', value, 400, fontSize, fontFamily, 0, false, 0)
+    return await TextMeasurementWorker.measureTextWidths(values, 400, fontSize, fontFamily, 0, false, 0)
   } catch {
-    return fallbackTextWidth
+    return values.map(() => fallbackTextWidth)
   }
-}
-
-const measureElement = async (element: StatusBarItemElement): Promise<number> => {
-  if (element.type === 'icon') {
-    return iconWidth
-  }
-  return measureText(element.value)
-}
-
-const measureItem = (item: StatusBarItem): Promise<number> => {
-  const existing = measuredWidths.get(item)
-  if (existing) {
-    return existing
-  }
-  const measurement = (async (): Promise<number> => {
-    const widths = await Promise.all(item.elements.map(measureElement))
-    return itemPaddingAndMargin + widths.reduce((sum, width) => sum + width, 0)
-  })()
-  measuredWidths.set(item, measurement)
-  return measurement
 }
 
 const getItemWidths = async (items: readonly StatusBarItem[]): Promise<readonly number[]> => {
-  return Promise.all(items.map(measureItem))
+  const unmeasuredItems = [...new Set(items.filter((item) => !measuredWidths.has(item)))]
+  const textElements = unmeasuredItems.flatMap((item) => item.elements.filter((element) => element.type === 'text'))
+  const textWidths = await measureTextWidths(textElements.map((element) => element.value))
+  let textIndex = 0
+  for (const item of unmeasuredItems) {
+    let itemWidth = itemPaddingAndMargin
+    for (const element of item.elements) {
+      if (element.type === 'icon') {
+        itemWidth += iconWidth
+      } else {
+        itemWidth += textWidths[textIndex]
+        textIndex++
+      }
+    }
+    measuredWidths.set(item, Promise.resolve(itemWidth))
+  }
+  return Promise.all(items.map((item) => measuredWidths.get(item)!))
 }
 
 const fitItems = (
@@ -68,7 +66,9 @@ const equalItems = (left: readonly StatusBarItem[], right: readonly StatusBarIte
 export const getVisibleStatusBarItems = async (state: StatusBarState): Promise<StatusBarState> => {
   const { statusBarItemsLeft, statusBarItemsRight, visibleStatusBarItemsLeft, visibleStatusBarItemsRight, width } = state
   const innerWidth = Math.max(0, width - horizontalGroupPadding)
-  const [leftWidths, rightWidths] = await Promise.all([getItemWidths(statusBarItemsLeft), getItemWidths(statusBarItemsRight)])
+  const itemWidths = await getItemWidths([...statusBarItemsLeft, ...statusBarItemsRight])
+  const leftWidths = itemWidths.slice(0, statusBarItemsLeft.length)
+  const rightWidths = itemWidths.slice(statusBarItemsLeft.length)
   const right = fitItems(statusBarItemsRight, rightWidths, innerWidth)
   const left = fitItems(statusBarItemsLeft, leftWidths, innerWidth - right.usedWidth)
   return {

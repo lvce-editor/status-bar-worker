@@ -16,7 +16,7 @@ const setTextMeasurement = (): void => {
   TextMeasurementWorker.set(
     createMockRpc({
       commandMap: {
-        'TextMeasurement.measureTextWidth': async (text: string) => text.length * 10,
+        'TextMeasurement.measureTextWidths': async (texts: readonly string[]) => texts.map((text) => text.length * 10),
       },
     }),
   )
