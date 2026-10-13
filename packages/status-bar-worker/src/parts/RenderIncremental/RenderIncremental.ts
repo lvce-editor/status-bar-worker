@@ -10,13 +10,19 @@ export const renderIncremental = (oldState: StatusBarState, newState: StatusBarS
   }
   const oldDom = getStatusBarVirtualDom(oldState.visibleStatusBarItemsLeft, oldState.visibleStatusBarItemsRight)
   const newDom = getStatusBarVirtualDom(newState.visibleStatusBarItemsLeft, newState.visibleStatusBarItemsRight)
-  const patches = diffTree(oldDom, newDom)
-  // The renderer treats a solitary Add as a legacy complete initial tree.
-  // A tree diff can instead append the right group; send a full tree for
-  // this ambiguous encoding so the status-bar root is preserved.
-  if (patches.length === 1 && patches[0].type === 6) {
+  // Structural and visibility changes can replace or reorder item groups.
+  // Keep their full-render fallback, including the renderer's ambiguous
+  // solitary Add encoding. Only patch a stable tree of the same items.
+  if (
+    oldDom.length !== newDom.length ||
+    oldDom.some((node, index) => {
+      const other = newDom[index]
+      return node.type !== other.type || node.childCount !== other.childCount || node.className !== other.className || node.name !== other.name
+    })
+  ) {
     return renderItems(oldState, newState)
   }
+  const patches = diffTree(oldDom, newDom)
   if (patches.length === 0) {
     return []
   }

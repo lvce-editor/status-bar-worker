@@ -77,3 +77,38 @@ test('renderIncremental fully renders a newly appended right group instead of se
   expect(result[0]).toBe(ViewletCommand.SetDom2)
   expect(result[2][0]).toEqual(expect.objectContaining({ className: 'StatusBar' }))
 })
+
+test.each([
+  { nextElements: [{ type: 'icon' as const, value: 'other' }], nextName: 'item', oldElements: [{ type: 'icon' as const, value: 'old' }] },
+  { nextElements: [{ type: 'icon' as const, value: 'old' }], nextName: 'other-item', oldElements: [{ type: 'icon' as const, value: 'old' }] },
+  {
+    nextElements: [
+      { type: 'icon' as const, value: 'icon' },
+      { type: 'text' as const, value: 'text' },
+    ],
+    nextName: 'item',
+    oldElements: [
+      { type: 'text' as const, value: 'text' },
+      { type: 'icon' as const, value: 'icon' },
+    ],
+  },
+  {
+    nextElements: [
+      { type: 'icon' as const, value: 'one' },
+      { type: 'icon' as const, value: 'two' },
+    ],
+    nextName: 'item',
+    oldElements: [{ type: 'text' as const, value: 'text' }],
+  },
+])('renderIncremental fully renders structural or item identity changes %#', ({ nextElements, nextName, oldElements }) => {
+  const oldState = {
+    ...createDefaultState(),
+    initial: false,
+    visibleStatusBarItemsRight: [{ ariaLabel: '', elements: oldElements, name: 'item', tooltip: '' }],
+  }
+  const newState = {
+    ...oldState,
+    visibleStatusBarItemsRight: [{ ariaLabel: '', elements: nextElements, name: nextName, tooltip: '' }],
+  }
+  expect(renderIncremental(oldState, newState)[0]).toBe(ViewletCommand.SetDom2)
+})
