@@ -1,6 +1,7 @@
 import { ViewletCommand } from '@lvce-editor/constants'
 import * as ApplyRender from '../ApplyRender/ApplyRender.ts'
 import * as Diff from '../Diff/Diff.ts'
+import * as DiffType from '../DiffType/DiffType.ts'
 import * as GetVisibleStatusBarItems from '../GetVisibleStatusBarItems/GetVisibleStatusBarItems.ts'
 import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
 import * as SourceControlStates from '../StatusBarStates/StatusBarStates.ts'
@@ -27,9 +28,15 @@ export const render2 = async (uid: number, _diffResult: readonly number[]): Prom
     }
     newState = latestState
   }
-  const diffResult = [...new Set([..._diffResult, ...Diff.diff(current.oldState, newState)])]
+  const changed = [...new Set([..._diffResult, ...Diff.diff(current.oldState, newState)])]
+  // A full replacement already includes every change; do not patch its new tree
+  // using paths calculated against the old tree.
+  const diffResult = changed.includes(DiffType.RenderItems) ? changed.filter((type) => type !== DiffType.RenderIncremental) : changed
   const { oldState } = current
   const commands = ApplyRender.applyRender(oldState, newState, diffResult)
+  // Advance synchronously: subsequent out-of-band updates must diff against
+  // the DOM commands just generated, including updates that revert a value.
+  SourceControlStates.set(uid, newState, newState)
   if (!RendererProcess.isConnected()) {
     return commands
   }

@@ -19,6 +19,12 @@ export const test: Test = async ({ Editor, expect, FileSystem, Locator, Main, Wo
   await Editor.setSelections(new Uint32Array([1, 6, 1, 6]))
   await expect(position).toHaveText('Ln 2, Col 7')
 
+  // Cursor updates can return to an earlier value after out-of-band rendering.
+  await Editor.setSelections(new Uint32Array([0, 0, 0, 0]))
+  await expect(position).toHaveText('Ln 1, Col 1')
+  await Editor.setSelections(new Uint32Array([1, 6, 1, 6]))
+  await expect(position).toHaveText('Ln 2, Col 7')
+
   await Main.closeAllEditors()
   await expect(position).toHaveCount(0)
 }
