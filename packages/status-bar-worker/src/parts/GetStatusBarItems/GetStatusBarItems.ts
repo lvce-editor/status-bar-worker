@@ -15,6 +15,7 @@ const getNotificationCount = async (): Promise<number> => {
 }
 
 export const getStatusBarItems = async ({
+  applicationId,
   assetDir,
   builtinNotificationsEnabled = true,
   builtinProblemsEnabled = true,
@@ -27,7 +28,7 @@ export const getStatusBarItems = async ({
   if (!showItems) {
     return []
   }
-  const extensionStatusBarItems = await getExtensionStatusBarItems(assetDir, platform)
+  const extensionStatusBarItems = await getExtensionStatusBarItems(assetDir, platform, applicationId)
   const notificationCount = await getNotificationCount()
   const uiStatusBarItems = ToUiStatusBarItems.toUiStatusBarItems(extensionStatusBarItems)
   const extraItems = await getBuiltinStatusBarItems(errorCount, warningCount, {

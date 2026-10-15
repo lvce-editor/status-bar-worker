@@ -10,7 +10,7 @@ export const handleClick = async (state: StatusBarState, name: string): Promise<
   if (!name) {
     return state
   }
-  const { editorStatus, statusBarItemsLeft, statusBarItemsRight } = state
+  const { applicationId, editorStatus, statusBarItemsLeft, statusBarItemsRight } = state
 
   const item = getMatchingItem(statusBarItemsLeft, statusBarItemsRight, name)
   if (!item) {
@@ -23,7 +23,7 @@ export const handleClick = async (state: StatusBarState, name: string): Promise<
   } else if (InputName.isEditorStatus(item.name)) {
     await handleClickEditorStatus(item.name, editorStatus)
   } else if (item.command && !InputName.isEditorStatus(item.name)) {
-    await handleClickExtensionStatusBarItem(item.command)
+    await handleClickExtensionStatusBarItem(item.command, applicationId)
   }
   // TODO
   // sendExtensionWorker([/* statusBarItemHandleClick */ 7657, /* name */ name])

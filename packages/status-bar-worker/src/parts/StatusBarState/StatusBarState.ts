@@ -2,6 +2,7 @@ import type { EditorStatus } from '../EditorStatus/EditorStatus.ts'
 import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
 
 export interface StatusBarState {
+  readonly applicationId?: string
   readonly assetDir: string
   readonly disposed?: boolean
   readonly editorStatus?: EditorStatus

@@ -1,6 +1,6 @@
-import { ExtensionManagementWorker } from '@lvce-editor/rpc-registry'
+import { invokeExtensionCommand } from '../InvokeExtensionCommand/InvokeExtensionCommand.ts'
 
-export const getExtensionStatusBarItems = async (assetDir: string, platform: number): Promise<readonly any[]> => {
-  await ExtensionManagementWorker.invoke('Extensions.activateByEvent', 'onStatusBarItem', assetDir, platform)
-  return ExtensionManagementWorker.invoke('Extensions.getStatusBarItems')
+export const getExtensionStatusBarItems = async (assetDir: string, platform: number, applicationId?: string): Promise<readonly any[]> => {
+  await invokeExtensionCommand(applicationId, 'Extensions.activateByEvent', 'onStatusBarItem', assetDir, platform)
+  return invokeExtensionCommand(applicationId, 'Extensions.getStatusBarItems')
 }
