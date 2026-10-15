@@ -21,3 +21,11 @@ test('handleClickExtensionStatusBarItem should pass command name to RPC', async 
 
   expect(mockRpc.invocations).toEqual([['Extensions.executeCommand', 'my-custom-command']])
 })
+
+test('clicking an application item executes its command in that application', async () => {
+  using rpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.invokeForApplication': async () => {},
+  })
+  await HandleClickExtensionStatusBarItem.handleClickExtensionStatusBarItem('sample.selectEnvironment', 'preview')
+  expect(rpc.invocations).toEqual([['Extensions.invokeForApplication', 'preview', 'Extensions.executeCommand', 'sample.selectEnvironment']])
+})

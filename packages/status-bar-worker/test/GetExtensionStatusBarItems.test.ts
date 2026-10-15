@@ -16,3 +16,18 @@ test('getExtensionStatusBarItems activates isolated providers and gets their ite
   ])
   expect(result).toEqual([{ id: 'test', text: 'Test' }])
 })
+
+test('provider activation and lookup stay within each owning application', async () => {
+  using rpc = ExtensionManagementWorker.registerMockRpc({
+    'Extensions.invokeForApplication': async (applicationId: string, method: string) =>
+      method === 'Extensions.getStatusBarItems' ? [{ text: applicationId }] : undefined,
+  })
+  expect(await getExtensionStatusBarItems('/test', 1, 'preview')).toEqual([{ text: 'preview' }])
+  expect(await getExtensionStatusBarItems('/test', 1, 'source')).toEqual([{ text: 'source' }])
+  expect(rpc.invocations).toEqual([
+    ['Extensions.invokeForApplication', 'preview', 'Extensions.activateByEvent', 'onStatusBarItem', '/test', 1],
+    ['Extensions.invokeForApplication', 'preview', 'Extensions.getStatusBarItems'],
+    ['Extensions.invokeForApplication', 'source', 'Extensions.activateByEvent', 'onStatusBarItem', '/test', 1],
+    ['Extensions.invokeForApplication', 'source', 'Extensions.getStatusBarItems'],
+  ])
+})

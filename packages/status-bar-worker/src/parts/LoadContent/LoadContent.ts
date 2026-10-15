@@ -10,10 +10,11 @@ import * as NotificationCount from '../NotificationCount/NotificationCount.ts'
 import * as StatusBarPreferences from '../StatusBarPreferences/StatusBarPreferences.ts'
 
 export const loadContent = async (state: StatusBarState): Promise<StatusBarState> => {
-  const { assetDir, errorCount, platform, warningCount } = state
+  const { applicationId, assetDir, errorCount, platform, warningCount } = state
   const editorStatus = EditorStatusState.get()
   const { builtinNotificationsEnabled, builtinProblemsEnabled, itemsVisible } = await StatusBarPreferences.loadStatusBarPreferences()
   const statusBarItems = await GetStatusBarItems.getStatusBarItems({
+    applicationId,
     assetDir,
     builtinNotificationsEnabled: builtinNotificationsEnabled,
     builtinProblemsEnabled: builtinProblemsEnabled,
