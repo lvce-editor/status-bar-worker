@@ -5,6 +5,7 @@ import { root } from './root.ts'
 
 const locations = [
   'package-lock.json',
+  '.nvmrc',
   '.github/workflows/pr.yml',
   '.github/workflows/ci.yml',
   '.github/workflows/release.yml',
