@@ -1,6 +1,6 @@
 export const testManyStatusBarItems = async ({ Command, Extension, expect, Locator, Settings }, count) => {
   const extensionId = `sample.extension-many-status-bar-items-${count}`
-  const extensionUri = new URL(`../${extensionId}/`, import.meta.url).toString()
+  const extensionUri = new URL(`../extensions/${extensionId}/`, import.meta.url).toString()
 
   try {
     await Settings.update({

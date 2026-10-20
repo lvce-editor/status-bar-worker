@@ -26,6 +26,7 @@ for (const name of await readdir(join(here, 'src'))) {
     },
   })
   await writeFile(join(tests, 'src', name.replace(/\.ts$/, '.js')), outputText)
+  await rm(join(tests, 'src', name))
 }
 try {
   await cp(join(here, 'fixtures'), join(tests, 'fixtures'), { recursive: true })
