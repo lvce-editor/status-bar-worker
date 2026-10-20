@@ -14,6 +14,9 @@ export const getStatusBarVirtualDom = (
 ): readonly VirtualDomNode[] => {
   const dom: VirtualDomNode[] = [
     {
+      ariaLive: 'off',
+      ariaRoleDescription: 'Status Bar',
+      tabIndex: 0,
       childCount: getChildCount(statusBarItemsRight.length),
       className: 'StatusBar',
       onClick: DomEventListenerFunctions.HandleClick,
