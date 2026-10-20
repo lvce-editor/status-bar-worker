@@ -3,6 +3,7 @@ import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as GetStatusBarItemsLeftDom from '../GetStatusBarItemsLeftDom/GetStatusBarItemsLeftDom.ts'
 import * as GetStatusBarItemsRightDom from '../GetStatusBarItemsRightDom/GetStatusBarItemsRightDom.ts'
+import * as TabIndex from '../TabIndex/TabIndex.ts'
 
 const getChildCount = (rightCount: number): number => {
   return rightCount > 0 ? 2 : 1
@@ -14,11 +15,14 @@ export const getStatusBarVirtualDom = (
 ): readonly VirtualDomNode[] => {
   const dom: VirtualDomNode[] = [
     {
+      ariaLive: 'off',
+      ariaRoleDescription: 'Status Bar',
       childCount: getChildCount(statusBarItemsRight.length),
       className: 'StatusBar',
       onClick: DomEventListenerFunctions.HandleClick,
       onContextMenu: DomEventListenerFunctions.HandleContextMenu,
       role: AriaRoles.Status,
+      tabIndex: TabIndex.Focusable,
       type: VirtualDomElements.Div,
     },
     ...GetStatusBarItemsLeftDom.getStatusBarItemsLeftDom(statusBarItemsLeft),

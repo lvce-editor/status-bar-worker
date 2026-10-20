@@ -144,3 +144,13 @@ test('getStatusBarVirtualDom should handle multiple items in right array', () =>
   expect(rightDiv).toBeDefined()
   expect(rightDiv?.childCount).toBe(2)
 })
+
+test('status bar root preserves keyboard focus and accessibility semantics', () => {
+  const [root] = GetStatusBarVirtualDom.getStatusBarVirtualDom([], [])
+  expect(root).toMatchObject({
+    ariaLive: 'off',
+    ariaRoleDescription: 'Status Bar',
+    role: 'status',
+    tabIndex: 0,
+  })
+})
