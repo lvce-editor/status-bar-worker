@@ -67,6 +67,25 @@ test('accounts for icons, item spacing, and both groups sharing the available wi
   expect(result.visibleStatusBarItemsLeft).toEqual([])
 })
 
+test('keeps an update progress item visible when measuring mixed status bar elements', async () => {
+  setTextMeasurement()
+  const item: StatusBarItem = {
+    ariaLabel: 'Update download progress 90%',
+    elements: [
+      { type: 'text', value: 'Update' },
+      { ariaLabel: 'Update download progress', max: 1, type: 'progress', value: 0.9 },
+    ],
+    name: 'update-progress',
+    tooltip: 'Update download progress 90%',
+  }
+  const result = await GetVisibleStatusBarItems.getVisibleStatusBarItems({
+    ...createDefaultState(),
+    statusBarItemsLeft: [item],
+    width: 200,
+  })
+  expect(result.visibleStatusBarItemsLeft).toEqual([item])
+})
+
 test('restores hidden items after expansion and uses updated text widths', async () => {
   setTextMeasurement()
   const firstItem = createItem('first', 'a')
