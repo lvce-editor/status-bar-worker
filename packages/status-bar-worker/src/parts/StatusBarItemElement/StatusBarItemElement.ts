@@ -14,4 +14,11 @@ export interface StatusBarItemIcon extends StatusBarItemBase {
   readonly value: string
 }
 
-export type StatusBarItemElement = StatusBarItemText | StatusBarItemIcon
+export interface StatusBarItemProgress extends StatusBarItemBase {
+  readonly ariaLabel: string
+  readonly max: number
+  readonly type: 'progress'
+  readonly value?: number
+}
+
+export type StatusBarItemElement = StatusBarItemText | StatusBarItemIcon | StatusBarItemProgress

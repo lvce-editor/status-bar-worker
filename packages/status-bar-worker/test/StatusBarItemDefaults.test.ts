@@ -7,6 +7,7 @@ import { getStatusBarItems } from '../src/parts/GetStatusBarItems/GetStatusBarIt
 import { handleClickEditorStatus } from '../src/parts/HandleClickEditorStatus/HandleClickEditorStatus.ts'
 import { handleNotificationCountChanged } from '../src/parts/HandleNotificationCountChanged/HandleNotificationCountChanged.ts'
 import { handleProblemsSummaryChange } from '../src/parts/HandleProblemsSummaryChange/HandleProblemsSummaryChange.ts'
+import { handleUpdateProgress } from '../src/parts/HandleUpdateProgress/HandleUpdateProgress.ts'
 import { toUiStatusBarItem } from '../src/parts/ToUiStatusBarItem/ToUiStatusBarItem.ts'
 
 test('extension items use the legacy name or an empty name when no id is provided', () => {
@@ -71,4 +72,36 @@ test('spinning extension icons retain their animation class and target name', ()
   const [node] = getStatusBarItemElementVirtualDom({ spinning: true, type: 'icon', value: 'LoadingIcon' }, 'extension')
   expect(node.name).toBe('extension')
   expect(node.className).toBe('MaskIcon StatusBarIcon LoadingIcon Spinning')
+})
+
+test('renders determinate status bar progress with native progress semantics', () => {
+  expect(
+    getStatusBarItemElementVirtualDom({ ariaLabel: 'Update download progress', max: 1, type: 'progress', value: 0.9 }, 'update-progress'),
+  ).toEqual([
+    {
+      ariaLabel: 'Update download progress',
+      className: 'StatusBarItemProgress',
+      max: 1,
+      name: 'update-progress',
+      type: expect.any(Number),
+      value: 0.9,
+    },
+  ])
+})
+
+test('renders unknown download totals as indeterminate and clears terminal progress', () => {
+  const state = createDefaultState()
+  const indeterminate = handleUpdateProgress(state, undefined)
+  expect(indeterminate.statusBarItemsLeft[0].elements[1]).toEqual({ ariaLabel: 'Update download progress', max: 1, type: 'progress' })
+  expect(handleUpdateProgress(indeterminate, null).statusBarItemsLeft).toEqual([])
+})
+
+test('updates the existing progress item without disturbing other status bar items', () => {
+  const existingItem = { ariaLabel: 'Other item', elements: [{ type: 'text' as const, value: 'Ready' }], name: 'other', tooltip: 'Ready' }
+  const initialState = { ...createDefaultState(), statusBarItemsLeft: [existingItem] }
+  const firstUpdate = handleUpdateProgress(initialState, 0.2)
+  const secondUpdate = handleUpdateProgress(firstUpdate, 1.2)
+  expect(secondUpdate.statusBarItemsLeft).toHaveLength(2)
+  expect(secondUpdate.statusBarItemsLeft[0]).toBe(existingItem)
+  expect(secondUpdate.statusBarItemsLeft[1].elements[1]).toMatchObject({ type: 'progress', value: 1 })
 })
