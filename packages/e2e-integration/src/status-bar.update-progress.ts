@@ -3,6 +3,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 export const name = 'status-bar.update-progress'
 
 export const test: Test = async ({ Command, expect, Locator }) => {
+  await Command.execute('Layout.showStatusBar')
+  await Command.execute('Layout.loadStatusBarIfVisible')
   await Command.execute('StatusBar.handleUpdateProgress', 0.9)
 
   const item = Locator('.StatusBarItem[name="update-progress"]')
