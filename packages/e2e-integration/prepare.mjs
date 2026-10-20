@@ -1,6 +1,7 @@
-import { cp, readdir, readFile, realpath, rm } from 'node:fs/promises'
+import { cp, readdir, readFile, realpath, rm, writeFile } from 'node:fs/promises'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import ts from 'typescript'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const owner = resolve(here, '../..')
@@ -15,6 +16,18 @@ for (const name of await readdir(join(tests, 'src'))) {
   if (name !== '_all.js') await rm(join(tests, 'src', name), { recursive: true })
 }
 await cp(join(here, 'src'), join(tests, 'src'), { recursive: true })
+for (const name of await readdir(join(here, 'src'))) {
+  if (!name.endsWith('.ts')) continue
+  const source = await readFile(join(here, 'src', name), 'utf8')
+  const { outputText } = ts.transpileModule(source, {
+    compilerOptions: {
+      module: ts.ModuleKind.ESNext,
+      target: ts.ScriptTarget.ESNext,
+    },
+  })
+  await writeFile(join(tests, 'src', name.replace(/\.ts$/, '.js')), outputText)
+  await rm(join(tests, 'src', name))
+}
 try {
   await cp(join(here, 'fixtures'), join(tests, 'fixtures'), { recursive: true })
 } catch (error) {

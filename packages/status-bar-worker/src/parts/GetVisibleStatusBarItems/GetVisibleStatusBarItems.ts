@@ -6,6 +6,7 @@ const fontSize = 12
 const fontFamily = 'system-ui, Ubuntu, Droid Sans, sans-serif'
 const itemPaddingAndMargin = 16
 const iconWidth = 20
+const progressWidth = 69
 const horizontalGroupPadding = 14
 
 const measuredWidths = new WeakMap<StatusBarItem, Promise<number>>()
@@ -22,6 +23,17 @@ const measureTextWidths = async (values: readonly string[]): Promise<readonly nu
   }
 }
 
+const getElementWidth = (element: StatusBarItem['elements'][number], textWidths: readonly number[], textIndex: number): number => {
+  switch (element.type) {
+    case 'icon':
+      return iconWidth
+    case 'progress':
+      return progressWidth
+    case 'text':
+      return textWidths[textIndex]
+  }
+}
+
 const getItemWidths = async (items: readonly StatusBarItem[]): Promise<readonly number[]> => {
   const unmeasuredItems = [...new Set(items.filter((item) => !measuredWidths.has(item)))]
   const textElements = unmeasuredItems.flatMap((item) => item.elements.filter((element) => element.type === 'text'))
@@ -30,10 +42,8 @@ const getItemWidths = async (items: readonly StatusBarItem[]): Promise<readonly 
   for (const item of unmeasuredItems) {
     let itemWidth = itemPaddingAndMargin
     for (const element of item.elements) {
-      if (element.type === 'icon') {
-        itemWidth += iconWidth
-      } else {
-        itemWidth += textWidths[textIndex]
+      itemWidth += getElementWidth(element, textWidths, textIndex)
+      if (element.type === 'text') {
         textIndex++
       }
     }
