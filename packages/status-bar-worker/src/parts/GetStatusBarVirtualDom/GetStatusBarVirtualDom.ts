@@ -16,12 +16,12 @@ export const getStatusBarVirtualDom = (
     {
       ariaLive: 'off',
       ariaRoleDescription: 'Status Bar',
-      tabIndex: 0,
       childCount: getChildCount(statusBarItemsRight.length),
       className: 'StatusBar',
       onClick: DomEventListenerFunctions.HandleClick,
       onContextMenu: DomEventListenerFunctions.HandleContextMenu,
       role: AriaRoles.Status,
+      tabIndex: 0,
       type: VirtualDomElements.Div,
     },
     ...GetStatusBarItemsLeftDom.getStatusBarItemsLeftDom(statusBarItemsLeft),
