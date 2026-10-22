@@ -10,7 +10,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@lvce-editor/server": "0.118.3",
-    "@lvce-editor/test-worker": "^17.26.7"
+    "@lvce-editor/server": "0.125.5",
+    "@lvce-editor/test-worker": "^17.30.0"
   }
 }
