@@ -16,6 +16,8 @@ export const test: Test = async ({ Command, expect, Locator }) => {
   })
 
   const item = Locator('.StatusBarItem[name="test.icon-text"]')
-  await expect(item.locator('.TestIcon')).toBeVisible()
-  await expect(item.locator('.StatusBarItemLabel')).toHaveText('Ready')
+  const icon = item.locator('.TestIcon')
+  const label = item.locator('.StatusBarItemLabel')
+  await expect(icon).toBeVisible()
+  await expect(label).toHaveText('Ready')
 }

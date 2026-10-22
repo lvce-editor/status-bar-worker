@@ -6,6 +6,7 @@ export const skip = 1
 
 export const test: Test = async ({ Command, expect, Locator }) => {
   const itemsRight = Locator('.StatusBarItemsRight')
+  const statusBarItems = itemsRight.locator('.StatusBarItem')
   await expect(itemsRight).toHaveCount(0)
 
   await Command.execute('StatusBar.itemRightCreate', 0, {
@@ -16,5 +17,5 @@ export const test: Test = async ({ Command, expect, Locator }) => {
   })
 
   await expect(itemsRight).toBeVisible()
-  await expect(itemsRight.locator('.StatusBarItem')).toHaveCount(1)
+  await expect(statusBarItems).toHaveCount(1)
 }

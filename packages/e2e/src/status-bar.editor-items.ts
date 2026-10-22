@@ -10,8 +10,9 @@ export const test: Test = async ({ Command, Editor, expect, FileSystem, Locator,
   await Command.execute('StatusBar.handleExtensionsChanged')
 
   const itemsLeft = Locator('.StatusBarItemsLeft')
+  const itemsLeftStatusBarItems = itemsLeft.locator('.StatusBarItem')
   await expect(itemsLeft).toBeVisible()
-  await expect(itemsLeft.locator('.StatusBarItem')).toHaveCount(0)
+  await expect(itemsLeftStatusBarItems).toHaveCount(0)
 
   const itemsRight = Locator('.StatusBarItemsRight')
   await expect(itemsRight).toBeVisible()

@@ -13,7 +13,8 @@ export const test: Test = async ({ Command, expect, Locator }) => {
   })
 
   const item = Locator('.StatusBarItem[name="test.empty-text"]')
+  const label = item.locator('.StatusBarItemLabel')
   await expect(item).toBeVisible()
-  await expect(item.locator('.StatusBarItemLabel')).toHaveCount(1)
+  await expect(label).toHaveCount(1)
   await expect(item).toHaveText('')
 }
