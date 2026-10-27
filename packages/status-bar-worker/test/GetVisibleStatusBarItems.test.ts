@@ -1,6 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { createMockRpc } from '@lvce-editor/rpc'
-import { TextMeasurementWorker } from '@lvce-editor/rpc-registry'
+import { CacheWorker, TextMeasurementWorker } from '@lvce-editor/rpc-registry'
 import type { StatusBarItem } from '../src/parts/StatusBarItem/StatusBarItem.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as GetVisibleStatusBarItems from '../src/parts/GetVisibleStatusBarItems/GetVisibleStatusBarItems.ts'
@@ -108,4 +108,90 @@ test('restores hidden items after expansion and uses updated text widths', async
     width: 70,
   })
   expect(updated.visibleStatusBarItemsLeft).toEqual([secondItem])
+})
+
+test('persists measured text widths and uses them for new items on the next render', async () => {
+  const cache = new Map<string, unknown>()
+  let measurementCalls = 0
+  CacheWorker.set(
+    createMockRpc({
+      commandMap: {
+        'Cache.getCacheStorageJsonItem': async (key: string) => (cache.has(key) ? { value: cache.get(key) } : undefined),
+        'Cache.setCacheStorageJsonItem': async (key: string, value: unknown) => {
+          cache.set(key, value)
+        },
+      },
+    }),
+  )
+  TextMeasurementWorker.set(
+    createMockRpc({
+      commandMap: {
+        'TextMeasurement.measureTextWidths': async (texts: readonly string[]) => {
+          measurementCalls++
+          return texts.map((text) => text.length * 10)
+        },
+      },
+    }),
+  )
+  const firstItem = createItem('first', 'cached label')
+  await GetVisibleStatusBarItems.getVisibleStatusBarItems({ ...createDefaultState(), statusBarItemsLeft: [firstItem] })
+  await Promise.resolve()
+  expect(measurementCalls).toBe(1)
+  expect(cache.size).toBe(1)
+
+  const secondItem = createItem('second', 'cached label')
+  await GetVisibleStatusBarItems.getVisibleStatusBarItems({ ...createDefaultState(), statusBarItemsLeft: [secondItem] })
+  expect(measurementCalls).toBe(1)
+})
+
+test('remeasures malformed cached widths and renders when cache reads or writes fail', async () => {
+  let measurementCalls = 0
+  CacheWorker.set(
+    createMockRpc({
+      commandMap: {
+        'Cache.getCacheStorageJsonItem': async () => ({ value: NaN }),
+        'Cache.setCacheStorageJsonItem': async () => {
+          throw new Error('cache unavailable')
+        },
+      },
+    }),
+  )
+  TextMeasurementWorker.set(
+    createMockRpc({
+      commandMap: {
+        'TextMeasurement.measureTextWidths': async (texts: readonly string[]) => {
+          measurementCalls++
+          return texts.map((text) => text.length * 10)
+        },
+      },
+    }),
+  )
+  const item = createItem('item', 'valid label')
+  const result = await GetVisibleStatusBarItems.getVisibleStatusBarItems({
+    ...createDefaultState(),
+    statusBarItemsLeft: [item],
+    width: 200,
+  })
+  expect(result.visibleStatusBarItemsLeft).toEqual([item])
+  expect(measurementCalls).toBe(1)
+
+  CacheWorker.set(
+    createMockRpc({
+      commandMap: {
+        'Cache.getCacheStorageJsonItem': async () => {
+          throw new Error('cache unavailable')
+        },
+        'Cache.setCacheStorageJsonItem': async () => {
+          throw new Error('cache unavailable')
+        },
+      },
+    }),
+  )
+  const secondResult = await GetVisibleStatusBarItems.getVisibleStatusBarItems({
+    ...createDefaultState(),
+    statusBarItemsLeft: [createItem('another-item', 'another label')],
+    width: 200,
+  })
+  expect(secondResult.visibleStatusBarItemsLeft).toHaveLength(1)
+  expect(measurementCalls).toBe(2)
 })

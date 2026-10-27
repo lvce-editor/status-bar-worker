@@ -1,6 +1,7 @@
 import { TextMeasurementWorker } from '@lvce-editor/rpc-registry'
 import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
 import type { StatusBarState } from '../StatusBarState/StatusBarState.ts'
+import * as StatusBarMeasurementCache from '../StatusBarMeasurementCache/StatusBarMeasurementCache.ts'
 
 const fontSize = 12
 const fontFamily = 'system-ui, Ubuntu, Droid Sans, sans-serif'
@@ -16,11 +17,31 @@ const measureTextWidths = async (values: readonly string[]): Promise<readonly nu
   if (values.length === 0) {
     return []
   }
-  try {
-    return await TextMeasurementWorker.measureTextWidths(values, 400, fontSize, fontFamily, 0, false, 0)
-  } catch {
-    return values.map(() => fallbackTextWidth)
+  const cachedWidths = await Promise.all(values.map((value) => StatusBarMeasurementCache.getWidth(value)))
+  const missingValues = values.filter((_, index) => cachedWidths[index] === undefined)
+  if (missingValues.length === 0) {
+    return cachedWidths as number[]
   }
+  let measuredWidths: readonly number[]
+  let measurementSucceeded = true
+  try {
+    measuredWidths = await TextMeasurementWorker.measureTextWidths(missingValues, 400, fontSize, fontFamily, 0, false, 0)
+  } catch {
+    measurementSucceeded = false
+    measuredWidths = missingValues.map(() => fallbackTextWidth)
+  }
+  let measuredIndex = 0
+  const widths = cachedWidths.map((width) => {
+    if (width !== undefined) {
+      return width
+    }
+    const measuredWidth = measuredWidths[measuredIndex++]
+    if (measurementSucceeded) {
+      void StatusBarMeasurementCache.setWidth(missingValues[measuredIndex - 1], measuredWidth)
+    }
+    return measuredWidth
+  })
+  return widths
 }
 
 const getElementWidth = (element: StatusBarItem['elements'][number], textWidths: readonly number[], textIndex: number): number => {
