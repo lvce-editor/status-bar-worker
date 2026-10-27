@@ -17,7 +17,10 @@ const measureTextWidths = async (values: readonly string[]): Promise<readonly nu
   if (values.length === 0) {
     return []
   }
+  const diagnosticStart = performance.now()
+  console.warn('[status-bar-timing] cache-read-start', values.length)
   const cachedWidths = await Promise.all(values.map((value) => StatusBarMeasurementCache.getWidth(value)))
+  console.warn('[status-bar-timing] cache-read-end', values.length, performance.now() - diagnosticStart)
   const missingValues = values.filter((_, index) => cachedWidths[index] === undefined)
   if (missingValues.length === 0) {
     return cachedWidths as number[]
@@ -30,6 +33,7 @@ const measureTextWidths = async (values: readonly string[]): Promise<readonly nu
     measurementSucceeded = false
     measuredWidths = missingValues.map(() => fallbackTextWidth)
   }
+  console.warn('[status-bar-timing] measured', missingValues.length, performance.now() - diagnosticStart)
   let measuredIndex = 0
   const widths = cachedWidths.map((width) => {
     if (width !== undefined) {
@@ -41,6 +45,7 @@ const measureTextWidths = async (values: readonly string[]): Promise<readonly nu
     }
     return measuredWidth
   })
+  console.warn('[status-bar-timing] writes-queued', missingValues.length, performance.now() - diagnosticStart)
   return widths
 }
 
