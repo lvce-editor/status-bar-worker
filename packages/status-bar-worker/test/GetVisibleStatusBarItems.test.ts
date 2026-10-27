@@ -138,6 +138,7 @@ test('persists measured text widths and uses them for new items on the next rend
   await Promise.resolve()
   expect(measurementCalls).toBe(1)
   expect(cache.size).toBe(1)
+  expect(cache.keys().toArray()[0]).toMatch(/^https:\/\/cache\.invalid\/status-bar-measurements\/v1\//)
 
   const secondItem = createItem('second', 'cached label')
   await GetVisibleStatusBarItems.getVisibleStatusBarItems({ ...createDefaultState(), statusBarItemsLeft: [secondItem] })

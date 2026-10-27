@@ -6,7 +6,7 @@ const fontFamily = 'system-ui, Ubuntu, Droid Sans, sans-serif'
 
 const getCacheKey = (text: string): string => {
   const parameters = [text, 400, fontSize, fontFamily, 0, false, 0]
-  return `/status-bar-measurements/v1/${encodeURIComponent(JSON.stringify(parameters))}`
+  return `https://cache.invalid/status-bar-measurements/v1/${encodeURIComponent(JSON.stringify(parameters))}`
 }
 
 const isValidWidth = (value: unknown): value is number => {
