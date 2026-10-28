@@ -1,6 +1,7 @@
 import { TextMeasurementWorker } from '@lvce-editor/rpc-registry'
 import type { StatusBarItem } from '../StatusBarItem/StatusBarItem.ts'
 import type { StatusBarState } from '../StatusBarState/StatusBarState.ts'
+import * as InputName from '../InputName/InputName.ts'
 import * as StatusBarMeasurementCache from '../StatusBarMeasurementCache/StatusBarMeasurementCache.ts'
 
 const fontSize = 12
@@ -13,31 +14,47 @@ const horizontalGroupPadding = 14
 const measuredWidths = new WeakMap<StatusBarItem, Promise<number>>()
 const fallbackTextWidth = 150
 
-const measureTextWidths = async (values: readonly string[]): Promise<readonly number[]> => {
-  if (values.length === 0) {
+interface TextMeasurementRequest {
+  readonly persist: boolean
+  readonly value: string
+}
+
+const measureTextWidths = async (requests: readonly TextMeasurementRequest[]): Promise<readonly number[]> => {
+  if (requests.length === 0) {
     return []
   }
-  const cachedWidths = await Promise.all(values.map((value) => StatusBarMeasurementCache.getWidth(value)))
-  const missingValues = values.filter((_, index) => cachedWidths[index] === undefined)
-  if (missingValues.length === 0) {
+  const cachedWidths = await Promise.all(
+    requests.map(({ persist, value }) => (persist ? StatusBarMeasurementCache.getWidth(value) : Promise.resolve(undefined))),
+  )
+  const missing = requests.filter((_, index) => cachedWidths[index] === undefined)
+  if (missing.length === 0) {
     return cachedWidths as number[]
   }
   let measuredWidths: readonly number[]
   let measurementSucceeded = true
   try {
-    measuredWidths = await TextMeasurementWorker.measureTextWidths(missingValues, 400, fontSize, fontFamily, 0, false, 0)
+    measuredWidths = await TextMeasurementWorker.measureTextWidths(
+      missing.map((request) => request.value),
+      400,
+      fontSize,
+      fontFamily,
+      0,
+      false,
+      0,
+    )
   } catch {
     measurementSucceeded = false
-    measuredWidths = missingValues.map(() => fallbackTextWidth)
+    measuredWidths = missing.map(() => fallbackTextWidth)
   }
   let measuredIndex = 0
   const widths = cachedWidths.map((width) => {
     if (width !== undefined) {
       return width
     }
+    const request = missing[measuredIndex]
     const measuredWidth = measuredWidths[measuredIndex++]
-    if (measurementSucceeded) {
-      void StatusBarMeasurementCache.setWidth(missingValues[measuredIndex - 1], measuredWidth)
+    if (measurementSucceeded && request.persist) {
+      void StatusBarMeasurementCache.setWidth(request.value, measuredWidth)
     }
     return measuredWidth
   })
@@ -57,8 +74,12 @@ const getElementWidth = (element: StatusBarItem['elements'][number], textWidths:
 
 const getItemWidths = async (items: readonly StatusBarItem[]): Promise<readonly number[]> => {
   const unmeasuredItems = [...new Set(items.filter((item) => !measuredWidths.has(item)))]
-  const textElements = unmeasuredItems.flatMap((item) => item.elements.filter((element) => element.type === 'text'))
-  const textWidths = await measureTextWidths(textElements.map((element) => element.value))
+  const textRequests = unmeasuredItems.flatMap((item) =>
+    item.elements
+      .filter((element) => element.type === 'text')
+      .map((element) => ({ persist: item.name !== InputName.EditorPosition, value: element.value })),
+  )
+  const textWidths = await measureTextWidths(textRequests)
   let textIndex = 0
   for (const item of unmeasuredItems) {
     let itemWidth = itemPaddingAndMargin
