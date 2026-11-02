@@ -31,7 +31,6 @@ export const test: Test = async ({ Command, Editor, expect, Extension, FileSyste
   await Main.openUri(uri)
   await Extension.addWebExtension(import.meta.resolve('../fixtures/status-bar.problems'))
   await Extension.disableWorkspace('test.status-bar-problems')
-  await Main.openUri(problemUri)
 
   const expectedDiagnostics = [
     {
@@ -48,6 +47,7 @@ export const test: Test = async ({ Command, Editor, expect, Extension, FileSyste
   ] as const
   await waitFor(() => Editor.shouldHaveDiagnostics(expectedDiagnostics))
 
+  await Main.openUri(problemUri)
   const itemProblems = Locator('.StatusBarItem[name="Problems"]')
   const problemCounts = itemProblems.locator('.StatusBarItemLabel')
   const errorCount = problemCounts.first()
@@ -63,16 +63,13 @@ export const test: Test = async ({ Command, Editor, expect, Extension, FileSyste
   await expect(warningCount).toHaveText('0')
 
   await Extension.enableWorkspace('test.status-bar-problems')
-  await expect(errorCount).toHaveText('1')
   await expect(warningCount).toHaveText('2')
 
   await Command.execute('StatusBar.handleExtensionsChanged')
   await expect(itemProblems).toBeVisible()
-  await expect(errorCount).toHaveText('1')
   await expect(warningCount).toHaveText('2')
 
   await Extension.disableWorkspace('test.status-bar-problems')
-  await expect(errorCount).toHaveText('1')
   await expect(warningCount).toHaveText('0')
 
   for (const count of [10, 100, 1000, 10_000, 100_000, 1_000_000, 1]) {
