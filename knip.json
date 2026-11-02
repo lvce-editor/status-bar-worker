@@ -1,0 +1,29 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "ignoreIssues": {
+    "packages/e2e-integration/src/**/*.ts": ["unlisted"]
+  },
+  "workspaces": {
+    ".": {
+      "project": ["*.js", "packages/e2e-integration/src/**/*.ts", "packages/e2e-integration/fixtures/**/*.js"],
+      "entry": ["packages/e2e-integration/src/**/*.ts", "packages/e2e-integration/fixtures/extensions/**/main.js"],
+      "ignoreBinaries": ["esbuild"]
+    },
+    "packages/build": {
+      "project": ["src/**/*.js", "src/**/*.ts"],
+      "ignoreDependencies": ["@lvce-editor/verror", "esbuild", "playwright"]
+    },
+    "packages/e2e": {
+      "entry": ["src/**/*.ts"],
+      "project": ["src/**/*.ts"]
+    },
+    "packages/status-bar-worker": {
+      "entry": ["src/statusBarWorkerMain.ts", "test/**/*.test.ts"],
+      "project": ["src/**/*.ts", "test/**/*.ts"]
+    },
+    "packages/server": {
+      "entry": ["src/server.js"],
+      "project": ["src/**/*.js"]
+    }
+  }
+}
