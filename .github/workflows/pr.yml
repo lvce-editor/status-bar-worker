@@ -50,7 +50,7 @@ jobs:
         if: always() && matrix.os == 'windows-11-arm'
         uses: actions/upload-artifact@v7
         with:
-          name: windows-arm64-browser-diagnostics
+          name: arm64-browser-diagnostics
           path: packages/e2e/renderer-worker-traces
       - name: measure
         run: npm run measure
