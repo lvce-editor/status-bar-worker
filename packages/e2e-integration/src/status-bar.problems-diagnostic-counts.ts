@@ -14,10 +14,12 @@ const waitFor = async (assertion: () => Promise<void>): Promise<void> => {
   }
 }
 
-export const test: Test = async ({ Command, Editor, expect, FileSystem, Locator, Main, Settings, Workspace }) => {
+export const test: Test = async ({ Command, Editor, expect, Extension, FileSystem, Locator, Main, Settings, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   const uri = `${tmpDir}/main.ts`
+  const problemUri = `${tmpDir}/file.xyz`
   await FileSystem.writeFile(uri, 'const foo: string = 123\n\nconsole.log(foo)\n')
+  await FileSystem.writeFile(problemUri, 'first line\nsecond line')
   await Settings.update({
     'editor.diagnostics': true,
     'statusBar.builtinProblemsEnabled': true,
@@ -27,6 +29,8 @@ export const test: Test = async ({ Command, Editor, expect, FileSystem, Locator,
   await Command.execute('Layout.loadStatusBarIfVisible')
   await Workspace.setUri(tmpDir)
   await Main.openUri(uri)
+  await Extension.addWebExtension(import.meta.resolve('../fixtures/status-bar.problems'))
+  await Extension.disableWorkspace('test.status-bar-problems')
 
   const expectedDiagnostics = [
     {
@@ -43,18 +47,29 @@ export const test: Test = async ({ Command, Editor, expect, FileSystem, Locator,
   ] as const
   await waitFor(() => Editor.shouldHaveDiagnostics(expectedDiagnostics))
 
+  await Main.openUri(problemUri)
   const itemProblems = Locator('.StatusBarItem[name="Problems"]')
   const problemCounts = itemProblems.locator('.StatusBarItemLabel')
   const errorCount = problemCounts.first()
   const warningCount = problemCounts.nth(1)
   await expect(itemProblems).toBeVisible()
   await expect(problemCounts).toHaveCount(2)
-  await expect(errorCount).toHaveText('1')
+  await expect(errorCount).toHaveText('0')
   await expect(warningCount).toHaveText('0')
 
   await Command.execute('StatusBar.handleExtensionsChanged')
   await expect(itemProblems).toBeVisible()
-  await expect(errorCount).toHaveText('1')
+  await expect(errorCount).toHaveText('0')
+  await expect(warningCount).toHaveText('0')
+
+  await Extension.enableWorkspace('test.status-bar-problems')
+  await expect(warningCount).toHaveText('2')
+
+  await Command.execute('StatusBar.handleExtensionsChanged')
+  await expect(itemProblems).toBeVisible()
+  await expect(warningCount).toHaveText('2')
+
+  await Extension.disableWorkspace('test.status-bar-problems')
   await expect(warningCount).toHaveText('0')
 
   for (const count of [10, 100, 1000, 10_000, 100_000, 1_000_000, 1]) {

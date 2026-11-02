@@ -1,5 +1,5 @@
 {
-  "browser": "dist/main.js",
+  "browser": "main.ts",
   "id": "test.status-bar-problems",
   "isolated": true,
   "name": "status-bar-problems",
