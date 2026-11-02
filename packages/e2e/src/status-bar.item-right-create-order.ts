@@ -2,11 +2,9 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'status-bar.item-right-create-order'
 
-export const skip = 1
-
 export const test: Test = async ({ Command, expect, Locator }) => {
   for (const itemName of ['test.first', 'test.second']) {
-    await Command.execute('StatusBar.itemRightCreate', 0, {
+    await Command.execute('StatusBar.itemRightCreate', {
       ariaLabel: itemName,
       elements: [{ type: 'text', value: itemName }],
       name: itemName,
