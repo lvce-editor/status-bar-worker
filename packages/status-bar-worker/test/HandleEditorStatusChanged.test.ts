@@ -106,7 +106,8 @@ test('preserves reordered items and unrelated items', () => {
   const initial = handleEditorStatusChanged(createDefaultState(), editorStatus)
   const custom = { ariaLabel: '', elements: [], name: 'custom', tooltip: '' }
   const state = { ...initial, statusBarItemsRight: [custom, ...initial.statusBarItemsRight.toReversed()] }
+  const { statusBarItemsRight } = state
   const next = handleEditorStatusChanged(state, { ...editorStatus, tabSize: 8 })
-  expect(next.statusBarItemsRight.map((item) => item.name)).toEqual(state.statusBarItemsRight.map((item) => item.name))
+  expect(next.statusBarItemsRight.map((item) => item.name)).toEqual(statusBarItemsRight.map((item) => item.name))
   expect(next.statusBarItemsRight[0]).toBe(custom)
 })

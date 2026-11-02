@@ -5,6 +5,7 @@ import * as Resize from '../src/parts/Resize/Resize.ts'
 
 test('resize should merge dimensions into state', () => {
   const state: StatusBarState = { ...createDefaultState(), uid: 1 }
+  const { statusBarItemsLeft, statusBarItemsRight } = state
   const dimensions = {
     height: 50,
     width: 100,
@@ -13,8 +14,8 @@ test('resize should merge dimensions into state', () => {
   expect((result as any).width).toBe(100)
   expect((result as any).height).toBe(50)
   expect(result.uid).toBe(1)
-  expect(result.statusBarItemsLeft).toEqual(state.statusBarItemsLeft)
-  expect(result.statusBarItemsRight).toEqual(state.statusBarItemsRight)
+  expect(result.statusBarItemsLeft).toEqual(statusBarItemsLeft)
+  expect(result.statusBarItemsRight).toEqual(statusBarItemsRight)
 })
 
 test('resize should preserve existing state properties', () => {
@@ -23,6 +24,7 @@ test('resize should preserve existing state properties', () => {
     disposed: true,
     uid: 5,
   }
+  const { statusBarItemsLeft, statusBarItemsRight } = state
   const dimensions = {
     width: 200,
   }
@@ -30,8 +32,8 @@ test('resize should preserve existing state properties', () => {
   expect((result as any).width).toBe(200)
   expect(result.uid).toBe(5)
   expect(result.disposed).toBe(true)
-  expect(result.statusBarItemsLeft).toEqual(state.statusBarItemsLeft)
-  expect(result.statusBarItemsRight).toEqual(state.statusBarItemsRight)
+  expect(result.statusBarItemsLeft).toEqual(statusBarItemsLeft)
+  expect(result.statusBarItemsRight).toEqual(statusBarItemsRight)
 })
 
 test('resize should overwrite existing properties in dimensions', () => {
@@ -39,6 +41,7 @@ test('resize should overwrite existing properties in dimensions', () => {
     ...createDefaultState(),
     uid: 1,
   }
+  const { statusBarItemsLeft, statusBarItemsRight } = state
   const dimensions = {
     uid: 10,
     width: 300,
@@ -46,30 +49,32 @@ test('resize should overwrite existing properties in dimensions', () => {
   const result = Resize.resize(state, dimensions)
   expect(result.uid).toBe(10)
   expect((result as any).width).toBe(300)
-  expect(result.statusBarItemsLeft).toEqual(state.statusBarItemsLeft)
-  expect(result.statusBarItemsRight).toEqual(state.statusBarItemsRight)
+  expect(result.statusBarItemsLeft).toEqual(statusBarItemsLeft)
+  expect(result.statusBarItemsRight).toEqual(statusBarItemsRight)
 })
 
 test('resize should handle empty dimensions', () => {
   const state: StatusBarState = { ...createDefaultState(), uid: 1 }
+  const { statusBarItemsLeft, statusBarItemsRight } = state
   const dimensions = {}
   const result = Resize.resize(state, dimensions)
   expect(result).toEqual(state)
   expect(result.uid).toBe(1)
-  expect(result.statusBarItemsLeft).toEqual(state.statusBarItemsLeft)
-  expect(result.statusBarItemsRight).toEqual(state.statusBarItemsRight)
+  expect(result.statusBarItemsLeft).toEqual(statusBarItemsLeft)
+  expect(result.statusBarItemsRight).toEqual(statusBarItemsRight)
 })
 
 test('resize should not mutate original state', () => {
   const state: StatusBarState = { ...createDefaultState(), uid: 1 }
+  const { uid: originalUid } = state
   const dimensions = {
     height: 50,
     width: 100,
   }
-  const originalUid = state.uid
   Resize.resize(state, dimensions)
-  expect(state.uid).toBe(originalUid)
-  expect(state.width).toBe(1024)
+  const { uid, width } = state
+  expect(uid).toBe(originalUid)
+  expect(width).toBe(1024)
   expect((state as any).height).toBeUndefined()
 })
 

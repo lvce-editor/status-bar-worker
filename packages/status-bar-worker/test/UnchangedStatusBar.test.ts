@@ -17,23 +17,25 @@ afterEach(async () => {
 
 test('notification broadcasts preserve views with notifications disabled', async () => {
   const state = { ...createDefaultState(), initial: false, uid: 901 }
-  StatusBarStates.set(state.uid, state, state)
+  const { uid } = state
+  StatusBarStates.set(uid, state, state)
   const sendMultiple = jest.fn()
   const rpc = createMockRpc({ commandMap: { 'Viewlet.sendMultiple': sendMultiple } })
   RendererProcess.set(Object.assign(rpc, { dispose: jest.fn() }))
   await handleNotificationCountChangedAll(4)
-  expect(StatusBarStates.get(state.uid).newState).toBe(state)
+  expect(StatusBarStates.get(uid).newState).toBe(state)
   expect(NotificationCount.get()).toBe(4)
   expect(sendMultiple).not.toHaveBeenCalled()
 })
 
 test('unchanged initialized views do not send render commands', async () => {
   const state = { ...createDefaultState(), initial: false, uid: 902 }
-  StatusBarStates.set(state.uid, state, state)
+  const { uid } = state
+  StatusBarStates.set(uid, state, state)
   const sendMultiple = jest.fn()
   const rpc = createMockRpc({ commandMap: { 'Viewlet.sendMultiple': sendMultiple } })
   RendererProcess.set(Object.assign(rpc, { dispose: jest.fn() }))
-  await renderOutOfBand(state.uid)
+  await renderOutOfBand(uid)
   expect(sendMultiple).not.toHaveBeenCalled()
 })
 
