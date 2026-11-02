@@ -42,4 +42,6 @@ jobs:
       - name: Run owned integration tests
         shell: bash
         working-directory: .tmp/lvce-integration/packages/extension-host-worker-tests
-        run: npm run e2e:headless -- --test-timeout=120000 '--initial-settings={"statusBar.itemsVisible":true,"statusBar.builtinProblemsEnabled":true,"statusBar.builtinNotificationsEnabled":true}'
+        # The 100,000-item capacity test takes close to two minutes on Windows x64;
+        # Windows ARM64 needs more time to execute the same assertions.
+        run: npm run e2e:headless -- --test-timeout=${{ matrix.os == 'windows-11-arm' && '300000' || '120000' }} '--initial-settings={"statusBar.itemsVisible":true,"statusBar.builtinProblemsEnabled":true,"statusBar.builtinNotificationsEnabled":true}'
