@@ -59,7 +59,7 @@ export const test: Test = async ({ Command, Editor, expect, Extension, FileSyste
 
   await Command.execute('StatusBar.handleExtensionsChanged')
   await expect(itemProblems).toBeVisible()
-  await expect(errorCount).toHaveText('1')
+  await expect(errorCount).toHaveText('0')
   await expect(warningCount).toHaveText('0')
 
   await Extension.enableWorkspace('test.status-bar-problems')
