@@ -2,10 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'status-bar.item-right-create-empty-text'
 
-export const skip = 1
-
 export const test: Test = async ({ Command, expect, Locator }) => {
-  await Command.execute('StatusBar.itemRightCreate', 0, {
+  await Command.execute('StatusBar.itemRightCreate', {
     ariaLabel: 'test.empty-text',
     elements: [{ type: 'text', value: '' }],
     name: 'test.empty-text',

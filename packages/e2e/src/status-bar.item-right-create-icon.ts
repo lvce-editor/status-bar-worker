@@ -2,10 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'status-bar.item-right-create-icon'
 
-export const skip = 1
-
 export const test: Test = async ({ Command, expect, Locator }) => {
-  await Command.execute('StatusBar.itemRightCreate', 0, {
+  await Command.execute('StatusBar.itemRightCreate', {
     ariaLabel: 'test.icon',
     elements: [{ type: 'icon', value: 'TestIcon' }],
     name: 'test.icon',
@@ -14,5 +12,5 @@ export const test: Test = async ({ Command, expect, Locator }) => {
 
   const icon = Locator('.StatusBarItem[name="test.icon"] .TestIcon')
   await expect(icon).toBeVisible()
-  await expect(icon).toHaveClass('MaskIcon StatusBarIcon TestIcon')
+  await expect(icon).toHaveAttribute('class', 'MaskIcon StatusBarIcon TestIcon')
 }
