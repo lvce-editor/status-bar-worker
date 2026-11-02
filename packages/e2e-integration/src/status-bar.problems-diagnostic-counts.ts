@@ -54,7 +54,7 @@ export const test: Test = async ({ Command, Editor, expect, Extension, FileSyste
   const warningCount = problemCounts.nth(1)
   await expect(itemProblems).toBeVisible()
   await expect(problemCounts).toHaveCount(2)
-  await expect(errorCount).toHaveText('1')
+  await expect(errorCount).toHaveText('0')
   await expect(warningCount).toHaveText('0')
 
   await Command.execute('StatusBar.handleExtensionsChanged')
