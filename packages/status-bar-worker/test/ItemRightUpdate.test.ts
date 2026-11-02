@@ -6,6 +6,7 @@ import * as ItemRightUpdate from '../src/parts/ItemRightUpdate/ItemRightUpdate.t
 
 test('itemRightUpdate should update existing item by name', () => {
   const state: StatusBarState = { ...createDefaultState(), uid: 1 }
+  const { statusBarItemsLeft } = state
   const item1: StatusBarItem = {
     ariaLabel: 'text1',
     elements: [{ type: 'text', value: 'text1' }],
@@ -33,11 +34,12 @@ test('itemRightUpdate should update existing item by name', () => {
   expect(result.statusBarItemsRight[0]).toEqual(updatedItem)
   expect(result.statusBarItemsRight[1]).toEqual(item2)
   expect(result.uid).toBe(1)
-  expect(result.statusBarItemsLeft).toEqual(state.statusBarItemsLeft)
+  expect(result.statusBarItemsLeft).toEqual(statusBarItemsLeft)
 })
 
 test('itemRightUpdate should add new item when name does not exist', () => {
   const state: StatusBarState = { ...createDefaultState(), uid: 1 }
+  const { statusBarItemsLeft } = state
   const item1: StatusBarItem = {
     ariaLabel: 'text1',
     elements: [{ type: 'text', value: 'text1' }],
@@ -59,11 +61,12 @@ test('itemRightUpdate should add new item when name does not exist', () => {
   expect(result.statusBarItemsRight[0]).toEqual(newItem)
   expect(result.statusBarItemsRight[1]).toEqual(item1)
   expect(result.uid).toBe(1)
-  expect(result.statusBarItemsLeft).toEqual(state.statusBarItemsLeft)
+  expect(result.statusBarItemsLeft).toEqual(statusBarItemsLeft)
 })
 
 test('itemRightUpdate should handle empty array', () => {
   const state: StatusBarState = { ...createDefaultState(), uid: 1 }
+  const { statusBarItemsLeft } = state
   const newItem: StatusBarItem = {
     ariaLabel: 'text1',
     elements: [{ type: 'text', value: 'text1' }],
@@ -74,7 +77,7 @@ test('itemRightUpdate should handle empty array', () => {
   expect(result.statusBarItemsRight).toHaveLength(1)
   expect(result.statusBarItemsRight[0]).toEqual(newItem)
   expect(result.uid).toBe(1)
-  expect(result.statusBarItemsLeft).toEqual(state.statusBarItemsLeft)
+  expect(result.statusBarItemsLeft).toEqual(statusBarItemsLeft)
 })
 
 test('itemRightUpdate should not mutate original state', () => {

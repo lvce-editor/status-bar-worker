@@ -11,9 +11,9 @@
     "build:static": "node packages/build/src/build-static.ts",
     "build:watch": "esbuild --format=esm --bundle --external:node:buffer --external:electron --external:ws --external:node:worker_threads --watch packages/status-bar-worker/src/statusBarWorkerMain.ts --outfile=.tmp/dist/dist/statusBarWorkerMain.js",
     "dev": "node packages/build/src/dev.ts",
-    "e2e": "npm run e2e --workspace=e2e",
+    "e2e": "npm run e2e --workspace=e2e --",
     "format": "prettier --write .",
-    "lint": "eslint . && prettier --check .",
+    "lint": "eslint . && prettier --check . && knip --no-config-hints",
     "measure": "npm run measure --workspace=packages/build",
     "measure:visible": "npm run measure:visible --workspace=packages/build",
     "test": "npm run test --workspaces --if-present",
@@ -27,6 +27,7 @@
   "devDependencies": {
     "@lvce-editor/eslint-config": "^18.14.2",
     "eslint": "^10.12.0",
+    "knip": "^6.41.0",
     "prettier": "^3.9.9",
     "typescript": "^6.0.3"
   }

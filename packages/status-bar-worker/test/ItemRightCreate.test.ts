@@ -70,8 +70,8 @@ test('itemRightCreate should preserve uid', () => {
   }
 
   const result = ItemRightCreate.itemRightCreate(state, newItem)
-
-  expect(result.uid).toBe(state.uid)
+  const { uid } = state
+  expect(result.uid).toBe(uid)
 })
 
 test('itemRightCreate should return new state object', () => {
@@ -84,9 +84,10 @@ test('itemRightCreate should return new state object', () => {
   }
 
   const result = ItemRightCreate.itemRightCreate(state, newItem)
+  const { statusBarItemsRight } = state
 
   expect(result).not.toBe(state)
-  expect(result.statusBarItemsRight).not.toBe(state.statusBarItemsRight)
+  expect(result.statusBarItemsRight).not.toBe(statusBarItemsRight)
 })
 
 test('itemRightCreate should not mutate original state', () => {
@@ -99,9 +100,9 @@ test('itemRightCreate should not mutate original state', () => {
   }
 
   ItemRightCreate.itemRightCreate(state, newItem)
-
-  expect(state.statusBarItemsRight).toHaveLength(0)
-  expect(state.statusBarItemsLeft).toHaveLength(0)
+  const { statusBarItemsLeft, statusBarItemsRight } = state
+  expect(statusBarItemsRight).toHaveLength(0)
+  expect(statusBarItemsLeft).toHaveLength(0)
 })
 
 test('itemRightCreate should handle item with all properties', () => {

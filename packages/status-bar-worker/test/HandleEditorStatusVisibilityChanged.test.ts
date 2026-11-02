@@ -39,8 +39,9 @@ test('hides editor status items without discarding the cached status', async () 
     false,
   )
 
-  expect(state.editorStatus).toEqual(editorStatus)
-  expect(state.statusBarItemsRight).toEqual([expect.objectContaining({ name: 'custom' })])
+  const { editorStatus: actualEditorStatus, statusBarItemsRight } = state
+  expect(actualEditorStatus).toEqual(editorStatus)
+  expect(statusBarItemsRight).toEqual([expect.objectContaining({ name: 'custom' })])
 })
 
 test('restores cached editor status items when a text editor becomes active', async () => {
@@ -56,8 +57,8 @@ test('restores cached editor status items when a text editor becomes active', as
   )
 
   const state = handleEditorStatusVisibilityChanged(hiddenState, true)
-
-  expect(state.statusBarItemsRight.map((item) => item.name)).toEqual([
+  const { statusBarItemsRight } = state
+  expect(statusBarItemsRight.map((item) => item.name)).toEqual([
     'custom',
     'EditorPosition',
     'EditorIndentation',

@@ -23,7 +23,8 @@ test('changing editor positions retain exact overflow measurement without persis
   const short = createItem(InputName.EditorPosition, 'Ln1Col1')
   const long = createItem(InputName.EditorPosition, 'Ln1000Col10000')
   const state = await getVisibleStatusBarItems({ ...createDefaultState(), statusBarItemsRight: [short], width: 110 })
-  expect(state.visibleStatusBarItemsRight).toEqual([short])
+  const { visibleStatusBarItemsRight } = state
+  expect(visibleStatusBarItemsRight).toEqual([short])
   const updated = await getVisibleStatusBarItems({ ...state, statusBarItemsRight: [long] })
   expect(updated.visibleStatusBarItemsRight).toEqual([])
   expect(measurement.invocations).toHaveLength(2)

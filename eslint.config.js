@@ -20,17 +20,6 @@ export default defineConfig([
       'virtual-dom/no-empty-aria': 'off',
       'virtual-dom/prefer-constants': 'off',
       'virtual-dom/prefer-merge-class-names': 'off',
-      'virtual-dom/prefer-state-destructuring': 'off',
-    },
-  },
-  {
-    files: [
-      'packages/status-bar-worker/src/parts/ContentLoadedEffects/ContentLoadedEffects.ts',
-      'packages/status-bar-worker/src/parts/HandleContextMenu/HandleContextMenu.ts',
-      'packages/status-bar-worker/src/parts/ItemLeftUpdate/ItemLeftUpdate.ts',
-    ],
-    rules: {
-      'virtual-dom/prefer-state-destructuring': 'off',
     },
   },
   {
