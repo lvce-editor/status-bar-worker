@@ -40,3 +40,16 @@ for (const path of config.scripts) {
 for (const [from, to] of config.artifacts) {
   await cp(join(owner, from), await realpath(join(application, to)), { recursive: true })
 }
+
+// Preserve browser exceptions while diagnosing integration completion timeouts.
+const runnerPath = join(tests, 'src', '_all.js')
+const runnerSource = await readFile(runnerPath, 'utf8')
+const marker = '    const page = await context.newPage()'
+if (!runnerSource.includes(marker)) throw new Error('Expected pinned runner page creation')
+await writeFile(
+  runnerPath,
+  runnerSource.replace(
+    marker,
+    `${marker}\n    page.on('pageerror', error => console.error('[integration page error]', error.stack || error.message))`,
+  ),
+)
