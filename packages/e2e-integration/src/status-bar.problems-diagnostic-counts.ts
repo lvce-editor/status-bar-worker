@@ -8,7 +8,7 @@ const waitFor = async (assertion: () => Promise<void>): Promise<void> => {
       await assertion()
       return
     } catch (error) {
-      if (attempt === 0 || attempt === 99) console.info('[diagnostics readiness]', attempt, String(error))
+      if (attempt === 0 || attempt === 99) console.warn('[diagnostics readiness]', attempt, String(error))
       if (attempt === 99) throw error
       await new Promise((resolve) => setTimeout(resolve, 50))
     }
@@ -16,7 +16,7 @@ const waitFor = async (assertion: () => Promise<void>): Promise<void> => {
 }
 
 export const test: Test = async ({ Command, Editor, expect, Extension, FileSystem, Locator, Main, Settings, Workspace }) => {
-  console.info('[diagnostics phase] start')
+  console.warn('[diagnostics phase] start')
   const tmpDir = await FileSystem.getTmpDir()
   const uri = `${tmpDir}/main.ts`
   const problemUri = `${tmpDir}/file.xyz`
@@ -29,13 +29,13 @@ export const test: Test = async ({ Command, Editor, expect, Extension, FileSyste
   })
   await Command.execute('Layout.showStatusBar')
   await Command.execute('Layout.loadStatusBarIfVisible')
-  console.info('[diagnostics phase] setting workspace')
+  console.warn('[diagnostics phase] setting workspace')
   await Workspace.setUri(tmpDir)
-  console.info('[diagnostics phase] opening TypeScript file')
+  console.warn('[diagnostics phase] opening TypeScript file')
   await Main.openUri(uri)
-  console.info('[diagnostics phase] adding extension')
+  console.warn('[diagnostics phase] adding extension')
   await Extension.addWebExtension(import.meta.resolve('../fixtures/status-bar.problems'))
-  console.info('[diagnostics phase] disabling extension')
+  console.warn('[diagnostics phase] disabling extension')
   await Extension.disableWorkspace('test.status-bar-problems')
 
   const expectedDiagnostics = [
@@ -51,9 +51,9 @@ export const test: Test = async ({ Command, Editor, expect, Extension, FileSyste
       uri,
     },
   ] as const
-  console.info('[diagnostics phase] waiting for TypeScript diagnostics')
+  console.warn('[diagnostics phase] waiting for TypeScript diagnostics')
   await waitFor(() => Editor.shouldHaveDiagnostics(expectedDiagnostics))
-  console.info('[diagnostics phase] TypeScript diagnostics ready')
+  console.warn('[diagnostics phase] TypeScript diagnostics ready')
 
   await Main.openUri(problemUri)
   const itemProblems = Locator('.StatusBarItem[name="Problems"]')
@@ -70,7 +70,7 @@ export const test: Test = async ({ Command, Editor, expect, Extension, FileSyste
   await expect(errorCount).toHaveText('0')
   await expect(warningCount).toHaveText('0')
 
-  console.info('[diagnostics phase] enabling extension')
+  console.warn('[diagnostics phase] enabling extension')
   await Extension.enableWorkspace('test.status-bar-problems')
   await expect(warningCount).toHaveText('2')
 
@@ -78,7 +78,7 @@ export const test: Test = async ({ Command, Editor, expect, Extension, FileSyste
   await expect(itemProblems).toBeVisible()
   await expect(warningCount).toHaveText('2')
 
-  console.info('[diagnostics phase] disabling extension')
+  console.warn('[diagnostics phase] disabling extension')
   await Extension.disableWorkspace('test.status-bar-problems')
   await expect(warningCount).toHaveText('0')
 
@@ -92,7 +92,7 @@ export const test: Test = async ({ Command, Editor, expect, Extension, FileSyste
     await expect(warningCount).toHaveText('0')
   }
 
-  console.info('[diagnostics phase] closing editors')
+  console.warn('[diagnostics phase] closing editors')
   await Main.closeAllEditors()
   await expect(errorCount).toHaveText('0')
   await expect(warningCount).toHaveText('0')
