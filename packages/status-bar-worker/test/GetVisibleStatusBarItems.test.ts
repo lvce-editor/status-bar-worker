@@ -196,3 +196,83 @@ test('remeasures malformed cached widths and renders when cache reads or writes 
   expect(secondResult.visibleStatusBarItemsLeft).toHaveLength(1)
   expect(measurementCalls).toBe(2)
 })
+
+test('uses valid persisted widths on the first lookup, including zero', async () => {
+  let measurementCalls = 0
+  CacheWorker.set(
+    createMockRpc({
+      commandMap: {
+        'Cache.getCacheStorageJsonItem': async (key: string) => ({ value: key.includes('zero-width-label') ? 0 : 42 }),
+      },
+    }),
+  )
+  TextMeasurementWorker.set(
+    createMockRpc({
+      commandMap: {
+        'TextMeasurement.measureTextWidths': async (texts: readonly string[]) => {
+          measurementCalls++
+          return texts.map(() => 1000)
+        },
+      },
+    }),
+  )
+  const items = [createItem('persisted', 'persisted-width-label'), createItem('zero', 'zero-width-label')]
+  const result = await GetVisibleStatusBarItems.getVisibleStatusBarItems({
+    ...createDefaultState(),
+    statusBarItemsLeft: items,
+    width: 88,
+  })
+  expect(result.visibleStatusBarItemsLeft).toEqual(items)
+  expect(measurementCalls).toBe(0)
+})
+
+test('bounds persistent cache traffic for huge inventories and coalesces repeated labels', async () => {
+  let cacheReads = 0
+  let cacheWrites = 0
+  let measuredTexts = 0
+  CacheWorker.set(
+    createMockRpc({
+      commandMap: {
+        'Cache.getCacheStorageJsonItem': async () => {
+          cacheReads++
+          return undefined
+        },
+        'Cache.setCacheStorageJsonItem': async () => {
+          cacheWrites++
+        },
+      },
+    }),
+  )
+  TextMeasurementWorker.set(
+    createMockRpc({
+      commandMap: {
+        'TextMeasurement.measureTextWidths': async (texts: readonly string[]) => {
+          measuredTexts += texts.length
+          return texts.map(() => 10)
+        },
+      },
+    }),
+  )
+  const items = Array.from({ length: 100_000 }, (_, index) => createItem(`bulk-${index}`, `bulk label ${index % 1000}`))
+  const result = await GetVisibleStatusBarItems.getVisibleStatusBarItems({
+    ...createDefaultState(),
+    statusBarItemsLeft: items,
+    width: 66,
+  })
+  expect(result.visibleStatusBarItemsLeft).toEqual(items.slice(0, 2))
+  expect(measuredTexts).toBe(items.length)
+  expect(cacheReads).toBeGreaterThan(0)
+  expect(cacheReads).toBeLessThanOrEqual(256)
+  expect(cacheWrites).toBe(cacheReads)
+
+  // New item objects with an admitted label reuse the measurement without more disk I/O.
+  const readsBefore = cacheReads
+  const writesBefore = cacheWrites
+  await GetVisibleStatusBarItems.getVisibleStatusBarItems({
+    ...createDefaultState(),
+    statusBarItemsLeft: [createItem('new-item', 'bulk label 0')],
+  })
+  expect(measuredTexts).toBe(items.length)
+  expect(cacheReads).toBe(readsBefore)
+  expect(cacheWrites).toBe(writesBefore)
+})
