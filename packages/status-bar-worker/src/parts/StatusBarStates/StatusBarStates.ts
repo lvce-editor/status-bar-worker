@@ -1,5 +1,5 @@
 import * as ViewletRegistry from '@lvce-editor//viewlet-registry'
 import type { StatusBarState } from '../StatusBarState/StatusBarState.ts'
 
-export const { get, getCommandIds, getKeys, registerCommands, set, wrapCommand, wrapGetter, wrapSerialAsyncCommand, wrapSerialCommand } =
+export const { get, getCommandIds, getKeys, registerCommands, set, wrapCommand, wrapGetter, wrapSerialAsyncCommand } =
   ViewletRegistry.create<StatusBarState>()
