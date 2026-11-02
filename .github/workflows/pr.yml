@@ -43,15 +43,9 @@ jobs:
           PLAYWRIGHT_BROWSERS_PATH: 0
       - name: e2e
         working-directory: ./packages/e2e
-        run: npm run e2e:headless -- --trace-renderer-worker --trace-focus
+        run: npm run e2e:headless
         env:
           PLAYWRIGHT_BROWSERS_PATH: 0
-      - name: Upload browser diagnostics
-        if: always() && matrix.os == 'windows-11-arm'
-        uses: actions/upload-artifact@v7
-        with:
-          name: arm64-browser-diagnostics
-          path: packages/e2e/renderer-worker-traces
       - name: measure
         run: npm run measure
         env:
