@@ -14,10 +14,12 @@ const waitFor = async (assertion: () => Promise<void>): Promise<void> => {
   }
 }
 
-export const test: Test = async ({ Command, Editor, expect, FileSystem, Locator, Main, Settings, Workspace }) => {
+export const test: Test = async ({ Command, Editor, expect, Extension, FileSystem, Locator, Main, Settings, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   const uri = `${tmpDir}/main.ts`
+  const problemUri = `${tmpDir}/file.xyz`
   await FileSystem.writeFile(uri, 'const foo: string = 123\n\nconsole.log(foo)\n')
+  await FileSystem.writeFile(problemUri, 'first line\nsecond line')
   await Settings.update({
     'editor.diagnostics': true,
     'statusBar.builtinProblemsEnabled': true,
@@ -27,6 +29,9 @@ export const test: Test = async ({ Command, Editor, expect, FileSystem, Locator,
   await Command.execute('Layout.loadStatusBarIfVisible')
   await Workspace.setUri(tmpDir)
   await Main.openUri(uri)
+  await Extension.addWebExtension(import.meta.resolve('../fixtures/status-bar.problems'))
+  await Extension.disableWorkspace('test.status-bar-problems')
+  await Main.openUri(problemUri)
 
   const expectedDiagnostics = [
     {
@@ -54,6 +59,19 @@ export const test: Test = async ({ Command, Editor, expect, FileSystem, Locator,
 
   await Command.execute('StatusBar.handleExtensionsChanged')
   await expect(itemProblems).toBeVisible()
+  await expect(errorCount).toHaveText('1')
+  await expect(warningCount).toHaveText('0')
+
+  await Extension.enableWorkspace('test.status-bar-problems')
+  await expect(errorCount).toHaveText('1')
+  await expect(warningCount).toHaveText('2')
+
+  await Command.execute('StatusBar.handleExtensionsChanged')
+  await expect(itemProblems).toBeVisible()
+  await expect(errorCount).toHaveText('1')
+  await expect(warningCount).toHaveText('2')
+
+  await Extension.disableWorkspace('test.status-bar-problems')
   await expect(errorCount).toHaveText('1')
   await expect(warningCount).toHaveText('0')
 

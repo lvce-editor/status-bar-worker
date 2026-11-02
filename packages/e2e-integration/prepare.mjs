@@ -33,6 +33,7 @@ try {
 } catch (error) {
   if (error.code !== 'ENOENT') throw error
 }
+await cp(join(owner, 'packages/e2e/fixtures/status-bar.problems'), join(tests, 'fixtures/status-bar.problems'), { recursive: true })
 for (const path of config.scripts) {
   await cp(join(here, 'scripts', path.split('/').at(-1)), join(application, path))
 }
